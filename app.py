@@ -1,42 +1,71 @@
+import os
+import tempfile
+import pandas as pd
 import streamlit as st
-import tempfile, os, io
+# Re‑use the existing CLI entry‑point (adjust to your module layout)
+from NanoparticleAtomCounting import main as atom_counter
 
-# Re-use the existing entry point
-from atom_count import main as atom_counter
+st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 
 st.title("Nanoparticle Atom Counter")
 
-uploaded = st.file_uploader(
-    "Upload input (.csv / .xls / .xlsx)",
-    type=["csv", "xls", "xlsx"]
+st.markdown(
+    "Upload a **.csv**, **.xls**, or **.xlsx** file that contains the nanoparticle\n"
+    "geometric parameters (r, R, θ, element, facet). Then pick whether the atoms\n"
+    "should be counted by **volume** or by **area**. The app will run the same\n"
+    "calculation you use on the command line and return a results table you can\n"
+    "download as CSV."
 )
-mode = st.selectbox("Counting mode", ("volume", "area"))
 
+# ────────────────────────────────────────────────  INPUT  ─────────────────────────────────────────────────
+uploaded = st.file_uploader(
+    "Input file (one table)",
+    type=("csv", "xls", "xlsx"),
+    accept_multiple_files=False,
+)
+
+mode = st.radio("Counting mode", ("volume", "area"), horizontal=True)
+
+# ──────────────────────────────────────────────  PROCESS  ─────────────────────────────────────────────────
 if uploaded is not None:
-    # 1️⃣  save the uploaded file to a temp location
-    ext = os.path.splitext(uploaded.name)[1]
-    with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp_in:
-        tmp_in.write(uploaded.getbuffer())
-        tmp_in_path = tmp_in.name
+    with st.spinner("Processing …"):
+        # 1️⃣  Save the upload to a temporary file so the CLI can read it
+        in_suffix = os.path.splitext(uploaded.name)[1]
+        with tempfile.NamedTemporaryFile(delete=False, suffix=in_suffix) as tmp_in:
+            tmp_in.write(uploaded.getbuffer())
+            tmp_in.flush()
+            in_path = tmp_in.name
 
-    # 2️⃣  pick a temp path for output (plain-text)
-    tmp_out = tempfile.NamedTemporaryFile(delete=False, suffix=".txt")
-    tmp_out_path = tmp_out.name
-    tmp_out.close()          # we only need its name
+        # 2️⃣  Prepare an output path (CSV)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp_out:
+            out_path = tmp_out.name
 
-    # 3️⃣  run the original workflow
-    atom_counter(tmp_in_path, tmp_out_path, mode=mode)
+        # 3️⃣  Run the heavy computation
+        try:
+            atom_counter(in_path, out_path, mode=mode)
+        except Exception as exc:
+            st.error(f"❌ Calculation failed: {exc}")
+            # Clean up before leaving
+            os.remove(in_path)
+            os.remove(out_path)
+            st.stop()
 
-    # 4️⃣  offer the result for download
-    with open(tmp_out_path, "rb") as f:
-        st.download_button(
-            label="Download results",
-            data=f,
-            file_name="atom_count_output.txt",
-            mime="text/plain"
-        )
+        # ────────────────────────────────────────  OUTPUT  ────────────────────────────────────────────────
+        # 4️⃣  Offer a download button
+        with open(out_path, "rb") as f:
+            st.download_button(
+                label="Download results as CSV",
+                data=f,
+                file_name="atom_count_output.csv",
+                mime="text/csv",
+            )
 
-    # (optional) preview the output right in the app
-    with open(tmp_out_path) as f:
-        st.text(f.read())
+        # 5️⃣  Preview the table inside the app
+        df_out = pd.read_csv(out_path)
+        st.subheader("Preview of results")
+        st.dataframe(df_out, use_container_width=True)
+
+        # 6️⃣  House‑keeping: remove temp files (they are outside /tmp cleanup scope on Streamlit Cloud)
+        os.remove(in_path)
+        os.remove(out_path)
 
