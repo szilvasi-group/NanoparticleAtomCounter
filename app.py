@@ -3,7 +3,7 @@ import tempfile
 import pandas as pd
 import streamlit as st
 # Re‑use the existing CLI entry‑point (adjust to your module layout)
-from atom_count import main as atom_counter
+from .atom_count import main as atom_counter
 
 st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 
