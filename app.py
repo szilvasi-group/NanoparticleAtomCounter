@@ -26,10 +26,11 @@ st.markdown(
     `r (A),R (A),Theta,Element,Facet`
 
     e.g.
-    r (A),R (A),Theta,Element,Facet
+    ```r (A),R (A),Theta,Element,Facet
     34.88120454078012,0.0,100.0,Ag,(1, 0, 0)
     36.08176747235197,0.0,100.0,Ag,(1, 0, 0)
     36.37571748236948,0.0,100.0,Ag,(1, 0, 0)
+    ```
 
     Leave blanks for whichever column you're not supplying, e.g. "Facet" or "R (A)"
     
