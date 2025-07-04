@@ -3,7 +3,7 @@ from sys import argv, exit
 import numpy as np
 import warnings
 from functools import lru_cache
-from NanoparticleAtomCounting.data import (
+from nanoparticleatomcounting.data import (
         chemical_symbols,
         atomic_numbers,
         atomic_names,
