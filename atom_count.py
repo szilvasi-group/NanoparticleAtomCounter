@@ -3,8 +3,8 @@ from typing import Tuple, List, Literal
 from sys import argv, exit
 import numpy as np
 import warnings
-from NanoparticleAtomCounting.by_volume import calculate_by_volume
-from NanoparticleAtomCounting.by_area import calculate_by_area
+from nanoparticleatomcounting.by_volume import calculate_by_volume
+from nanoparticleatomcounting.by_area import calculate_by_area
 import pandas as pd
 from numpy.typing import NDArray
 from os import path
