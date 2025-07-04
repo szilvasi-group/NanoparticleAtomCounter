@@ -1,7 +1,7 @@
 from typing import Tuple, List
 import numpy as np
 import warnings
-from NanoparticleAtomCounting.count_utilities import (
+from nanoparticleatomcounting.count_utilities import (
         volume_to_atoms,
         area_to_atoms,
         calculate_atomic_density,
