@@ -10,12 +10,36 @@ st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 st.title("Nanoparticle Atom Counter")
 
 st.markdown(
-    "Upload a **.csv**, **.xls**, or **.xlsx** file that contains the nanoparticle\n"
-    "geometric parameters (r, R, θ, element, facet). Then pick whether the atoms\n"
-    "should be counted by **volume** or by **area**. The app will run the same\n"
-    "calculation you use on the command line and return a results table you can\n"
-    "download as CSV."
+    """
+    Upload a **.csv**, **.xls**, or **.xlsx** file that contains the nanoparticle
+    geometric parameters (**r**, **R**, **Theta**, **Element**, **Facet**).
+
+    <u>Definitions:</u>  
+    • **r** – footprint radius in Å  
+    • **R** – radius of curvature in Å  
+      *Note: supply **either** r **or** R; if you supply both, r is used and R ignored.*  
+    • **Theta** – contact angle  
+    • **Element** – atom type the nanoparticle is made of  
+    • **Facet** – facet in contact with the support (optional)
+
+    **Column headers must be exactly:**  
+    `r (A),R (A),Theta,Element,Facet`
+
+    e.g.
+    r (A),R (A),Theta,Element,Facet
+    34.88120454078012,0.0,100.0,Ag,(1, 0, 0)
+    36.08176747235197,0.0,100.0,Ag,(1, 0, 0)
+    36.37571748236948,0.0,100.0,Ag,(1, 0, 0)
+
+    Leave blanks for whichever column you're not supplying, e.g. "Facet" or "R (A)"
+    
+    Finally, pick whether the atoms should be counted by **volume** or by **area**.
+    The app will run the same calculation you use on the command line and
+    return a results table you can download as CSV.
+    """,
+    unsafe_allow_html=True,   # needed for <u> underline
 )
+
 
 # ────────────────────────────────────────────────  INPUT  ─────────────────────────────────────────────────
 uploaded = st.file_uploader(
