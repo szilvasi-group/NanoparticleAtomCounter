@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Nanoparticle Atom Counter
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Gbolagade
+    email: giolajide@crimson.ua.edu
+    affiliation: University of Alabama
+    orcid: 'https://orcid.org/0000-0003-0992-670X'
+    family-names: ' Olajide'
+  - given-names: Tibor
+    email: tszilvasi@ua.edu
+    affiliation: University of Alabama
+    family-names: ' Szilvasi'
+repository-code: 'https://github.com/giolajide/nanoparticleatomcounting/'
+url: 'https://nanoparticle-atom-counting.streamlit.app/'
+abstract: >-
+  Determines the number of interfacial, perimeter, surface,
+  and total atoms of a nanoparticle given the radius and
+  contact angle
+keywords:
+  - Nanoparticles
+  - Transmission Electron Microscopy
+  - Spherical Cap Model
+license: MIT
+version: 0.1.0
