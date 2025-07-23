@@ -1,3 +1,27 @@
+"""
+Utilities that the atom counting routines rely on
+
+Functions
+---------
+calculate_constants:
+    Extract molar volume (assumed at equilibrium),
+    interplanar spacing, and atomic diameter
+calculate_surface_area:
+    Calculate area of outer surface of NP
+    Excludes the interfacial area and the side area of the perimeter
+volume_to_atoms:
+    Convert volume (in A^3) to number of atoms
+area_to_atoms:
+    Convert area (in A^2) to number of atoms
+calculate_atomic_density:
+    Calculate atomic density (i.e. atoms per unit surface area)
+calculate_total_volume:
+    Calculate Nanoparticle volume, ASSUMING IT'S A SPHERICAL CAP
+alpha:
+    a constant needed in the spherical cap equations
+beta:
+    a constant needed in the spherical cap equations
+"""
 from typing import Tuple, List
 from sys import argv, exit
 import numpy as np
