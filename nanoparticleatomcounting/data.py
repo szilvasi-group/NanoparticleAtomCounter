@@ -1,3 +1,18 @@
+"""
+Datasheet
+
+Largely adapted from Atomic Simulation Environment's (ASE) database:
+    /path_to_ase/data/__init__.py
+
+Data herein:
+    chemical_symbols
+    atomic_numbers
+    atomic_names
+    covalent_radii
+    reference_states
+    molar_volumes
+    inteplanar_dist
+"""
 import numpy as np
 #from scipy.constants import N_A
 
