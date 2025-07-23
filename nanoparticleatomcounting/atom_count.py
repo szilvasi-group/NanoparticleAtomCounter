@@ -1,3 +1,13 @@
+"""
+Main script for estimating atom counts in supported nanoparticles.
+
+Functions
+---------
+parse_input_data(input_file: str) -> tuple
+    Reads the input CSV or XLXS
+main:
+    run all calculations
+"""
 import ast
 from typing import Tuple, List, Literal
 from sys import argv, exit
