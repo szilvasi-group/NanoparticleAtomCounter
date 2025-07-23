@@ -17,7 +17,7 @@ setup(
     author="Gbolagade Olajide",
     author_email="giolajide@crimson.ua.edu",
     description="Estimate atom counts in metal nanoparticles"
-    "given radius and contact angle",
+    " given radius and contact angle",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/giolajide/nanoparticleatomcounting",
@@ -27,7 +27,7 @@ setup(
     install_requires=[
         "numpy>=1.20,<2.3",
         "pandas>=1.4",
-        "streamlit>=1.4",
+        "streamlit>=1.4,<2.0",
         "openpyxl>=3.1.0",
         "xlrd>=2.0.1"
     ],
@@ -53,6 +53,13 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
     ],
+
+    keywords=[
+        "nanoparticle",
+        "tem",
+        "electron microscopy",
+        "active site"
+        ],
 
     license="MIT",
     python_requires=">=3.8",
