@@ -1,3 +1,20 @@
+"""
+Volume-based routines for estimating atom counts in supported nanoparticles.
+
+Functions
+---------
+calculate_volumes(element: str, r: float, theta: float, facet: tuple) -> tuple
+    Calculate volume of the interfacial region (excluding the perimeter region),
+    perimeter region, and the entire nanoparticle
+    using:
+        1. contact angle (theta)
+        2. footprint/interfacial radius (r) in Angstrom
+        3. chemical symbol of the nanoparticle's atoms (element)
+        4. facet of nanoparticle oriented to support (facet)
+
+calculate_by_volume(element: str, r: float, theta: float, facet: tuple) -> tuple
+    Main function to do all calculations through the 'volume' method
+"""
 from typing import Tuple, List
 import numpy as np
 import warnings
