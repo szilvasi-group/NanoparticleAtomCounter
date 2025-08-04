@@ -48,6 +48,24 @@ st.download_button(
     mime="text/csv",
 )
 
+
+# ───────────────────────────────────  IMAGES  ─────────────────────────────────
+# Put Acute.png and Obtuse.png in the same folder as this script,
+# or adjust the relative path as needed.
+st.markdown("### And here's a visual guide to r, R, and θ")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.image("Acute.png", caption="θ < 90°  (acute contact angle)", use_column_width=True)
+
+with col2:
+    st.image("Obtuse.png", caption="θ > 90°  (obtuse contact angle)", use_column_width=True)
+
+st.markdown("---")  # thin separator before the file-upload widgets
+# ──────────────────────────────────────────────────────────────────────────────
+
+
 st.markdown(
     """
 
