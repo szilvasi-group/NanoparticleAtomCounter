@@ -11,7 +11,7 @@ from nanoparticleatomcounting.atom_count import main as atom_counter
 # ───────────────────────────  PAGE CONFIG  ───────────────────────────
 st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 
-# ---------- sidebar (resources & options) ----------
+# ---------- sidebar: resources ----------
 with st.sidebar:
     st.header("Resources")
 
@@ -23,7 +23,7 @@ with st.sidebar:
     ).encode()
 
     st.download_button(
-        "📥 Sample input (.csv)",
+        "Sample input (.csv)",
         SAMPLE_CSV,
         file_name="sample_input.csv",
         mime="text/csv",
@@ -31,9 +31,6 @@ with st.sidebar:
 
     st.image("Acute.png", caption="θ < 90° (acute)", use_column_width=True)
     st.image("Obtuse.png", caption="θ > 90° (obtuse)", use_column_width=True)
-
-    st.markdown("---")
-    mode = st.radio("Counting mode", ("volume", "area"))
 # ---------------------------------------------------------------------
 
 
@@ -48,11 +45,14 @@ Upload a **.csv**, **.xls**, or **.xlsx** file containing the columns
 *Supply either **r** or **R** (if both are present, **r** is used).  
 Facet is optional; leave blank if unknown.*
 
-ℹ️ **Need a template or a visual guide?**  
+ℹ**Need a template or a visual guide?**  
 A sample input file and explanatory diagrams are available in the sidebar.
 """,
     unsafe_allow_html=True,
 )
+
+# counting-mode selector (now in main area)
+mode = st.radio("Counting mode", ("volume", "area"), horizontal=True)
 
 
 # ──────────  FILE UPLOAD  ──────────
@@ -89,7 +89,7 @@ if st.button("⚙️ Run calculation"):
             success = False
 
         if not success:
-            st.error("❌ Calculation failed. Please check your input and try again.")
+            st.error("Calculation failed. Please check your input and try again.")
             os.remove(in_path)
             os.remove(out_path)
             st.stop()
@@ -99,7 +99,7 @@ if st.button("⚙️ Run calculation"):
 
         st.markdown("#### Results")
         st.download_button(
-            "💾 Download CSV",
+            "Download CSV",
             data=open(out_path, "rb").read(),
             file_name="atom_count_output.csv",
             mime="text/csv",
