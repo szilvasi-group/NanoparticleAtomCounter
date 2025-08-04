@@ -29,8 +29,8 @@ with st.sidebar:
         mime="text/csv",
     )
 
-    st.image("Acute.png", caption="θ < 90° (acute)", use_column_width=True)
-    st.image("Obtuse.png", caption="θ > 90° (obtuse)", use_column_width=True)
+    st.image("Acute.png", caption="θ < 90° (acute)", use_container_width=True)
+    st.image("Obtuse.png", caption="θ > 90° (obtuse)", use_container_width=True)
 # ---------------------------------------------------------------------
 
 
