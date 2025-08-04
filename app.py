@@ -24,22 +24,12 @@ st.markdown(
     **Column headers must be exactly:**  
     `r (A),R (A),Theta,Element,Facet`
 
-    e.g.
-    ```r (A),R (A),Theta,Element,Facet
-    34.88120454078012,0.0,100.0,Ag,(1, 0, 0)
-    36.08176747235197,0.0,100.0,Ag,(1, 0, 0)
-    36.37571748236948,0.0,100.0,Ag,(1, 0, 0)
-    ```
-
     Leave blanks for whichever column you're not supplying, e.g. "Facet" or "R (A)"
-    
-    Finally, pick whether the atoms should be counted by **volume** or by **area**.
-    The app will run the same calculation you use on the command line and
-    return a results table you can download as CSV.
+
+    An example input file can be downloaded below:
     """,
     unsafe_allow_html=True,   # needed for <u> underline
 )
-
 
 # ▼ NEW: sample-file download ▼ -------------------------------------------------
 def sample_csv() -> bytes:
@@ -57,6 +47,18 @@ st.download_button(
     file_name="sample_input.csv",
     mime="text/csv",
 )
+
+st.markdown(
+    """
+
+    Finally, pick whether the atoms should be counted by **volume** or by **area**.
+    
+    The app will run the same calculation you use on the command line and
+    return a results table you can download as CSV.
+    """,
+    unsafe_allow_html=True,   # needed for <u> underline
+)
+
 
 
 # ────────────────────────────────────────────────  INPUT  ─────────────────────────────────────────────────
