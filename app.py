@@ -6,7 +6,6 @@ import streamlit as st
 from nanoparticleatomcounting.atom_count import main as atom_counter
 
 st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
-
 st.title("Nanoparticle Atom Counter")
 
 st.markdown(
@@ -39,6 +38,24 @@ st.markdown(
     return a results table you can download as CSV.
     """,
     unsafe_allow_html=True,   # needed for <u> underline
+)
+
+
+# ▼ NEW: sample-file download ▼ -------------------------------------------------
+def sample_csv() -> bytes:
+    """Return a minimal example input file as CSV bytes."""
+    return (
+        "r (A),R (A),Theta,Element,Facet\n"
+        "1000,,70.0,Ag,\n"
+        "120,,85,Ag,\n"
+        "36.37,,102,Cu,\n"
+    ).encode()
+
+st.download_button(
+    label="📥 Download sample input (.csv)",
+    data=sample_csv(),
+    file_name="sample_input.csv",
+    mime="text/csv",
 )
 
 
