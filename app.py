@@ -45,8 +45,11 @@ Upload a **.csv**, **.xls**, or **.xlsx** file containing the columns
 *Supply either **r** or **R** (if both are present, **r** is used).  
 Facet is optional; leave blank if unknown.*
 
-ℹ**Need a template or a visual guide?**  
+**Need a template or a visual guide?**  
 A sample input file and explanatory diagrams are available in the sidebar.
+
+
+**This note here is for me: when the paper has been written, add a link to the paper.md and the CITATION.cff**
 """,
     unsafe_allow_html=True,
 )
