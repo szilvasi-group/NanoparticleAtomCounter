@@ -17,9 +17,9 @@ with st.sidebar:
 
     SAMPLE_CSV = (
         "r (A),R (A),Theta,Element,Facet\n"
-        "1000,,70.0,Ag,\n"
-        "120,,85,Ag,\n"
-        "36.37,,102,Cu,\n"
+        "10,,70.0,Ag,\n"
+        "100,,90,Pd,\n"
+        "400,,125,Cu,\n"
     ).encode()
 
     st.download_button(
@@ -31,6 +31,7 @@ with st.sidebar:
 
     st.image("Acute.png", caption="θ < 90° (acute)", use_container_width=True)
     st.image("Obtuse.png", caption="θ > 90° (obtuse)", use_container_width=True)
+    st.image("Nanoparticle_Legend.tiff", caption="Definition of surface, interfacial, and perimeter atoms", use_container_width=True)
 # ---------------------------------------------------------------------
 
 
