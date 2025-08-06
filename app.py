@@ -31,7 +31,7 @@ with st.sidebar:
 
     st.image("Acute.png", caption="θ < 90° (acute)", use_container_width=True)
     st.image("Obtuse.png", caption="θ > 90° (obtuse)", use_container_width=True)
-    st.image("Nanoparticle_Legend.tiff", caption="Definition of surface, interfacial, and perimeter atoms", use_container_width=True)
+    st.image("Nanoparticle_Legend.tif", caption="Definition of surface, interfacial, and perimeter atoms", use_container_width=True)
 # ---------------------------------------------------------------------
 
 
