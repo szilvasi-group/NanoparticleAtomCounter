@@ -23,7 +23,7 @@ import argparse
 
 
 MODE = "volume"
-OUTPUT = "output.txt"
+OUTPUT = "output_atomcounts.csv"
 
 def parse_input_data(input_file: str
         ) -> Tuple[NDArray, NDArray, NDArray, NDArray, NDArray]:
@@ -38,7 +38,8 @@ def parse_input_data(input_file: str
     R:          Radius of curvature in Angstrom, e.g. 17.12
     Theta:      Contact Angle, e.g. 80
     Element:    Element the Nanoparticle is composed of, e.g. Ag
-    Facet:      Facet of Nanoparticle that faces the support, given as a tuple, e.g. (1, 1, 1)
+    Interface Facet:    Facet at the nanoparticle-support interface, given as a tuple, e.g. (1, 1, 1)
+    Surface Facet:      Dominant facet at the nanoparticle-gas interface, also as a tuple
 
     Mandatory:
         1. Theta
@@ -46,9 +47,9 @@ def parse_input_data(input_file: str
         3. Element
 
     Optional but recommended:
-        1. Facet
+        Interface Facet and Surface Facet
         if not provided, will assume defaults;
-        see NanoparticleAtomCounting.count_utilities.calculate_constants for the defaults
+        see count_utilities.calculate_constants for the defaults
     """
 
     ext = path.splitext(input_file)[1].lower()
@@ -75,58 +76,94 @@ def parse_input_data(input_file: str
 
     #verify that the cols are labelled properly so we get the correct data
     df.columns = df.columns.str.strip() # remove leading/trailing spaces. no unifying case or R will become r
-    expected = ["r (A)", "R (A)", "Theta", "Element", "Facet"]
+    expected = ["r (A)", "R (A)", "Theta", "Element", "Interface Facet", "Surface Facet"]
     # compare as multisets to check both presence *and* counts
     assert Counter(df.columns) == Counter(expected), (
         f"Column mismatch:\n"
         f"  found    = {df.columns.tolist()}\n"
         f"  expected = {expected}"
     )
-    
+
     rs       = df["r (A)"].to_numpy() #np.nan if no values
     Rs       = df["R (A)"].to_numpy() #np.nan if no values
     thetas   = df["Theta"].to_numpy()
     elements = df["Element"].to_numpy()
-    facets = (
-    df["Facet"]
+    interface_facets = (
+    df["Interface Facet"]
+      .apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [None] * 3)
+      .to_numpy()
+      ) #None if no values
+    surface_facets = (
+    df["Surface Facet"]
       .apply(lambda x: ast.literal_eval(x) if pd.notnull(x) else [None] * 3)
       .to_numpy()
       ) #None if no values
 
-    return rs, Rs, thetas, elements, facets
+    return rs, Rs, thetas, elements, interface_facets, surface_facets
 
-
-def main(
-        input_file: str,
-        output_file: str = OUTPUT,
-        mode: Literal["volume", "area"] = MODE,
-        ) -> None:
+def main() -> None:
     f"""
     Main function to do all calculations through the selected method
 
     Requires:
         input_file (str):                   input file name, with full path
-        output_file (str):                   output file name, with full path. default = {OUTPUT}
-        mode (Literal["volume", "area"])    whether to calculate by volume or area. Default = {MODE}
+        output_file (str):                   output file name, with full path. default = 'output.txt'
+        mode (Literal["volume", "area"])    whether to calculate by volume or area. Default = 'volume'
 
     Returns:
         None, but writes out the output file
     """
-    rs, Rs, thetas, elements, facets = parse_input_data(input_file)
-        
-    if np.all(np.isnan(rs)): #if rs is empty, convert Rs into rs
+    parser = argparse.ArgumentParser(
+    description = """Given an input file containing:
+     (1) NP element type
+     (2) footprint radius or radius of curvature
+     (3) contact angle,
+     (4) (optionally) interface facet
+     (5) (optionally) surface facet
+
+    calculates number of surface, perimeter, interfacial, and total atoms"""
+    )
+
+    parser.add_argument("--input", "-i",
+            type = str,
+            required = True,
+            help = "Path to input file")
+
+    parser.add_argument("--output", "-o",
+            type = str,
+            default = OUTPUT,
+            help = f"Path to output file. default = {OUTPUT}")
+
+    parser.add_argument("--mode", "-m",
+            type = str,
+            default = MODE,
+            help = f"""Method for calculating: by area ("area") or by volume ("volume").
+            default = 'volume' """,
+            choices = ("volume",
+                "area"),
+            )
+
+    args = parser.parse_args()
+    input_file = args.input
+    output_file = args.output
+    mode = args.mode.lower()
+
+    rs, Rs, thetas, elements, interface_facets, surface_facets = parse_input_data(input_file)
+
+    if (np.all(np.isnan(rs)) or np.all(rs == 0)): #if rs is empty or 0, convert Rs into rs
         print("converting r into R...")
         rs = Rs * np.sin(np.radians(thetas))
     elif np.any(np.isnan(rs)): #if there is any rs value missing, exit
         raise ValueError(f"Some entries for r (A) are missing!")
-        
+
     #in case some variables have more entries than others
     data = {
             "rs":       rs,
             "Rs":       Rs,
             "thetas":   thetas,
             "elements": elements,
-            "facets":   facets,
+            "interface_facets":   interface_facets,
+            "surface_facets": surface_facets,
             }
 
     lengths = {name: len(arr) for name, arr in data.items()}
@@ -148,13 +185,15 @@ def main(
             "area": calculate_by_area,
             }
 
+
     peri_atoms, inter_atoms, surf_atoms, tot_atoms = zip(
         *[
             mode_[mode](
-                data["elements"][i],
-                data["rs"][i],
-                data["thetas"][i],
-                tuple(data["facets"][i])
+                element = data["elements"][i],
+                footprint_radius = data["rs"][i],
+                theta = data["thetas"][i],
+                interface_facet = tuple(data["interface_facets"][i]),
+                surface_facet = tuple(data["surface_facets"][i])
                 #to be able to cache in calculate_constants(), facets must be immutable (i.e. tuple rather than list)
                 #just in case the user had given as [x, y, z] rather than (x, y, z)
                 #so, convert to tuple
@@ -177,39 +216,5 @@ def main(
 
 
 if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser(
-    description = """Given an input file containing:
-     (1) NP element type
-     (2) footprint radius or radius of curvature
-     (3) contact angle,
-     (4) (optionally) aligned facet
-
-    calculates number of surface, perimeter, interfacial, and total atoms"""
-    )
-
-    parser.add_argument('--input', '-i',
-            type = str,
-            required = True,
-            help = 'Path to input file')
-
-    parser.add_argument('--output', '-o',
-            type = str,
-            default = OUTPUT,
-            help = f'Path to output file. default = {OUTPUT}')
-
-    parser.add_argument('--mode', '-m',
-            type = str,
-            default = MODE,
-            help = f"""Method for calculating: by area ("area") or by volume ("volume").
-            default = {MODE}"""
-            )
-
-    args = parser.parse_args()
-    input_file = args.input
-    output_file = args.output
-    mode = args.mode
-
-    main(input_file, output_file, mode)
-
+    main()
 
