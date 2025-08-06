@@ -39,6 +39,8 @@ from nanoparticleatomcounting.data import (
         )
 
 ##extracts molar volume, interplanar spacing, and diameter of the nanoparticle element
+
+#this is the default for interfacial and surface (i.e. gas-oriented) facets
 DEFAULT_FACETS = {
         "fcc": "(1, 1, 1)",
         "bcc": "(1, 1, 0)",
@@ -50,22 +52,22 @@ DEFAULT_FACETS = {
         } #confirmed these to generally be the lowest-energy facets
           #(https://next-gen.materialsproject.org/materials and http://crystalium.materialsvirtuallab.org/)
 
-warnings.filterwarnings("ignore")
+
+#warnings.filterwarnings("ignore")
 
 @lru_cache(maxsize = 10_000)
 def calculate_constants(
         element: str,
-        facet: Tuple[int, int, int] = None
+        facet: Tuple[int,int,int] = None
         ) -> float:
-    f"""
+    """
     Extract molar volume (assumed at equilibrium),
     interplanar spacing, and atomic diameter
 
     Requires:
         element (str):      atomic symbol for atom type in the nanoparticle
-        facet (Tuple[int,int,int]):
-                            facet facing the support.
-                            Defaults: {DEFAULT_FACETS}
+        facet (Tuple[int,int,int]): facet, whether interfacial or support depends
+                                    on the context
 
     Returns:
         molar volume (float) in A^3/mole,
@@ -83,8 +85,6 @@ def calculate_constants(
     if facet == "(0, 0, 0)":
         raise ValueError(f"Facet cannot be {facet}")
 
-#    if facet is not None and not isinstance(facet, tuple):
-#        facet = tuple(facet)
 
     element = element.capitalize()
 
@@ -96,7 +96,7 @@ def calculate_constants(
             crystal_lattice = reference_state["symmetry"]
             facet = DEFAULT_FACETS[crystal_lattice]
             warnings.warn(
-                    f"Interfacial facet not given, will assume {facet}",
+                    f"Interfacial and-or Surface facet not given, will assume {facet}",
                     category = UserWarning
                     )
         covalent_radius = covalent_radii[atomic_number]
@@ -115,6 +115,8 @@ def alpha(theta: int) -> float:
     Constant needed for the spherical cap model equations.
     theta is in degrees
     """
+    if (theta < 0 or theta > 180):
+        warnings.warn(f"Invalid value of theta ({theta}) supplied", category=RuntimeWarning)
     return 1 / (1 + np.cos(np.radians(theta)))
 
 
@@ -124,6 +126,8 @@ def beta(theta: int) -> float:
     theta is in degrees
     Will give infinity if theta = 0 or 180
     """
+    if (theta < 0 or theta > 180):
+        raise ValueError(f"Invalid value of theta ({theta}) supplied")
     if theta in [0, 180]:
         raise ValueError(f"Contact angle of {theta} not allowed")
 
@@ -135,7 +139,7 @@ def calculate_surface_area(
         element: str,
         footprint_radius: float,
         theta: float = None,
-        facet: Tuple[int,int,int] = None
+        surface_facet: Tuple[int,int,int] = None
         ) -> float:
     """
     Calculate area of outer surface of NP
@@ -143,8 +147,7 @@ def calculate_surface_area(
 
     Requires:
         element (str):              atomic symbol for atom type in the nanoparticle
-        facet (Tuple[int,int,int]): facet facing the support.
-                                    see calculate_constants() for defaults
+        surface_facet (Tuple[int,int,int]): facet facing vacuum
         theta (float):              contact angle. degrees
 
     Returns:
@@ -154,7 +157,13 @@ def calculate_surface_area(
         raise ValueError(f"Contact angle of {theta} not allowed")
 
     r = footprint_radius #to make things clear
-    _, interplanar_spacing, _ = calculate_constants(element, facet)
+    if r <= 0:
+        raise ValueError(f"Invalid r ({r}) Ang supplied")
+    if r < 5:
+        warnings.warn(f"""Small value of r ({r}) Ang supplied; a spherical cap
+        approximation may be tenuous""", category = UserWarning)
+
+    _, interplanar_spacing, _ = calculate_constants(element = element, facet = surface_facet)
     z = interplanar_spacing #to make things clear
 
     theta_rad = np.radians(theta)
@@ -188,13 +197,13 @@ def calculate_total_volume(
     """
     if theta in [0, 180]:
         raise ValueError(f"Contact angle of {theta} not allowed")
-    if footprint_radius <= 10:
+    if footprint_radius <= 5:
         warnings.warn(
         f"""A spherical cap may not work well for this footprint radius({footprint_radius})!
                 Mind!""",
                 category = UserWarning
                 )
-        
+
     return (np.pi * (footprint_radius ** 3)) * alpha(theta) * beta(theta) / 3
 
 
@@ -207,13 +216,13 @@ def calculate_atomic_density(
 
     Requires:
         element (str):              atomic symbol for atom type in the nanoparticle
-        facet (Tuple[int,int,int]): facet facing the support.
-                                    see calculate_constants() for defaults
+        facet (Tuple[int,int,int]): facet, whether interfacial or support depends
+                                    on the context
 
     Returns:
         atomic density (float) in atoms/A^2
     """
-    molar_volume, interplanar_spacing, _ = calculate_constants(element, facet)
+    molar_volume, interplanar_spacing, _ = calculate_constants(element = element, facet = facet)
     atomic_density = interplanar_spacing * N_A / molar_volume
 
     return atomic_density #atoms/A^2
@@ -230,21 +239,21 @@ def area_to_atoms(
     Requires:
         area (float):               Area of region in A^2
         element (str):              atomic symbol for atom type in the nanoparticle
-        facet (Tuple[int,int,int]): facet facing the support.
+        facet (Tuple[int,int,int]): facet, whether interfacial or support depends
+                                    on the context
                                     see calculate_constants() for defaults
 
     Returns:
         N_atoms (int):      Number of atoms in region, rounded to nearest integer
     """
     atomic_density = calculate_atomic_density(element, facet) #atoms/A^2
-    return int(area * atomic_density)
+    return int(np.round(area * atomic_density))
 
 
 def volume_to_atoms(
         volume: float,
         element: str,
-        molar_volume: float = None, 
-        facet: Tuple[int, int, int] = None
+        molar_volume: float = None,
         ) -> int:
     """
     Convert volume (in A^3) to number of atoms
@@ -258,10 +267,9 @@ def volume_to_atoms(
         N_atoms (int):              Number of atoms in region, rounded to nearest integer
     """
     if not molar_volume:
-        molar_volume, *_ = calculate_constants(element, facet)
+        molar_volume, *_ = calculate_constants(element = element)
 
     bulk_density = N_A / molar_volume #atom/A^3
 
     return np.round(volume * bulk_density)
-
 
