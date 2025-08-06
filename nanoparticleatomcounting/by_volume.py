@@ -33,7 +33,7 @@ def calculate_volumes(
         element: str,
         footprint_radius: float,
         theta: float = None,
-        facet: Tuple[int,int,int] = None
+        interface_facet: Tuple[int,int,int] = None,
         ) -> Tuple[float, float, float]:
     """
     Calculate volume of the interfacial region (excluding the perimeter region),
@@ -43,7 +43,7 @@ def calculate_volumes(
         element (str):              atomic symbol for atom type in the nanoparticle
         theta (float):              contact angle. degrees
         footprint_radius (float):   NP footprint radius. In Ang
-        facet (Tuple[int,int,int]): facet facing the support
+        interface_facet (Tuple[int,int,int]): facet facing the support
 
     Returns:
         interface_volume, perimeter_volume, total_volume     all in A^3
@@ -58,8 +58,8 @@ def calculate_volumes(
         #if θ<90: distance from sphere center vertically up to bottom of spherical segment
         #if θ==90: zero
     #z1: atomic diameter
-    #z: interplanar spacing (height of the interface)
-    _, z, z1 = calculate_constants(element = element, facet = tuple(facet))
+    #z: interplanar spacing at the interface, i.e. this is the height of the interface
+    _, z, z1 = calculate_constants(element = element, facet = tuple(interface_facet))
 
     r = footprint_radius
     R = r / np.sin(np.radians(theta))
@@ -111,7 +111,8 @@ def calculate_by_volume(
         element: str,
         footprint_radius: float,
         theta: float = None,
-        facet: Tuple[int,int,int] = None
+        interface_facet: Tuple[int,int,int] = None,
+        surface_facet: Tuple[int,int,int] = None
         ) -> Tuple[int, int, int, int]:
     """
     Main function to do all calculations through the 'volume' method
@@ -122,8 +123,8 @@ def calculate_by_volume(
         element (str):              atomic symbol for atom type in the nanoparticle
         theta (float):              contact angle. degrees
         footprint_radius (float):   NP footprint radius. In Ang
-        facet (Tuple[int,int,int]): facet facing the support
-                                    for defaults, see the calculate_constants() function
+        interface_facet (Tuple[int,int,int]): facet facing the support
+        surface_facet (Tuple[int,int,int]): facet facing vacuum
 
     Returns:
         perimeter_atoms, interfacial_atoms, surface_atoms, all_atoms
@@ -133,7 +134,7 @@ def calculate_by_volume(
             element = element,
             footprint_radius = footprint_radius,
             theta = theta,
-            facet = facet
+            interface_facet = interface_facet,
             )
 
     interfacial_atoms, perimeter_atoms, total_atoms = [
@@ -141,7 +142,6 @@ def calculate_by_volume(
         volume = i,
         element = element,
         molar_volume = None,
-        facet = facet
         ) for i in [
             interfacial_volume,
             perimeter_volume,
@@ -153,13 +153,13 @@ def calculate_by_volume(
             element = element,
             footprint_radius = footprint_radius,
             theta = theta,
-            facet = facet
+            surface_facet = surface_facet
             )
 
     surface_atoms = area_to_atoms(
             area = surface_area,
             element = element,
-            facet = facet
+            facet = surface_facet
             )
 
     return perimeter_atoms, interfacial_atoms, surface_atoms, total_atoms
