@@ -97,7 +97,7 @@ if st.button("⚙️ Run calculation"):
             subprocess.run(
                 [
                     sys.executable,              # current Python executable
-                    "-m", "nanoparticleatomcounting.atom_count",
+                    "-m", "nanoparticleatomcounting.cli.atom_count",
                     "--input",  in_path,
                     "--output", out_path,
                     "--mode",   mode,
