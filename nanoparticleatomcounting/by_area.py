@@ -1,6 +1,9 @@
 """
 Area-based routines for estimating atom counts in supported nanoparticles.
 
+calculates the number of interfacial atoms by looking only at the footprint radius,
+which means the contact angle doesn't affect the number of interfacial atoms
+
 Functions
 ---------
 calculate_areas(element: str, r: float, theta: float, facet: tuple) -> tuple
@@ -17,7 +20,7 @@ calculate_by_area(element: str, r: float, theta: float, facet: tuple) -> tuple
 from typing import Tuple, List
 import numpy as np
 import warnings
-from nanoparticleatomcounting.count_utilities import (
+from nanoparticleatomcounter.count_utilities import (
         volume_to_atoms,
         calculate_total_volume,
         area_to_atoms,
@@ -27,11 +30,6 @@ from nanoparticleatomcounting.count_utilities import (
         calculate_constants
         )
 
-
-#calculate the number of interfacial atoms by looking only at the footprint radius, which means
-#the contact angle doesn't affect the number of interfacial atoms
-#should be fine for contact angles near 90 degrees
-#if not, you may (or may not) want to calculate by volume instead
 
 def calculate_areas(
         element: str,
