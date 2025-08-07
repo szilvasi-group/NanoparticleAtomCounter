@@ -1,29 +1,28 @@
 """
-parity.py  –  Plot parity (y = x) comparisons between two CSV files.
+Plot parity (y = x) comparisons between two CSV files.
+Here, they'll be the outputs of the atomcounter vs the atomistic model
 
 Usage
 -----
     python parity.py file_A.csv file_B.csv  [--show]
 
 The two input files must share the same column headers
-(e.g., Perimeter, Interface, Surface, Total).  
-A separate parity plot is produced for each shared column.
-PNG files are written alongside the CSVs; pass --show to display
-the figures interactively as well.
+(e.g., Perimeter, Interface, Surface, Total).
 """
 import sys
-import argparse
+from argparse import ArgumentParser
 from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def read_args() -> argparse.Namespace:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("csv_a", help="first CSV file")
-    ap.add_argument("csv_b", help="second CSV file")
-    ap.add_argument("--show", action="store_true",
+def read_args():
+     parser = ArgumentParser()
+     parser.add_argument("csv_a", help="first CSV file. Atomistic output")
+     parser.add_argument("csv_b", help="second CSV file. AtomCounter output")
+     parser.add_argument("--show", action="store_true",
                     help="show the plots on screen (in addition to saving)")
-    return ap.parse_args()
+
+     return parser.parse_args()
 
 def main() -> None:
     args = read_args()
@@ -35,22 +34,19 @@ def main() -> None:
     df_a.columns = df_a.columns.str.strip()
     df_b.columns = df_b.columns.str.strip()
 
-    # --- make the names consistent ---
-    df_a = df_a.rename(columns={"Interfacial": "Interface"})   # <— key line
-    # ---------------------------------
+#    df_a = df_a.rename(columns={"Interfacial": "Interface"})   # <— key line
 
     common_cols = df_a.columns.intersection(df_b.columns)
     if common_cols.empty:
         sys.exit("Error: the two files share no common column headers.")
 
-    out_dir = Path(".")  # write PNGs to the current directory
+    out_dir = Path(".")  # write output file to the PWD
 
-    # ---------- parity plots ----------
+    ##create parity plots
     for col in common_cols:
         x = df_a[col]
         y = df_b[col]
 
-        # axis limits: a little padding around the combined min/max
         lo = min(x.min(), y.min())
         hi = max(x.max(), y.max())
         pad = 0.05 * (hi - lo)
@@ -58,16 +54,16 @@ def main() -> None:
 
         plt.figure(figsize=(4, 4))
         plt.scatter(x, y, c="tab:blue")
-        plt.plot([lo, hi], [lo, hi], "k--", lw=1)  # y = x reference
+        plt.plot([lo, hi], [lo, hi], "k--", lw=1)
         plt.xlabel(f"{col} – file A")
         plt.ylabel(f"{col} – file B")
-        plt.title(f"Parity plot: {col}")
+        plt.title(f"Parity plot of results: {col}")
         plt.xlim(lo, hi)
         plt.ylim(lo, hi)
         plt.tight_layout()
 
         out_path = out_dir / f"parity_{col.lower()}.png"
-        plt.savefig(out_path, dpi=150)
+        plt.savefig(out_path, dpi=120)
         if args.show:
             plt.show()
         else:
