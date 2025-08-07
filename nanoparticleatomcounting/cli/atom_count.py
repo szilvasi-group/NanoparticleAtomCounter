@@ -13,8 +13,8 @@ from typing import Tuple, List, Literal
 from sys import argv, exit
 import numpy as np
 import warnings
-from nanoparticleatomcounting.by_volume import calculate_by_volume
-from nanoparticleatomcounting.by_area import calculate_by_area
+from nanoparticleatomcounter.by_volume import calculate_by_volume
+from nanoparticleatomcounter.by_area import calculate_by_area
 import pandas as pd
 from numpy.typing import NDArray
 from os import path
@@ -196,7 +196,7 @@ def main() -> None:
                 surface_facet = tuple(data["surface_facets"][i])
                 #to be able to cache in calculate_constants(), facets must be immutable (i.e. tuple rather than list)
                 #just in case the user had given as [x, y, z] rather than (x, y, z)
-                #so, convert to tuple
+                #so, I am converting to a tuple
             )
             for i in range(min_len)
         ]
