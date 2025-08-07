@@ -4,7 +4,7 @@ Tests all functions in the by_volume script
 import pytest
 import numpy as np
 import warnings
-from nanoparticleatomcounting.by_volume import (
+from nanoparticleatomcounter.by_volume import (
         calculate_by_volume,
         calculate_volumes,
         )
