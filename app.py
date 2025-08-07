@@ -15,7 +15,7 @@ st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 with st.sidebar:
     st.header("Resources")
 
-    SAMPLE_CSV = Path("sample_input.xls").read_bytes()
+    SAMPLE_CSV = Path("sample_input.csv").read_bytes()
 #    SAMPLE_CSV = (
 #        "r (A),R (A),Theta,Element,Facet\n"
 #        "10,,70.0,Ag,\n"
@@ -27,7 +27,7 @@ with st.sidebar:
         "Sample input (.csv)",
         SAMPLE_CSV,
         file_name="sample_input.csv",
-        mime="application/vnd.ms-excel", #text/csv",
+        mime="text/csv",
     )
 
     st.image("Acute.png", caption="θ < 90° (acute)", use_container_width=True)
