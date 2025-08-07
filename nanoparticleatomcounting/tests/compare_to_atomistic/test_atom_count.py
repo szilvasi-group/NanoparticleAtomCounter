@@ -1,5 +1,5 @@
 """
-This script compares the results given by the npatomcounter to those
+Here, I will compare the results given by the npatomcounter to those
 from making an approximate atomistic model for nanoparticles of an FCC
 lattice and flat interface
 """
@@ -12,12 +12,12 @@ import numpy as np
 import pandas as pd
 from itertools import product
 from ase import Atoms
-from nanoparticleatomcounting.tests.atomistic_utils import scaler, create_unit_support
+from nanoparticleatomcounter.tests.atomistic_utils import scaler, create_unit_support
 from tqdm import tqdm
 from typing import List, Union, Tuple, Literal
 from ase.visualize import view
 import warnings
-from nanoparticleatomcounting.tests.create_spherical_caps import create_sphere, cut_particle
+from nanoparticleatomcounter.tests.create_spherical_caps import create_sphere, cut_particle
 from argparse import ArgumentParser
 
 MIN_ANGLE = 60
@@ -66,9 +66,9 @@ def create_trajectory(
         supports:           list of support elements
     """
 
-    if max_radius > 50:
-        warnings.warn("""This will take some time!
-                I hope you can be patient""",
+    if max_radius > 40:
+        warnings.warn("""This will take some time.
+                I hope you can what you are doing!""",
                 category = UserWarning
                 )
 
@@ -195,7 +195,7 @@ def plot_parities(atomistic_output: str,
 
 
 
-##now test
+##here we go
 traj_file = OUTPUT_TRAJECTORY
 input_to_atomcounter = "input.csv"
 atomcounter_output = "counter.csv"
