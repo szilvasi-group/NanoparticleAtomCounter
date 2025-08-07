@@ -21,7 +21,7 @@ Requirements
 
 Installation
 ------------
-TO install the latest version:
+To install the latest version:
 ::
     pip install nanoparticleatomcounter
 
