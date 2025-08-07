@@ -7,7 +7,7 @@ from ase.build import bulk
 import warnings
 from ase.data import chemical_symbols
 from typing import Union, Optional, List, Tuple
-from nanoparticleatomcounting.tests.atomistic_utils import scaler, create_unit_support
+from nanoparticleatomcounter.tests.atomistic_utils import scaler, create_unit_support
 #from functools import lru_cache
 
 
