@@ -9,8 +9,7 @@ calculate_areas(element: str, r: float, theta: float, facet: tuple) -> tuple
         1. contact angle (theta)
         2. footprint/interfacial radius (r) in Angstrom
         3. chemical symbol of the nanoparticle's atoms (element)
-        4. facet of nanoparticle oriented to support (interface facet)
-        5. facet at nanoparticle-gas interface (surface facet)
+        4. facet of nanoparticle oriented to support (facet)
 
 calculate_by_area(element: str, r: float, theta: float, facet: tuple) -> tuple
     Main function to do all calculations through the 'area' method
@@ -76,7 +75,7 @@ def calculate_areas(
     footprint_a = np.pi * (r ** 2) #A^2
     interface_a = np.pi * ((r - d) ** 2) #A^2
     peri_a = footprint_a - interface_a #A^2
-    surf_a = calculate_surface_area(element, r, theta, facet = surface_facet)
+    surf_a = calculate_surface_area(element, r, theta, surface_facet = surface_facet)
 
     return interface_a, peri_a, surf_a #all in A^2
 
@@ -109,17 +108,21 @@ def calculate_by_area(
             surface_facet,
             )
 
-    perimeter_atoms, interfacial_atoms, NP_surface_atoms = [
+    perimeter_atoms, interfacial_atoms = [
             area_to_atoms(
                 area = i,
                 element = element,
-                facet = facet
-                ) for i in [
-                    perimeter_area,
-                    interfacial_area,
-                    NP_surface_area
-                    ]
+                facet = interface_facet
+                ) for i in [perimeter_area, interfacial_area,]
             ]
+
+
+    NP_surface_atoms = area_to_atoms(
+                area = NP_surface_area,
+                element = element,
+                facet = surface_facet
+                )
+
 
     total_volume = calculate_total_volume(footprint_radius, theta)
     total_atoms = volume_to_atoms(total_volume, element, None)
