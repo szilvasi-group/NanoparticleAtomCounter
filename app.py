@@ -70,7 +70,7 @@ file = st.file_uploader(
 if file is None:
     st.stop()      # wait for user input
 
-"""
+
 # ──────────  CALCULATION  ──────────
 if st.button("⚙️ Run calculation"):
     with st.spinner("Processing …"):
@@ -114,59 +114,4 @@ if st.button("⚙️ Run calculation"):
         # cleanup
         os.remove(in_path)
         os.remove(out_path)
-    """
-
-# ──────────  CALCULATION  ──────────
-if st.button("⚙️ Run calculation"):
-    with st.spinner("Processing …"):
-
-        # write the uploaded file to disk
-        in_suffix = Path(file.name).suffix           # .csv / .xls / .xlsx
-        fd_in, in_path  = tempfile.mkstemp(suffix=in_suffix)
-        os.write(fd_in, file.getbuffer())
-        os.close(fd_in)
-
-        # pick a *name* for the output file, but don’t create it yet
-        _, out_path = tempfile.mkstemp(suffix=".csv")
-        os.remove(out_path)                          # ensure it doesn’t exist
-
-        # ---------- run the CLI and catch any error ----------
-        try:
-            atom_counter(in_path, out_path, mode=mode)
-        except Exception as e:
-            st.exception(e)                          # show full traceback
-            Path(in_path).unlink(missing_ok=True)
-            st.stop()
-
-        # ---------- sanity-check the output ----------
-        if not Path(out_path).exists() or Path(out_path).stat().st_size == 0:
-            st.error(
-                "The calculation finished, but the output file is empty. "
-                "Check your input values or look at the traceback above."
-            )
-            Path(in_path).unlink(missing_ok=True)
-            Path(out_path).unlink(missing_ok=True)
-            st.stop()
-
-        # ---------- load & display ----------
-        try:
-            df_out = pd.read_csv(out_path)
-        except pd.errors.EmptyDataError:
-            st.error(f"{out_path} exists but contains no rows.")
-            Path(in_path).unlink(missing_ok=True)
-            Path(out_path).unlink(missing_ok=True)
-            st.stop()
-
-        st.markdown("#### Results")
-        st.download_button(
-            "Download CSV",
-            data=Path(out_path).read_bytes(),
-            file_name="atom_count_output.csv",
-            mime="text/csv",
-        )
-        st.dataframe(df_out, use_container_width=True)
-
-        # cleanup temp files
-        Path(in_path).unlink(missing_ok=True)
-        Path(out_path).unlink(missing_ok=True)
-
+  
