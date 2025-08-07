@@ -42,11 +42,11 @@ Contact
 
 Example
 -------
-1. On the webpage
+1. On the app_
 2. On a command line
    ::
         nanoparticle-atom-counter --input input.csv --output output.csv
 
 
 
-:: _webpage: https://nanoparticle-atom-counting.streamlit.app
+.. _app: https://nanoparticle-atom-counting.streamlit.app
