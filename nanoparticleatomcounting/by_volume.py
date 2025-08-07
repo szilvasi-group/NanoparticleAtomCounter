@@ -18,7 +18,7 @@ calculate_by_volume(element: str, r: float, theta: float, facet: tuple) -> tuple
 from typing import Tuple, List
 import numpy as np
 import warnings
-from nanoparticleatomcounting.count_utilities import (
+from nanoparticleatomcounter.count_utilities import (
         volume_to_atoms,
         area_to_atoms,
         calculate_atomic_density,
