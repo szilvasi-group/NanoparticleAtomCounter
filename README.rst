@@ -4,7 +4,6 @@ Nanoparticle Atom Counter
 Assuming a spherical cap, we estimate the number of Total, Surface, Perimeter, and Interfacial atoms of a supported nanoparticle
 from the radius and contact angle, both of which can be easily gotten from TEM images
 
-Web app: https://nanoparticle-atom-counting.streamlit.app/
 
 Requirements
 ------------
@@ -42,8 +41,9 @@ Contact
 
 Example
 -------
-1. On the app_
-2. On a command line
+Can be used on the web app_ or on a command line: https://nanoparticle-atom-counting.streamlit.app/
+* To use on the web app_, upload your input file and download the output
+* To use on a command line:
    ::
         nanoparticle-atom-counter --input input.csv --output output.csv
 
