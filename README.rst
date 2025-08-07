@@ -36,16 +36,17 @@ Please run the following test and let us know if there are any errors:
 
 Contact
 -------
-Email: tszilvasi@crimson.ua.edu, giolajide@crimson.ua.edu
-Or you can raise an issue right here
+* Email me at giolajide@crimson.ua.edu
+* Or raise an issue right here
 
 
 Example
 -------
-1. On the `webpage <https://nanoparticle-atom-counting.streamlit.app/>`
+1. On the webpage
 2. On a command line
    ::
         nanoparticle-atom-counter --input input.csv --output output.csv
 
 
 
+:: _webpage: https://nanoparticle-atom-counting.streamlit.app
