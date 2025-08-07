@@ -6,7 +6,7 @@ import subprocess
 import sys
 import pandas as pd
 import streamlit as st
-from nanoparticleatomcounting.cli.atom_count import main as atom_counter
+from nanoparticleatomcounter.cli.atom_count import main as atom_counter
 
 
 # ───────────────────────────  PAGE CONFIG  ───────────────────────────
@@ -91,7 +91,7 @@ if st.button("⚙️ Run calculation"):
             subprocess.run(
                 [
                     sys.executable,              # current Python executable
-                    "-m", "nanoparticleatomcounting.cli.atom_count",
+                    "-m", "nanoparticleatomcounter.cli.atom_count",
                     "--input",  in_path,
                     "--output", out_path,
                     "--mode",   mode,
