@@ -51,4 +51,4 @@ Example
 
 
 .. _app: https://nanoparticle-atom-counting.streamlit.app
-.. _issues: https://github.com/giolajide/nanoparticleatomcounting/issues
+.. _here: https://github.com/giolajide/nanoparticleatomcounting/issues
