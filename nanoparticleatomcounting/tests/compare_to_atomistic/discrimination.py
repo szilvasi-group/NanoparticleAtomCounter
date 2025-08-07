@@ -10,7 +10,7 @@ Functions:              get_interface
 
 To remove complications regarding alphashape and its very specific set of dependencies
 (and on how slow optimizing alpha is for large nanoparticles)
-we have eliminated it, commenting it out entirely
+I have eliminated it, commenting it out entirely
 
 Just to note it here, in case a future version has me putting back alphashape, here's the process:
     pip uninstall alphashape
@@ -36,7 +36,7 @@ from typing import (Tuple, Literal, List, Union)
 from ase.neighborlist import natural_cutoffs, NeighborList
 import warnings
 from os import system, environ
-from nanoparticleatomcounting.tests.ase_utils import (
+from nanoparticleatomcounting.tests.atomistic_utils import (
         divider, setup_neighborlist,
         setup_analyzer, NANOPARTICLE_ELEMENT, #SKIN
         )
@@ -272,7 +272,7 @@ def get_np_surface_by_CN(
             """,
             category = UserWarning
             )
-    
+
     CN = [(index, len(nl.get_neighbors(index)[0]))
             for index, i in enumerate(atoms) if i.symbol == np_element]
     bulk_indices = [i for i, j in CN if j == coord_cutoff]
@@ -410,18 +410,17 @@ if __name__ == "__main__":
             type = int, default = PROCESSES,
             help = f"How many processes to run in parallel. default = {PROCESSES}"
             )
-
+    parser.add_argument(
+            "--output", "-o",
+            type = str, default = "output_atomistic.csv",
+            help = "Output filename."
+            )
     parser.add_argument(
             "--np_element", "-ne",
             type = str, default = None, #NANOPARTICLE_ELEMENT,
             help = f"Element of which the NP is composed. by default we'll read atoms.info['np_element']"
             )
-    parser.add_argument(
-            "--interfacial_facet", "-if",
-            type = str, nargs = "+", default = None,
-            help = f"""Facet of NP that faces the support.
-            by default we'll read atoms.info['interfacial_facet']"""
-            )
+
     parser.add_argument(
     "--support_elements", "-se",
     type = str, nargs = "+", default = None,
@@ -442,22 +441,16 @@ if __name__ == "__main__":
             Default = {CN_SCALING}"""
             )
 
-#    parser.add_argument(
-#            "--do_alphashape", action = "store_const",
-#            const = True, default = DO_ALPHA_SHAPE,
-#            help = """To also use alpha shape to get perimeter atoms"""
-#            )
     do_alphashape = False
 
     args = parser.parse_args()
+    output_file = args.output
     atoms = read(args.traj, ":")
     atoms = atoms if isinstance(atoms, list) else [atoms]
     processes = environ.get("SLURM_NTASKS_PER_NODE", args.processes)
     processes = int(processes)
     np_element_list = [image.info["np_element"] if not args.np_element
             else args.np_element for image in atoms]
-    interfacial_facet_list = [image.info["interfacial_facet"] if not args.interfacial_facet
-            else args.interfacial_facet for image in atoms]
 
     with Parallel(n_jobs = processes) as parallel:
         results = parallel(delayed(discriminate)(
@@ -513,6 +506,5 @@ if __name__ == "__main__":
         "Surface"  : np_surface_len,
         "Total": np_total_len,
     })
-    df.to_csv("output_atomistic.csv", index=False)
-
+    df.to_csv(output_file, index=False)
 
