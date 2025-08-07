@@ -17,12 +17,6 @@ with st.sidebar:
     st.header("Resources")
 
     SAMPLE_CSV = Path("sample_input.csv").read_bytes()
-#    SAMPLE_CSV = (
-#        "r (A),R (A),Theta,Element,Facet\n"
-#        "10,,70.0,Ag,\n"
-#        "100,,90,Pd,\n"
-#        "400,,125,Cu,\n"
-#    ).encode()
 
     st.download_button(
         "Sample input (.csv)",
@@ -42,7 +36,7 @@ st.title("Nanoparticle Atom Counter")
 
 st.markdown(
     """
-Upload a **.csv**, **.xls**, or **.xlsx** file containing the columns  
+Upload a **.csv** containing the columns  
 `r (A), R (A), Theta, Element, Interface Facet, Surface Facet`.
 
 *Supply either **r** or **R** (if both are present, **r** is used).  
