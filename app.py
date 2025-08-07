@@ -6,7 +6,7 @@ import subprocess
 import sys
 import pandas as pd
 import streamlit as st
-from nanoparticleatomcounting.atom_count import main as atom_counter
+from nanoparticleatomcounting.cli.atom_count import main as atom_counter
 
 
 # ───────────────────────────  PAGE CONFIG  ───────────────────────────
