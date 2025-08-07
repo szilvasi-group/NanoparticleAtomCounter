@@ -12,12 +12,12 @@ import numpy as np
 import pandas as pd
 from itertools import product
 from ase import Atoms
-from nanoparticleatomcounter.tests.atomistic_utils import scaler, create_unit_support
+from nanoparticleatomcounter.tests.compare_to_atomistic.atomistic_utils import scaler, create_unit_support
 from tqdm import tqdm
 from typing import List, Union, Tuple, Literal
 from ase.visualize import view
 import warnings
-from nanoparticleatomcounter.tests.create_spherical_caps import create_sphere, cut_particle
+from nanoparticleatomcounter.tests.compare_to_atomistic.create_spherical_caps import create_sphere, cut_particle
 from argparse import ArgumentParser
 
 MIN_ANGLE = 60
