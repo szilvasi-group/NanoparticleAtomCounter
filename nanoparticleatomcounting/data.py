@@ -1,7 +1,7 @@
 """
 Datasheet
 
-Largely adapted from Atomic Simulation Environment's (ASE) database:
+Largely adapted from the Atomic Simulation Environment (ASE) database:
     /path_to_ase/data/__init__.py
 
 Data herein:
@@ -15,9 +15,6 @@ Data herein:
 """
 import numpy as np
 #from scipy.constants import N_A
-
-#adapted from Atomic Simulation Environment's (ASE) database:
-    #/path_to_ase/data/__init__.py
 
 N_A = 6.02214076e+23
 
