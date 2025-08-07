@@ -27,7 +27,7 @@ with st.sidebar:
         "Sample input (.csv)",
         SAMPLE_CSV,
         file_name="sample_input.csv",
-        mime="text/csv",
+        mime="application/vnd.ms-excel", #text/csv",
     )
 
     st.image("Acute.png", caption="θ < 90° (acute)", use_container_width=True)
