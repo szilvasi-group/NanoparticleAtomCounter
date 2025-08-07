@@ -1,10 +1,6 @@
 """
-Plot parity (y = x) comparisons between two CSV files.
+Plot a parity line for the data from two CSV files.
 Here, they'll be the outputs of the atomcounter vs the atomistic model
-
-Usage
------
-    python parity.py file_A.csv file_B.csv  [--show]
 
 The two input files must share the same column headers
 (e.g., Perimeter, Interface, Surface, Total).
@@ -24,17 +20,13 @@ def read_args():
 
      return parser.parse_args()
 
-def main() -> None:
+def main():
     args = read_args()
-
-    # after reading and stripping whitespace
     df_a = pd.read_csv(args.csv_a)
     df_b = pd.read_csv(args.csv_b)
 
     df_a.columns = df_a.columns.str.strip()
     df_b.columns = df_b.columns.str.strip()
-
-#    df_a = df_a.rename(columns={"Interfacial": "Interface"})   # <— key line
 
     common_cols = df_a.columns.intersection(df_b.columns)
     if common_cols.empty:
