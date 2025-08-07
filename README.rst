@@ -38,7 +38,7 @@ Please run the following test and let us know if there are any errors:
 Contact
 -------
 * Email me at giolajide@crimson.ua.edu
-* Or raise an issue right here
+* Or raise an issue right here_
 
 
 Example
@@ -51,3 +51,4 @@ Example
 
 
 .. _app: https://nanoparticle-atom-counting.streamlit.app
+.. _issues: https://github.com/giolajide/nanoparticleatomcounting/issues
