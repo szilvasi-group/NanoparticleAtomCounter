@@ -155,10 +155,12 @@ def calculate_surface_area(
     """
     if theta in [0, 180]:
         raise ValueError(f"Contact angle of {theta} not allowed")
+    elif (theta > 180 or theta < 0):
+        raise ValueError(f"Supplied {theta} is > 180 or < 0. Not allowed")
 
     r = footprint_radius #to make things clear
     if r <= 0:
-        raise ValueError(f"Invalid r ({r}) Ang supplied")
+        raise ValueError(f"r ({r}) Ang supplied is <= 0. Invalid")
     if r < 5:
         warnings.warn(f"""Small value of r ({r}) Ang supplied; a spherical cap
         approximation may be tenuous""", category = UserWarning)
@@ -241,13 +243,14 @@ def area_to_atoms(
         element (str):              atomic symbol for atom type in the nanoparticle
         facet (Tuple[int,int,int]): facet, whether interfacial or support depends
                                     on the context
-                                    see calculate_constants() for defaults
 
     Returns:
-        N_atoms (int):      Number of atoms in region, rounded to nearest integer
+        n_atoms (int):        Number of atoms in region, rounded to nearest integer
     """
     atomic_density = calculate_atomic_density(element, facet) #atoms/A^2
-    return int(np.round(area * atomic_density))
+    n_atoms = int(np.round(area * atomic_density))
+
+    return n_atoms
 
 
 def volume_to_atoms(
@@ -264,12 +267,16 @@ def volume_to_atoms(
         molar_volume (float):       molar volume in A^3/mole
 
     Returns:
-        N_atoms (int):              Number of atoms in region, rounded to nearest integer
+        n_atoms (int):              Number of atoms in region, rounded to nearest integer
     """
     if not molar_volume:
         molar_volume, *_ = calculate_constants(element = element)
 
     bulk_density = N_A / molar_volume #atom/A^3
+    ##set to zero in case interface_volume==0, see by_volume.calculate_volumes
+    n_atoms = np.round(volume * bulk_density)
+    n_atoms = 0 if np.isnan(n_atoms) else int(n_atoms)
 
-    return np.round(volume * bulk_density)
+    return n_atoms
+
 
