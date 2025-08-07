@@ -58,7 +58,7 @@ A sample input file and explanatory diagrams are available in the sidebar.
 )
 
 # counting-mode selector (now in main area)
-mode = st.radio("Select Counting Mode", ("volume", "area"), horizontal=True)
+mode = st.radio("**Select Counting Mode**", ("volume", "area"), horizontal=True)
 
 
 # ──────────  FILE UPLOAD  ──────────
