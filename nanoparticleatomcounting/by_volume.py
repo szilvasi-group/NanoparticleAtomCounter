@@ -59,9 +59,20 @@ def calculate_volumes(
         #if θ==90: zero
     #z1: atomic diameter
     #z: interplanar spacing at the interface, i.e. this is the height of the interface
-    _, z, z1 = calculate_constants(element = element, facet = tuple(interface_facet))
+    if theta in [0, 180]:
+        raise ValueError(f"Contact angle of {theta} not allowed")
+    elif (theta > 180 or theta < 0):
+        raise ValueError(f"Supplied {theta} is > 180 or < 0. Not allowed")
 
-    r = footprint_radius
+    r = footprint_radius #to make things clear
+    if r <= 0:
+        raise ValueError(f"r ({r}) Ang supplied is <= 0. Invalid")
+    if r < 5:
+        warnings.warn(f"""Small value of r ({r}) Ang supplied; a spherical cap
+        approximation may be tenuous""", category = UserWarning)
+
+    _, z, z1 = calculate_constants(element = element, facet = interface_facet)
+
     R = r / np.sin(np.radians(theta))
     #r2 = radial spacing
     r2 = np.clip(r - z1, 0, None) #no reliable formula for radial spacing. assumed to be = atomic diameter
@@ -163,5 +174,4 @@ def calculate_by_volume(
             )
 
     return perimeter_atoms, interfacial_atoms, surface_atoms, total_atoms
-
 
