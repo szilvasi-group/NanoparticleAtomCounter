@@ -15,12 +15,13 @@ st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 with st.sidebar:
     st.header("Resources")
 
-    SAMPLE_CSV = (
-        "r (A),R (A),Theta,Element,Facet\n"
-        "10,,70.0,Ag,\n"
-        "100,,90,Pd,\n"
-        "400,,125,Cu,\n"
-    ).encode()
+    SAMPLE_CSV = Path("sample_input.xls").read_bytes()
+#    SAMPLE_CSV = (
+#        "r (A),R (A),Theta,Element,Facet\n"
+#        "10,,70.0,Ag,\n"
+#        "100,,90,Pd,\n"
+#        "400,,125,Cu,\n"
+#    ).encode()
 
     st.download_button(
         "Sample input (.csv)",
