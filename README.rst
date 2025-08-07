@@ -44,7 +44,7 @@ Contact
 Example
 -------
 * To use on the web app_, upload your input file and download the output
-* To use on a command line:
+* To use on a command line
 ::
     nanoparticle-atom-counter --input input.csv --output output.csv
 
