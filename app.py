@@ -2,7 +2,8 @@ import contextlib
 import os
 import tempfile
 from pathlib import Path
-
+import subprocess
+import sys
 import pandas as pd
 import streamlit as st
 from nanoparticleatomcounting.atom_count import main as atom_counter
@@ -86,18 +87,43 @@ if st.button("⚙️ Run calculation"):
         with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tout:
             out_path = tout.name
 
-        # run CLI
-        success = True
-        with contextlib.suppress(Exception):
-            atom_counter(in_path, out_path, mode=mode)
-        if not Path(out_path).exists():
-            success = False
 
-        if not success:
-            st.error("Calculation failed. Please check your input and try again.")
+
+
+
+        
+        try:
+            # call the CLI module exactly as if you ran: python -m nanoparticleatomcounting.atom_count …
+            subprocess.run(
+                [
+                    sys.executable,              # current Python executable
+                    "-m", "nanoparticleatomcounting.atom_count",
+                    "--input",  in_path,
+                    "--output", out_path,
+                    "--mode",   mode,
+                ],
+                check=True,
+                capture_output=True,             # optional: keeps stdout/stderr
+                text=True,
+            )
+
+        except subprocess.CalledProcessError as err:
+            st.error(f"Atom-counter failed:\n{err.stderr}")
             os.remove(in_path)
-            os.remove(out_path)
             st.stop()
+        
+#        # run CLI
+#        success = True
+#        with contextlib.suppress(Exception):
+#            atom_counter(in_path, out_path, mode=mode)
+#        if not Path(out_path).exists():
+#            success = False
+
+#        if not success:
+#            st.error("Calculation failed. Please check your input and try again.")
+#            os.remove(in_path)
+#            os.remove(out_path)
+#            st.stop()
 
         # read and show results
         df_out = pd.read_csv(out_path)
