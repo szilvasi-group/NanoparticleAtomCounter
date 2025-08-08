@@ -40,7 +40,11 @@ setup(
     # enable the CLI: `nanoparticle-atom-count`
     entry_points={
         "console_scripts": [
-            "nanoparticle-atom-count=nanoparticleatomcounter.cli.atom_count:main",
+            "nanoparticle-atom-count="
+            "nanoparticleatomcounter.cli.atom_count:main", #main script
+
+            "atom-count-test="
+            "nanoparticleatomcounter.tests.run_tests:main" #tests script
         ],
     },
 
@@ -58,6 +62,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
 
     keywords=[
