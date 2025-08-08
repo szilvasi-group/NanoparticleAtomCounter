@@ -7,18 +7,18 @@ lattice and flat interface
 import subprocess
 from ase.io import write
 import shlex
-from os import system
+from os import system, environ, makedirs
 import numpy as np
 import pandas as pd
 from itertools import product
 from ase import Atoms
-from nanoparticleatomcounter.tests.compare_to_atomistic.atomistic_utils import scaler, create_unit_support
 from tqdm import tqdm
 from typing import List, Union, Tuple, Literal
 from ase.visualize import view
 import warnings
-from nanoparticleatomcounter.tests.compare_to_atomistic.create_spherical_caps import create_sphere, cut_particle
 from argparse import ArgumentParser
+from nanoparticleatomcounter.tests.compare_to_atomistic.create_spherical_caps import create_sphere, cut_particle
+from nanoparticleatomcounter.tests.compare_to_atomistic.atomistic_utils import scaler, create_unit_support
 
 MIN_ANGLE = 60
 MAX_ANGLE = 160
@@ -30,6 +30,14 @@ PROCESSES = -1
 OUTPUT_TRAJECTORY = "atoms.traj"
 NP_ELEMENTS = ["Ag"]
 SUPPORT_ELEMENTS = ["graphene", "au"]
+
+
+def create_outputdir() -> str:
+    home_dir = environ["HOME"]
+    output_dir = f"{home_dir}/nanoparticle_atom_counter_tests/"
+    makedirs(output_dir, exist_ok = True)
+
+    return output_dir
 
 
 def create_trajectory(
@@ -105,6 +113,8 @@ def run_atomistic(
         nanoparticles: List[str], supports: List[str],
         input_to_atomcounter: str,
         atomistic_output: str,
+        new_atoms_output: str,
+        output_dir: str,
         ):
     """
     Use the atomistic model to get the number of each kind of atom in each nanoparticle
@@ -122,12 +132,20 @@ def run_atomistic(
                                 which the atomcounter will need
         atomistic_output:       name of output file to be generated, containing the number
                                 of each kind of atom in each nanoparticle
+        new_atoms_output:       name of trajectory file to be created, in which the perimeter,
+                                interface, and surface atoms are colored differently than the bulk
+        output_dir:             name of output directory in which all files will be created
 
     """
     print("discriminating...")
-    command = shlex.split(f"python tests/discrimination.py -t {trajectory_file} -p {processes} -o {atomistic_output}")
+    command = shlex.split(f"python compare_to_atomistic/discrimination.py"
+            f" -t {trajectory_file} -p {processes} -o {atomistic_output}"
+            f" -to {new_atoms_output}")
 
-    with open("discrimination.out", "w") as out_f, open("discrimination.err", "w") as err_f:
+    discrimination_out = output_dir + "discrimination.out"
+    discrimination_err = output_dir + "discrimination.err"
+
+    with open(discrimination_out, "w") as out_f, open(discrimination_err, "w") as err_f:
         subprocess.run(
                 command,
                 stdout = out_f,
@@ -143,7 +161,7 @@ def run_atomistic(
             "Theta": theta,
             "Element": element.capitalize(),
             "Interface Facet": "(1,0,0)",
-            "Surface Facet": "(1,1,1)",
+            "Surface Facet": "", #"(1,1,1)",
         })
 
     df = pd.DataFrame(rows)
@@ -151,7 +169,7 @@ def run_atomistic(
     print("Finished the atomistic modelling")
 
 
-def run_atomcounter(input_file: str, output_file: str):
+def run_atomcounter(input_file: str, output_file: str, output_dir: str):
     """
     Runs the atomcounter to get the number of each kind of atom in each nanoparticle
 
@@ -159,11 +177,16 @@ def run_atomcounter(input_file: str, output_file: str):
 
         input_file:     name of input file, having the element, curvature radius, etc
         output_file:    name of output file to be generated
+        output_dir:     name of output directory in which all files will be created
     """
 
     print("running npatomcounter...")
+
+    atomcounter_out = output_dir + "atomcounter.out"
+    atomcounter_err = output_dir + "atomcounter.err"
+
     command = shlex.split(f"nanoparticle-atom-count -i {input_file} -o {output_file}")
-    with open("atomcounter.out", "w") as out_f, open("atomcounter.err", "w") as err_f:
+    with open(atomcounter_out, "w") as out_f, open(atomcounter_err, "w") as err_f:
         subprocess.run(
                 command,
                 stdout = out_f,
@@ -175,7 +198,7 @@ def run_atomcounter(input_file: str, output_file: str):
 
 
 def plot_parities(atomistic_output: str,
-        atomcounter_output: str):
+        atomcounter_output: str, output_dir: str):
     """
     Creates parity plots of the results, comparing the atomistic to the atomcounter
 
@@ -184,7 +207,8 @@ def plot_parities(atomistic_output: str,
         atomcounter_output:     name of output file from the atomcounter
     """
     print("plotting parities...")
-    command = shlex.split(f"python tests/plot-parity.py {atomistic_output} {atomcounter_output} --show")
+    command = shlex.split(f"python compare_to_atomistic/plot-parity.py {atomistic_output} "
+            "{atomcounter_output} --output_dir output_dir --show")
     with open("parity.out", "w") as out_f, open("parity.err", "w") as err_f:
         subprocess.run(
                 command,
@@ -195,17 +219,23 @@ def plot_parities(atomistic_output: str,
 
 
 
-##here we go
-traj_file = OUTPUT_TRAJECTORY
-input_to_atomcounter = "input.csv"
-atomcounter_output = "counter.csv"
-atomistic_output = "atomistic.csv"
+##ikimashou
+output_dir = create_outputdir()
+print(f"\n\nWriting all results to {output_dir}\n\n")
+
+traj_file = output_dir + OUTPUT_TRAJECTORY
+input_to_atomcounter = output_dir + "input.csv"
+atomcounter_output = output_dir + "counter.csv"
+atomistic_output = output_dir + "atomistic.csv"
+new_atoms_output = output_dir + "identified.traj"
 
 contact_angles, radii_angstrom, nanoparticles, supports = create_trajectory(
-        min_angle = 69, max_angle = 155, n_angles = 6,
-        min_radius = 12, max_radius = 25, n_radii = 6,
-        output_trajectory = traj_file, np_elements = ["Pd"],
-        support_element = ["graphene"]
+        min_angle = 69, max_angle = 155,
+        n_angles = 6, min_radius = 12,
+        max_radius = 25, n_radii = 6,
+        output_trajectory = traj_file,
+        np_elements = ["Pd"],
+        support_element = ["graphene"],
         )
 
 print("We might be here a while . . . ")
@@ -215,11 +245,22 @@ run_atomistic(
         contact_angles = contact_angles, radii_angstrom = radii_angstrom,
         nanoparticles = nanoparticles, supports = supports,
         input_to_atomcounter = input_to_atomcounter,
-        atomistic_output = atomistic_output
+        atomistic_output = atomistic_output,
+        new_atoms_output = new_atoms_output,
+        output_dir = output_dir,
         )
 
-run_atomcounter(input_file = input_to_atomcounter, output_file = atomcounter_output)
+run_atomcounter(
+        input_file = input_to_atomcounter,
+        output_file = atomcounter_output,
+        output_dir = output_dir,
+        )
 
-plot_parities(atomistic_output = atomistic_output, atomcounter_output = atomcounter_output)
+plot_parities(
+        atomistic_output = atomistic_output,
+        atomcounter_output = atomcounter_output
+        output_dir = output_dir,
+        )
 
+print(f"\n\nAll output written to {output_dir}")
 
