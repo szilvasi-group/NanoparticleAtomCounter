@@ -17,6 +17,8 @@ def read_args():
      parser.add_argument("csv_b", help="second CSV file. AtomCounter output")
      parser.add_argument("--show", action="store_true",
                     help="show the plots on screen (in addition to saving)")
+     parser.add_argument("--output_dir", type: str,
+                         help="directory where parity plots should be saved")
 
      return parser.parse_args()
 
@@ -32,7 +34,7 @@ def main():
     if common_cols.empty:
         sys.exit("Error: the two files share no common column headers.")
 
-    out_dir = Path(".")  # write output file to the PWD
+    out_dir = args.output_dir
 
     ##create parity plots
     for col in common_cols:
@@ -54,7 +56,7 @@ def main():
         plt.ylim(lo, hi)
         plt.tight_layout()
 
-        out_path = out_dir / f"parity_{col.lower()}.png"
+        out_path = out_dir + f"/parity_{col.lower()}.png"
         plt.savefig(out_path, dpi=120)
         if args.show:
             plt.show()
