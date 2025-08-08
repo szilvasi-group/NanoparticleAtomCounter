@@ -10,7 +10,7 @@ Can be used on the web app_ or on a command line.
 .. image:: Acute.png
   :width: 400
   :alt: Alternative text
-
+Here is an actute angle
 
 Requirements
 ------------
