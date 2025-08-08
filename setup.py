@@ -20,7 +20,7 @@ setup(
     description="Estimate atom counts in monometallic nanoparticles"
     " given radius and contact angle",
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     url="https://github.com/giolajide/nanoparticleatomcounter",
     packages=find_packages(where="."),
 
