@@ -33,7 +33,7 @@ Testing
 -------
 Please run the following test and let us know if there are any errors:
 ::
-    XXXXX I need to put this in an automatic way like 'ase test' XXXX
+    atom-count-test
 
 Contact
 -------
