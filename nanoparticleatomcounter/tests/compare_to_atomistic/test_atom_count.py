@@ -271,3 +271,17 @@ plot_parities(
 print(f"\n\nAll output written to {output_dir}")
 
 
+
+explanation = """\
+- input.csv: input file for the nanoparticleatomcounter
+- counter.csv: atom counts according to the nanoparticleatomcounter
+- atomistic.csv: atom counts by using an atomistic model
+- atoms.traj: atomistic model
+- identified.traj: atomistic model, with different types of atoms distinguished
+- parity*.png: parity plots comparing the nanoparticleatomcounter to the atomistic model
+"""
+
+readme = output_dir + "README.md"
+with open(readme, "w") as file:
+    file.write(explanation)
+    
