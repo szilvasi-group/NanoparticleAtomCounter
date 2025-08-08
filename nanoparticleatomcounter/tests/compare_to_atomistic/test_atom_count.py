@@ -235,7 +235,7 @@ new_atoms_output = output_dir + "identified.traj"
 
 contact_angles, radii_angstrom, nanoparticles, supports = create_trajectory(
         min_angle = 69, max_angle = 159, n_angles = 9,
-        min_radius = 17, max_radius = 35, n_radii = 9,
+        min_radius = 17, max_radius = 28, n_radii = 9,
         output_trajectory = traj_file,
         np_elements = ["Pd"],
         support_element = ["graphene"],
