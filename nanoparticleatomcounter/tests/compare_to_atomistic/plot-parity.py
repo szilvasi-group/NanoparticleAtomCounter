@@ -17,7 +17,7 @@ def read_args():
      parser.add_argument("csv_b", help="second CSV file. AtomCounter output")
      parser.add_argument("--show", action="store_true",
                     help="show the plots on screen (in addition to saving)")
-     parser.add_argument("--output_dir", type: str,
+     parser.add_argument("--output_dir", type=str,
                          help="directory where parity plots should be saved")
 
      return parser.parse_args()
