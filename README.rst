@@ -1,5 +1,5 @@
 Nanoparticle Atom Counter
-=============================
+=========================
 
 Assuming a spherical cap, we estimate the number of Total, Surface, Perimeter, and Interfacial atoms of a supported nanoparticle
 from the radius and contact angle, both of which can be easily gotten from TEM images
@@ -9,18 +9,22 @@ Can be used on the web app_ or on a command line.
 
 Requirements
 ------------
+
 * numpy>=1.20,<2.3
 * pandas>=1.4
-* Streamlit>=1.4
+* streamlit>=1.4,<2
 * openpyxl>=3.1.0
 * xlrd>=2.0.1
-* pytest<=8.4.1
-* ase>=3.22.0,<3.25
-* tqdm<=4.67.1
-* joblib<=1.5.1
+* ase>=3.22,<3.27
+* tqdm>=4.66,<5
+* joblib>=1.5,<2
+
+For testing, pytest>=8,<9 is also required
+
 
 Installation
 ------------
+
 To install the latest version:
 ::
     pip install nanoparticleatomcounter
@@ -31,8 +35,10 @@ Alternatively:
     cd nanoparticleatomcounter
     pip install -e .
 
+
 Testing
 -------
+
 Please run the following test and let me know if there are any errors:
 ::
     atom-count-test
@@ -41,14 +47,18 @@ This requires pytest; hence, first install nanoparticleatomcounter as:
 ::
     pip install nanoparticleatomcounter[test]
 
+
 Contact
 -------
+
+Any problems or questions?
 * Email me at giolajide@crimson.ua.edu
 * Or raise an issue right here_
 
 
 Example
 -------
+
 * To use on the web app_, upload your input file and download the output
 * To use on a command line
 ::
