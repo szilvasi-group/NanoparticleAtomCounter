@@ -25,6 +25,7 @@ setup(
     packages=find_packages(where="."),
 
     # specify your dependencies here
+    python_requires=">=3.9,<3.14",
     install_requires=[
         "numpy>=1.20,<2.3",
         "pandas>=1.4",
@@ -32,7 +33,7 @@ setup(
         "openpyxl>=3.1.0",
         "xlrd>=2.0.1",
         "pytest<=8.4.1",
-        "ase<=3.23.0",
+        "ase>=3.23.0,>3.21",
         "tqdm<=4.67.1",
         "joblib<=1.5.1"
     ],
@@ -62,7 +63,6 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
     ],
 
     keywords=[
