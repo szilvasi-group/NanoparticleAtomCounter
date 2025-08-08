@@ -27,6 +27,11 @@ For testing, pytest>=8,<9 is also required
 Installation
 ------------
 
+First create and activate a new environment::
+
+    conda create --name env_name python>=3.9
+    conda activate env_name
+
 To install the latest version::
 
     pip install nanoparticleatomcounter
@@ -38,7 +43,7 @@ Alternatively::
     pip install -e .
 
 
-To run tests, install as::
+To also be able to run tests, install as::
 
     pip install nanoparticleatomcounter[test]
 
