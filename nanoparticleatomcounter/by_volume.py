@@ -51,11 +51,11 @@ def calculate_volumes(
     #R: radius from spherical cap center,
     #r: footprint radius (i.e. radius of bottom of spherical segment),
     #x: radius of top of spherical segment, z: height of spherical segment,
-    #x2: x but excluding the perimeter having thickness == z,
-    #r2: r but excluding the perimeter having thickness == z,
+    #x2: x but excluding the perimeter having thickness == z1,
+    #r2: r but excluding the perimeter having thickness == z1,
     #h:
         #if θ>90: distance from sphere center vertically down to top of spherical segment
-        #if θ<90: distance from sphere center vertically up to bottom of spherical segment
+        #if θ<90: distance from sphere center vertically up to bottom of interface
         #if θ==90: zero
     #z1: atomic diameter
     #z: interplanar spacing at the interface, i.e. this is the height of the interface
@@ -82,7 +82,7 @@ def calculate_volumes(
         h = np.sqrt(R**2 - r**2) - z #thus spake pythagoras
         x = np.sqrt(R**2 - h**2) #eqn 1
         dome_height = h + z + R
-        x2 = np.sqrt((2*h*z) - (z**2) + (r2**2)) #from eqn1, noting that R^2 = (h+z)^2 + r^2 and then substituting r2 for r
+        x2 = np.sqrt((2*h*z) + (z**2) + (r2**2)) #from eqn1, noting that R^2 = (h+z)^2 + r^2 and then substituting r2 for r
     else:
         h = np.clip(np.sqrt(R**2 - r**2), 0, None) #clip so h==0 if theta == 90
         dome_height = R + h
@@ -94,12 +94,14 @@ def calculate_volumes(
 #    print(f"Interface height: {z} A")
 #    print(f"Radius of spherical segment: {x} A")
 #    print(f"Footprint radius: {r} A")
+#    print("x2",x2)
 
     #Formula from https://en.wikipedia.org/wiki/Spherical_segment
     segment_volume = np.pi * z * ((3 * (r**2 + x**2)) + z**2) / 6
     interface_volume = np.pi * z * ((3 * (r2**2 + x2**2)) + z**2) / 6
     total_volume = calculate_total_volume(r, theta)
 
+#    print(segment_volume, interface_volume, total_volume)
     #if x2 was negative, then it means for the given combination of r and theta, if you shave off z from r
     #then too much will be shaved off from the top of the spherical segment that its radius (x2) becomes negative
     #this implies that we can't have any non-perimeter atoms for such a system
@@ -164,7 +166,7 @@ def calculate_by_volume(
             element = element,
             footprint_radius = footprint_radius,
             theta = theta,
-            surface_facet = surface_facet
+            interface_facet = interface_facet
             )
 
     surface_atoms = area_to_atoms(

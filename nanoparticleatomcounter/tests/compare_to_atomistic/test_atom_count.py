@@ -18,6 +18,7 @@ from ase.visualize import view
 import warnings
 from argparse import ArgumentParser
 from nanoparticleatomcounter.tests.compare_to_atomistic.create_spherical_caps import create_sphere, cut_particle
+from pathlib import Path
 from nanoparticleatomcounter.tests.compare_to_atomistic.atomistic_utils import scaler, create_unit_support
 
 MIN_ANGLE = 60
@@ -30,6 +31,8 @@ PROCESSES = -1
 OUTPUT_TRAJECTORY = "atoms.traj"
 NP_ELEMENTS = ["Ag"]
 SUPPORT_ELEMENTS = ["graphene", "au"]
+
+script_dir = Path(__file__).resolve().parent
 
 
 def create_outputdir() -> str:
@@ -138,7 +141,7 @@ def run_atomistic(
 
     """
     print("discriminating...")
-    command = shlex.split(f"python compare_to_atomistic/discrimination.py"
+    command = shlex.split(f"python {script_dir}/discrimination.py"
             f" -t {trajectory_file} -p {processes} -o {atomistic_output}"
             f" -to {new_atoms_output}")
 
@@ -207,7 +210,7 @@ def plot_parities(atomistic_output: str,
         atomcounter_output:     name of output file from the atomcounter
     """
     print("plotting parities...")
-    command = shlex.split(f"python compare_to_atomistic/plot-parity.py {atomistic_output} "
+    command = shlex.split(f"python {script_dir}/plot-parity.py {atomistic_output} "
             f"{atomcounter_output} --output_dir {output_dir} --show")
 
     parity_out = output_dir + "parity.out"
@@ -234,8 +237,8 @@ atomistic_output = output_dir + "atomistic.csv"
 new_atoms_output = output_dir + "identified.traj"
 
 contact_angles, radii_angstrom, nanoparticles, supports = create_trajectory(
-        min_angle = 69, max_angle = 159, n_angles = 9,
-        min_radius = 17, max_radius = 28, n_radii = 9,
+        min_angle = 69, max_angle = 159, n_angles = 8,
+        min_radius = 17, max_radius = 35, n_radii = 8,
         output_trajectory = traj_file,
         np_elements = ["Pd"],
         support_element = ["graphene"],
@@ -266,4 +269,5 @@ plot_parities(
         )
 
 print(f"\n\nAll output written to {output_dir}")
+
 

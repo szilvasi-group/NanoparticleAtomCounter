@@ -10,7 +10,7 @@ def main() -> None:
     """
     Run every test in the project, then exit with pytest’s status code.
     """
-    tests_dir = Path(__file__).parent
+    tests_dir = Path(__file__).resolve().parent #Path(__file__).parent
 #    print(tests_dir)
     sys.exit(pytest.main(["-s", str(tests_dir)]))
 

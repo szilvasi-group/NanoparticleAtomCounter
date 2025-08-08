@@ -73,7 +73,7 @@ def calculate_areas(
     footprint_a = np.pi * (r ** 2) #A^2
     interface_a = np.pi * ((r - d) ** 2) #A^2
     peri_a = footprint_a - interface_a #A^2
-    surf_a = calculate_surface_area(element, r, theta, surface_facet = surface_facet)
+    surf_a = calculate_surface_area(element, r, theta, interface_facet = interface_facet)
 
     return interface_a, peri_a, surf_a #all in A^2
 

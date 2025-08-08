@@ -31,7 +31,12 @@ Requirements
 * tqdm>=4.66,<5
 * joblib>=1.5,<2
 
-For testing, pytest>=8,<9 is also required
+For testing, these are also required:
+* pytest>=8,<9
+* ase>=3.22.0,<3.25
+* tqdm<=4.67.1
+* joblib<=1.5.1
+
 
 
 

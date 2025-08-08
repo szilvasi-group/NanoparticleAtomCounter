@@ -9,10 +9,8 @@ import streamlit as st
 from nanoparticleatomcounter.cli.atom_count import main as atom_counter
 
 
-# ───────────────────────────  PAGE CONFIG  ───────────────────────────
 st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 
-# ---------- sidebar: resources ----------
 with st.sidebar:
     st.header("Resources")
 
@@ -28,10 +26,8 @@ with st.sidebar:
     st.image("Acute.png", caption="θ < 90° (acute)", use_container_width=True)
     st.image("Obtuse.png", caption="θ > 90° (obtuse)", use_container_width=True)
     st.image("Nanoparticle_Legend.png", caption="Definition of surface, interfacial, and perimeter atoms", use_container_width=True)
-# ---------------------------------------------------------------------
 
 
-# ───────────────────────────  MAIN LAYOUT  ────────────────────────────
 st.title("Nanoparticle Atom Counter")
 
 st.markdown(
@@ -51,11 +47,8 @@ A sample input file and explanatory diagrams are available in the sidebar.
     unsafe_allow_html=True,
 )
 
-# counting-mode selector (now in main area)
 mode = st.radio("**Select Counting Mode**", ("volume", "area"), horizontal=True)
 
-
-# ──────────  FILE UPLOAD  ──────────
 file = st.file_uploader(
     "Drag-and-drop or browse for your input file",
     type=("csv", "xls", "xlsx"),
@@ -65,8 +58,6 @@ file = st.file_uploader(
 if file is None:
     st.stop()      # wait for user input
 
-
-# ──────────  CALCULATION  ──────────
 if st.button("⚙️ Run calculation"):
     with st.spinner("Processing …"):
 
@@ -81,11 +72,6 @@ if st.button("⚙️ Run calculation"):
         with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tout:
             out_path = tout.name
 
-
-
-
-
-        
         try:
             # call the CLI module exactly as if you ran: python -m nanoparticleatomcounting.atom_count …
             subprocess.run(
@@ -106,19 +92,6 @@ if st.button("⚙️ Run calculation"):
             os.remove(in_path)
             st.stop()
         
-#        # run CLI
-#        success = True
-#        with contextlib.suppress(Exception):
-#            atom_counter(in_path, out_path, mode=mode)
-#        if not Path(out_path).exists():
-#            success = False
-
-#        if not success:
-#            st.error("Calculation failed. Please check your input and try again.")
-#            os.remove(in_path)
-#            os.remove(out_path)
-#            st.stop()
-
         # read and show results
         df_out = pd.read_csv(out_path)
 

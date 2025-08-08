@@ -117,6 +117,7 @@ def alpha(theta: int) -> float:
     """
     if (theta < 0 or theta > 180):
         warnings.warn(f"Invalid value of theta ({theta}) supplied", category=RuntimeWarning)
+
     return 1 / (1 + np.cos(np.radians(theta)))
 
 
@@ -139,7 +140,7 @@ def calculate_surface_area(
         element: str,
         footprint_radius: float,
         theta: float = None,
-        surface_facet: Tuple[int,int,int] = None
+        interface_facet: Tuple[int,int,int] = None
         ) -> float:
     """
     Calculate area of outer surface of NP
@@ -147,7 +148,7 @@ def calculate_surface_area(
 
     Requires:
         element (str):              atomic symbol for atom type in the nanoparticle
-        surface_facet (Tuple[int,int,int]): facet facing vacuum
+        interface_facet (Tuple[int,int,int]): facet facing support
         theta (float):              contact angle. degrees
 
     Returns:
@@ -165,12 +166,14 @@ def calculate_surface_area(
         warnings.warn(f"""Small value of r ({r}) Ang supplied; a spherical cap
         approximation may be tenuous""", category = UserWarning)
 
-    _, interplanar_spacing, _ = calculate_constants(element = element, facet = surface_facet)
+    _, interplanar_spacing, _ = calculate_constants(element = element, facet = interface_facet)
     z = interplanar_spacing #to make things clear
 
     theta_rad = np.radians(theta)
     #how theta changes with shaving off interfacial height
-    arg = np.clip(np.cos(theta_rad) + ((z/r) * np.sin(theta_rad)), -1.0, 1.0)
+    arg = np.clip(np.cos(theta_rad) + ((z/r) * np.sin(theta_rad)), -1.0, 1.0) #this uses not the planar spacing at
+    #the surface but that at the interface; and if you derive it, you'll understand why
+
 #    if arg > 1.0:
 #        warnings.warn(f"""ratio of interplanar spacing and footprint radius too large: ({z/r});
 #        no real cap angle can exist after shaving interface.""",
@@ -271,6 +274,7 @@ def volume_to_atoms(
     """
     if not molar_volume:
         molar_volume, *_ = calculate_constants(element = element)
+#        print(molar_volume)
 
     bulk_density = N_A / molar_volume #atom/A^3
     ##set to zero in case interface_volume==0, see by_volume.calculate_volumes

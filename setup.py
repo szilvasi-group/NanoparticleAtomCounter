@@ -1,4 +1,4 @@
-##I generated this setup.py using setup-py-cli
+##generated this setup.py using setup-py-cli
 ##from https://pypi.org/project/setup-py-cli/
 
 from setuptools import setup, find_packages
@@ -25,21 +25,22 @@ setup(
     packages=find_packages(where="."),
 
     # specify your dependencies here
-    python_requires=">=3.9,<3.15",
+    python_requires=">=3.10,<3.14",
+
     install_requires=[
         "numpy>=1.20,<2.3",
         "pandas>=1.4",
         "streamlit>=1.4,<2",
         "openpyxl>=3.1",
         "xlrd>=2.0",
-        "ase>=3.22,<3.27",
-        "tqdm>=4.66,<5",
-        "joblib>=1.5,<2"
     ],
 
     extras_require={
         "test": [
             "pytest>=8,<9",
+            "ase>=3.22,<3.27",
+            "tqdm>=4.66,<5",
+            "joblib>=1.5,<2"
         ],
     },
     # enable the CLI: `nanoparticle-atom-count`
@@ -64,9 +65,9 @@ setup(
         "License :: OSI Approved :: MIT License",
         # Supported Python versions
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
 
     keywords=[
