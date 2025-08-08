@@ -6,7 +6,7 @@ Nanoparticle Atom Counter
 |
 |
 
-.. figure:: Nanoparticle_Legend.png
+.. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Nanoparticle_Legend.png
    :width: 450
    :alt: Atom types discriminated
    :align: center
