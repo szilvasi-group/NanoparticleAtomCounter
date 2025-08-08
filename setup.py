@@ -25,19 +25,23 @@ setup(
     packages=find_packages(where="."),
 
     # specify your dependencies here
-    python_requires=">=3.9,<3.14",
+    python_requires=">=3.9,<3.15",
     install_requires=[
         "numpy>=1.20,<2.3",
         "pandas>=1.4",
-        "streamlit>=1.4,<2.0",
-        "openpyxl>=3.1.0",
-        "xlrd>=2.0.1",
-        "pytest<=8.4.1",
-        "ase>=3.23.0,>3.21",
-        "tqdm<=4.67.1",
-        "joblib<=1.5.1"
+        "streamlit>=1.4,<2",
+        "openpyxl>=3.1",
+        "xlrd>=2.0",
+        "ase>=3.22,<3.27",
+        "tqdm>=4.66,<5",
+        "joblib>=1.5,<2"
     ],
 
+    extras_require={
+        "test": [
+            "pytest>=8,<9",
+        ],
+    },
     # enable the CLI: `nanoparticle-atom-count`
     entry_points={
         "console_scripts": [
