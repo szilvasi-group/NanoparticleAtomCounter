@@ -27,9 +27,7 @@ Requirements
 * streamlit>=1.4,<2
 * openpyxl>=3.1.0
 * xlrd>=2.0.1
-* ase>=3.22,<3.27
-* tqdm>=4.66,<5
-* joblib>=1.5,<2
+
 
 For testing, these are also required:
 * pytest>=8,<9
@@ -45,8 +43,8 @@ Installation
 
 First create and activate a new environment::
 
-    conda create --name env_name python>=3.9
-    conda activate env_name
+    mamba create --name env_name python>=3.10
+    mamba activate env_name
 
 To install the latest version::
 
