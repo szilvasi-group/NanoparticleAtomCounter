@@ -406,6 +406,11 @@ if __name__ == "__main__":
             help = "Traj file on which to run the script. Required"
             )
     parser.add_argument(
+            "--traj_output", "-to",
+            type = str, required = True,
+            help = "Traj file to create in which atoms have been discriminated. Required"
+            )
+    parser.add_argument(
             "--processes", "-p",
             type = int, default = PROCESSES,
             help = f"How many processes to run in parallel. default = {PROCESSES}"
@@ -445,6 +450,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     output_file = args.output
+    output_traj = args.traj_output
     atoms = read(args.traj, ":")
     atoms = atoms if isinstance(atoms, list) else [atoms]
     processes = environ.get("SLURM_NTASKS_PER_NODE", args.processes)
@@ -488,10 +494,10 @@ if __name__ == "__main__":
         for i in np_peri:
             image[i].symbol = "Mo"
         for i in np_surf:
-            image[i].symbol = "Pd"
+            image[i].symbol = "Ti"
 
     print("Saving results")
-    write("switched.traj", atoms)
+    write(output_traj, atoms)
 
     ##time to write results
     #write the output for the atomistic_discriminator
