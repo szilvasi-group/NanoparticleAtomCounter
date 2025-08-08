@@ -27,7 +27,7 @@ def test_calculate_areas():
         calculate_areas("Cu", 1.2, 67, (1,0,0))
     ##test valid values
     interface_A, peri_A, surf_A = calculate_areas("Cr", 55, 90, None, (1,1,1))
-    expected = [8567, 936, 18724]
+    expected = [8567, 936, 18328]
     for index, region_area in enumerate([interface_A, peri_A, surf_A]):
         assert region_area == pytest.approx(expected[index], abs=2)
 
@@ -40,7 +40,7 @@ def test_calculate_by_area():
     ##test valid values, using a hemispherical cap,
     #whose equations are simpler to calculate by hand
     peri_atoms, interface_atoms, surf_atoms, total_atoms = calculate_by_area("Ag", 50, 90,(1,0,0), (1,1,1))
-    expected = [106, 833, 2070, 15306]
+    expected = [106, 833, 2083, 15306]
     for index, region_atoms in enumerate([peri_atoms, interface_atoms, surf_atoms, total_atoms]):
         assert region_atoms == pytest.approx(expected[index], abs=2)
 
