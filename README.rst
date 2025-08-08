@@ -9,13 +9,13 @@ Can be used on the web app_ or on a command line.
 
 Requirements
 ------------
-* NumPy>=1.20,<2.3
+* numpy>=1.20,<2.3
 * pandas>=1.4
 * Streamlit>=1.4
 * openpyxl>=3.1.0
 * xlrd>=2.0.1
 * pytest<=8.4.1
-* ase<=3.23.0
+* ase>=3.22.0,<3.25
 * tqdm<=4.67.1
 * joblib<=1.5.1
 
