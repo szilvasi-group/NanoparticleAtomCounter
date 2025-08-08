@@ -7,12 +7,12 @@ Nanoparticle Atom Counter
 |
 
 .. figure:: Nanoparticle_Legend.png
-   :width: 300
+   :width: 450
    :alt: Atom types discriminated
    :align: center
 
-
-
+|
+|
 
 Can be used on the web app_ or on a command line.
 
