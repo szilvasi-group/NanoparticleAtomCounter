@@ -4,37 +4,18 @@ Nanoparticle Atom Counter
 Assuming a spherical cap, we estimate the number of Total, Surface, Perimeter, and Interfacial atoms of a supported nanoparticle
 from the radius and contact angle, both of which can be easily gotten from TEM images
 
-Can be used on the web app_ or on a command line.
-
-
-Atom Types
-==========
-
-In these figures, we have a spherical cap showing the footprint radius (r),
-radius of curvature (R), and contact angle (θ). first with an acute θ, then obtuse
-
-.. figure:: Acute.png
-   :width: 400
-   :alt: Acute angle
-   :align: center
-
-   θ < 90
-
-.. figure:: Obtuse.png
-   :width: 400
-   :alt: Obtuse angle
-   :align: center
-
-   θ > 90
-
-And here is our definition for Perimeter, Surface, and Interfacial atoms
-
-.. figure:: Nanoparticle_Legend.tif
-   :width: 400
+.. figure:: Nanoparticle_Legend.png
+   :width: 600
    :alt: Active site types discriminated
    :align: center
 
    Distinguishing kinds of active sites
+
+
+
+Can be used on the web app_ or on a command line.
+
+
 
 
 Requirements
