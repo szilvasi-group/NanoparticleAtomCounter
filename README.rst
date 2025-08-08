@@ -7,10 +7,12 @@ from the radius and contact angle, both of which can be easily gotten from TEM i
 Can be used on the web app_ or on a command line.
 
 
-.. image:: Acute.png
-  :width: 400
-  :alt: Alternative text
-Here is an actute angle
+.. figure:: Acute.png
+   :width: 400
+   :alt: Acute angle
+   :align: center
+
+   Here is an acute angle
 
 Requirements
 ------------
