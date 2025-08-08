@@ -25,7 +25,7 @@ setup(
     packages=find_packages(where="."),
 
     # specify your dependencies here
-    python_requires=">=3.10,<3.14",
+    python_requires=">=3.10",
 
     install_requires=[
         "numpy>=1.20,<2.3",
@@ -79,7 +79,6 @@ setup(
         ],
 
     license="MIT",
-    python_requires=">=3.8",
     include_package_data=True,
     project_urls={
         "Bug Tracker": "https://github.com/giolajide/nanoparticleatomcounter/issues",
