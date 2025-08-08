@@ -1,8 +1,8 @@
 Nanoparticle Atom Counter
 =========================
 
-| Assuming a spherical cap, this estimates the number of **Total**, **Surface**, **Perimeter**, and **Interfacial** atoms (illustrated below)
-| of a supported nanoparticle from the radius and contact angle, both of which can be gotten by *Transmission Electron Microscopy* (TEM)
+| Assuming a spherical cap, this estimates the number of **Total, Surface**, **Perimeter**, and **Interfacial** atoms (illustrated below)
+| of a supported nanoparticle from the radius and contact angle, both of which can be gotten by **Transmission Electron Microscopy** (TEM)
 |
 |
 
