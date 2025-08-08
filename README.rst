@@ -36,22 +36,24 @@ Alternatively:
     pip install -e .
 
 
+To run tests, install as:
+::
+    pip install nanoparticleatomcounter[test]
+
+
 Testing
 -------
 
-Please run the following test and let me know if there are any errors:
+If you have it installed with the tests, then please run the following test and let me know if there are any errors:
 ::
     atom-count-test
-
-This requires pytest; hence, first install nanoparticleatomcounter as:
-::
-    pip install nanoparticleatomcounter[test]
 
 
 Contact
 -------
 
 Any problems or questions?
+
 * Email me at giolajide@crimson.ua.edu
 * Or raise an issue right here_
 
@@ -60,8 +62,8 @@ Example
 -------
 
 * To use on the web app_, upload your input file and download the output
-* To use on a command line
-::
+* To use on a command line::
+
     nanoparticle-atom-counter --input input.csv --output output.csv
 
 
