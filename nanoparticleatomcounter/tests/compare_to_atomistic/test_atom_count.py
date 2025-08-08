@@ -208,8 +208,12 @@ def plot_parities(atomistic_output: str,
     """
     print("plotting parities...")
     command = shlex.split(f"python compare_to_atomistic/plot-parity.py {atomistic_output} "
-            "{atomcounter_output} --output_dir output_dir --show")
-    with open("parity.out", "w") as out_f, open("parity.err", "w") as err_f:
+            f"{atomcounter_output} --output_dir {output_dir} --show")
+
+    parity_out = output_dir + "parity.out"
+    parity_err = output_dir + "parity.err"
+
+    with open(parity_out, "w") as out_f, open(parity_err, "w") as err_f:
         subprocess.run(
                 command,
                 stdout = out_f,
@@ -230,9 +234,8 @@ atomistic_output = output_dir + "atomistic.csv"
 new_atoms_output = output_dir + "identified.traj"
 
 contact_angles, radii_angstrom, nanoparticles, supports = create_trajectory(
-        min_angle = 69, max_angle = 155,
-        n_angles = 6, min_radius = 12,
-        max_radius = 25, n_radii = 6,
+        min_angle = 69, max_angle = 159, n_angles = 9,
+        min_radius = 17, max_radius = 35, n_radii = 9,
         output_trajectory = traj_file,
         np_elements = ["Pd"],
         support_element = ["graphene"],
