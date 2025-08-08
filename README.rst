@@ -26,15 +26,18 @@ Installation
 ------------
 
 To install the latest version::
+
     pip install nanoparticleatomcounter
 
 Alternatively::
+
     git clone git@github.com:giolajide/nanoparticleatomcounter.git
     cd nanoparticleatomcounter
     pip install -e .
 
 
 To run tests, install as::
+
     pip install nanoparticleatomcounter[test]
 
 
@@ -42,6 +45,7 @@ Testing
 -------
 
 If you have it installed with the tests, then please run the following test and let me know if there are any errors::
+
     atom-count-test
 
 
