@@ -27,13 +27,21 @@ To install the latest version:
 
 Alternatively:
 ::
-    git clone XXXXX
+    git clone git@github.com:giolajide/nanoparticleatomcounter.git
+::
+    cd nanoparticleatomcounter
+::
+    pip install -e .
 
 Testing
 -------
 Please run the following test and let us know if there are any errors:
 ::
     atom-count-test
+
+This requires pytest; hence, first install nanoparticleatomcounter as:
+::
+    pip install nanoparticleatomcounter[test]
 
 Contact
 -------
