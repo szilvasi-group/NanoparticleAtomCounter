@@ -7,6 +7,7 @@ from the radius and contact angle, both of which can be easily gotten from TEM i
 Can be used on the web app_ or on a command line.
 
 
+
 Requirements
 ------------
 
@@ -20,6 +21,7 @@ Requirements
 * joblib>=1.5,<2
 
 For testing, pytest>=8,<9 is also required
+
 
 
 Installation
@@ -41,12 +43,14 @@ To run tests, install as::
     pip install nanoparticleatomcounter[test]
 
 
+
 Testing
 -------
 
 If you have it installed with the tests, then please run the following test and let me know if there are any errors::
 
     atom-count-test
+
 
 
 Contact
@@ -56,6 +60,7 @@ Any problems or questions?
 
 * Email me at giolajide@crimson.ua.edu
 * Or raise an issue right here_
+
 
 
 Example
