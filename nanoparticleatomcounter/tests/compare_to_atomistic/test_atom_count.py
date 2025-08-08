@@ -258,7 +258,7 @@ run_atomcounter(
 
 plot_parities(
         atomistic_output = atomistic_output,
-        atomcounter_output = atomcounter_output
+        atomcounter_output = atomcounter_output,
         output_dir = output_dir,
         )
 
