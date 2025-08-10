@@ -13,7 +13,7 @@ with io.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="nanoparticleatomcounter",
+    name="NanoparticleAtomCounter",
     version=__version__,
     author="Gbolagade Olajide, Tibor Szilvasi",
     author_email="giolajide@crimson.ua.edu, tszilvasi@crimson.ua.edu",
