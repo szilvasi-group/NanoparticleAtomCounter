@@ -98,7 +98,7 @@ def create_trajectory(
 
     requested_system = (
         "Requested system:"
-        f"{int(n_radii * n_angles)} {np_elements} nanoparticles on {support_element}\n"
+        f"{int(n_radii * n_angles)} {np_elements[0]} nanoparticles on {support_element[0]}\n"
         f"Nanoparticle curvature radii are from {min_radius} to {max_radius} A,\n"
         f"with contact angles from {min_angle} to {max_angle}"
     )
