@@ -23,10 +23,8 @@ setup(
     long_description_content_type="text/x-rst",
     url="https://github.com/giolajide/nanoparticleatomcounter",
     packages=find_packages(where="."),
-
     # specify your dependencies here
     python_requires=">=3.10",
-
     install_requires=[
         "numpy>=1.20,<2.3",
         "pandas>=1.4",
@@ -34,27 +32,24 @@ setup(
         "openpyxl>=3.1",
         "xlrd>=2.0",
     ],
-
     extras_require={
         "test": [
             "pytest>=8,<9",
             "ase>=3.22,<3.27",
             "tqdm>=4.66,<5",
             "joblib>=1.5,<2",
-            "ascii-colors", 
+            "ascii-colors",
         ],
     },
     # enable the CLI: `nanoparticle-atom-count`
     entry_points={
         "console_scripts": [
             "nanoparticle-atom-count="
-            "NanoparticleAtomCounter.cli.atom_count:main", #main script
-
+            "NanoparticleAtomCounter.cli.atom_count:main",  # main script
             "atom-count-test="
-            "NanoparticleAtomCounter.tests.run_tests:main" #tests script
+            "NanoparticleAtomCounter.tests.run_tests:main",  # tests script
         ],
     },
-
     classifiers=[
         ##https://pypi.org/classifiers/
         # Project maturity
@@ -70,15 +65,7 @@ setup(
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
     ],
-
-    keywords=[
-        "nanoparticle",
-        "tem",
-        "electron microscopy",
-        "active site",
-        "catalyst"
-        ],
-
+    keywords=["nanoparticle", "tem", "electron microscopy", "active site", "catalyst"],
     license="MIT",
     include_package_data=True,
     project_urls={
@@ -86,4 +73,3 @@ setup(
         "Documentation": "https://github.com/giolajide/nanoparticleatomcounter#readme",
     },
 )
-

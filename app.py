@@ -22,15 +22,13 @@ with st.sidebar:
         mime="text/csv",
     )
 
-    st.image("Acute.png",
-            caption="θ < 90°",
-            use_container_width=True)
-    st.image("Obtuse.png",
-            caption="θ > 90°",
-            use_container_width=True)
-    st.image("Nanoparticle_Legend.png",
-            caption="Definition of surface, interfacial, and perimeter atoms",
-            use_container_width=True)
+    st.image("Acute.png", caption="θ < 90°", use_container_width=True)
+    st.image("Obtuse.png", caption="θ > 90°", use_container_width=True)
+    st.image(
+        "Nanoparticle_Legend.png",
+        caption="Definition of surface, interfacial, and perimeter atoms",
+        use_container_width=True,
+    )
 
 
 st.title("Nanoparticle Atom Counter")
@@ -52,9 +50,7 @@ A sample input file and explanatory diagrams are in the sidebar.
     unsafe_allow_html=True,
 )
 
-mode = st.radio("**Select Counting Mode**",
-        ("volume", "area"),
-        horizontal=True)
+mode = st.radio("**Select Counting Mode**", ("volume", "area"), horizontal=True)
 
 file = st.file_uploader(
     "Drag-and-drop or browse for your input file",
@@ -63,31 +59,35 @@ file = st.file_uploader(
 )
 
 if file is None:
-    st.stop()      # wait for the user's input
+    st.stop()  # wait for the user's input
 
 if st.button("⚙️ Run calculation"):
     with st.spinner("Processing . . . "):
 
-        #temp input file
+        # temp input file
         in_suffix = Path(file.name).suffix
         with tempfile.NamedTemporaryFile(delete=False, suffix=in_suffix) as tempin:
             tempin.write(file.getbuffer())
             tempin.flush()
             in_path = tempin.name
 
-        #temp output file
+        # temp output file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tempout:
             out_path = tempout.name
 
         try:
-            #run the calculation
+            # run the calculation
             subprocess.run(
                 [
                     sys.executable,
-                    "-m", "NanoparticleAtomCounter.cli.atom_count",
-                    "--input",  in_path,
-                    "--output", out_path,
-                    "--mode",   mode,
+                    "-m",
+                    "NanoparticleAtomCounter.cli.atom_count",
+                    "--input",
+                    in_path,
+                    "--output",
+                    out_path,
+                    "--mode",
+                    mode,
                 ],
                 check=True,
                 capture_output=True,
@@ -98,7 +98,7 @@ if st.button("⚙️ Run calculation"):
             st.error(f"Atom-counter failed:\n{err.stderr}")
             os.remove(in_path)
             st.stop()
-        
+
         # now, read and show results
         df_out = pd.read_csv(out_path)
 
@@ -114,4 +114,3 @@ if st.button("⚙️ Run calculation"):
         # cleanup
         os.remove(in_path)
         os.remove(out_path)
-  

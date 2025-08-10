@@ -5,22 +5,29 @@ Here, they'll be the outputs of the atomcounter vs the atomistic model
 The two input files must share the same column headers
 (e.g., Perimeter, Interface, Surface, Total).
 """
+
 import sys
 from argparse import ArgumentParser
 from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def read_args():
-     parser = ArgumentParser()
-     parser.add_argument("csv_a", help="first CSV file. Atomistic output")
-     parser.add_argument("csv_b", help="second CSV file. AtomCounter output")
-     parser.add_argument("--show", action="store_true",
-                    help="show the plots on screen (in addition to saving)")
-     parser.add_argument("--output_dir", type=str,
-                         help="directory where parity plots should be saved")
 
-     return parser.parse_args()
+def read_args():
+    parser = ArgumentParser()
+    parser.add_argument("csv_a", help="first CSV file. Atomistic output")
+    parser.add_argument("csv_b", help="second CSV file. AtomCounter output")
+    parser.add_argument(
+        "--show",
+        action="store_true",
+        help="show the plots on screen (in addition to saving)",
+    )
+    parser.add_argument(
+        "--output_dir", type=str, help="directory where parity plots should be saved"
+    )
+
+    return parser.parse_args()
+
 
 def main():
     args = read_args()
@@ -65,7 +72,6 @@ def main():
 
         print(f"Saved {out_path}")
 
+
 if __name__ == "__main__":
     main()
-
-
