@@ -21,7 +21,7 @@ setup(
     " given radius and contact angle",
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    url="https://github.com/giolajide/nanoparticleatomcounter",
+    url="https://github.com/szilvasi-group/NanoparticleAtomCounter#readme",
     packages=find_packages(where="."),
     # specify your dependencies here
     python_requires=">=3.10,<3.15",
@@ -69,7 +69,7 @@ setup(
     license="MIT",
     include_package_data=True,
     project_urls={
-        "Bug Tracker": "https://github.com/giolajide/nanoparticleatomcounter/issues",
-        "Documentation": "https://github.com/giolajide/nanoparticleatomcounter#readme",
+        "Bug Tracker": "https://github.com/szilvasi-group/NanoparticleAtomCounter/issues",
+        "Documentation": "https://github.com/szilvasi-group/NanoparticleAtomCounter#readme",
     },
 )
