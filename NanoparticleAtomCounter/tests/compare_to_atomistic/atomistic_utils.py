@@ -92,7 +92,7 @@ def setup_neighborlist(atoms: Atoms, scaling_factor: float = SCALING_FACTOR,
     given the Atoms object and the scaling factor for covalent radii
 
     if radial_cutoff is given, then we will consider only neighbors within
-    the lower of that cutoff and the covalent/ionic bond length
+    the lower of that cutoff and the bond length
     """
     if not radial_cutoff:
         cutoffs = natural_cutoffs(atoms, mult = scaling_factor)
@@ -199,12 +199,11 @@ def scaler(
         z_spacing:          Desired Z-spacing of periodic images (Optional)
         lateral_spacing:    Desired X- and Y-spacing of periodic NP images (Optional)
         unit_support:       Atoms object of the unit support.
-                            Defaults to that given here (GPAW-D3(BJ) for 2 or 4 layers)
     Returns:
                             Supported_NP
     """
     if not unit_support:
-        unit_support = create_unit_support(layers = layers)
+        unit_support = create_unit_support(support = "mgo")
     unit_cell = unit_support.cell
     unit_cell_x = unit_cell[0,0]
     unit_cell_y = unit_cell[1,1]

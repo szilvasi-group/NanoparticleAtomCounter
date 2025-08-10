@@ -13,8 +13,8 @@ from typing import Tuple, List, Literal
 from sys import argv, exit
 import numpy as np
 import warnings
-from nanoparticleatomcounter.by_volume import calculate_by_volume
-from nanoparticleatomcounter.by_area import calculate_by_area
+from NanoparticleAtomCounter.by_volume import calculate_by_volume
+from NanoparticleAtomCounter.by_area import calculate_by_area
 import pandas as pd
 from numpy.typing import NDArray
 from os import path
@@ -202,6 +202,8 @@ def main() -> None:
         ]
     )
 
+    print("Success!")
+
     df = pd.DataFrame(
             {
         "Perimeter"  : peri_atoms,
@@ -212,7 +214,7 @@ def main() -> None:
             )
 
     df.to_csv(output_file, index = False)
-    print(f"Ouput ({output_file}) written!")
+    print(f"Output ({output_file}) written!")
 
 
 if __name__ == "__main__":

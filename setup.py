@@ -4,7 +4,7 @@
 from setuptools import setup, find_packages
 import io
 import os
-from nanoparticleatomcounter import __version__
+from NanoparticleAtomCounter import __version__
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,7 +17,7 @@ setup(
     version=__version__,
     author="Gbolagade Olajide, Tibor Szilvasi",
     author_email="giolajide@crimson.ua.edu, tszilvasi@crimson.ua.edu",
-    description="Estimate atom counts in monometallic nanoparticles"
+    description="Estimates atom counts in monometallic nanoparticles"
     " given radius and contact angle",
     long_description=long_description,
     long_description_content_type="text/x-rst",
@@ -40,17 +40,18 @@ setup(
             "pytest>=8,<9",
             "ase>=3.22,<3.27",
             "tqdm>=4.66,<5",
-            "joblib>=1.5,<2"
+            "joblib>=1.5,<2",
+            "ascii-colors", 
         ],
     },
     # enable the CLI: `nanoparticle-atom-count`
     entry_points={
         "console_scripts": [
             "nanoparticle-atom-count="
-            "nanoparticleatomcounter.cli.atom_count:main", #main script
+            "NanoparticleAtomCounter.cli.atom_count:main", #main script
 
             "atom-count-test="
-            "nanoparticleatomcounter.tests.run_tests:main" #tests script
+            "NanoparticleAtomCounter.tests.run_tests:main" #tests script
         ],
     },
 

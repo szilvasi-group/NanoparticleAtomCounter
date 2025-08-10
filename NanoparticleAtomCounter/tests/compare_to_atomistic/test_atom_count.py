@@ -1,12 +1,12 @@
 """
-Here, I will compare the results given by the npatomcounter to those
+Here, I'll compare the results given by the npatomcounter to those
 from making an approximate atomistic model for nanoparticles of an FCC
 lattice and flat interface
 """
-
 import subprocess
 from ase.io import write
 import shlex
+import sys
 from os import system, environ, makedirs
 import numpy as np
 import pandas as pd
@@ -17,16 +17,20 @@ from typing import List, Union, Tuple, Literal
 from ase.visualize import view
 import warnings
 from argparse import ArgumentParser
-from nanoparticleatomcounter.tests.compare_to_atomistic.create_spherical_caps import create_sphere, cut_particle
 from pathlib import Path
-from nanoparticleatomcounter.tests.compare_to_atomistic.atomistic_utils import scaler, create_unit_support
+from ascii_colors import ASCIIColors
+from NanoparticleAtomCounter.tests.compare_to_atomistic.create_spherical_caps\
+        import create_sphere, cut_particle
+from NanoparticleAtomCounter.tests.compare_to_atomistic.atomistic_utils\
+        import scaler, create_unit_support
+
 
 MIN_ANGLE = 60
 MAX_ANGLE = 160
 MIN_RADIUS = 10 #Ang
-MAX_RADIUS = 50 #Ang
-N_ANGLES = 5
-N_RADII = 5
+MAX_RADIUS = 30 #Ang
+N_ANGLES = 4
+N_RADII = 4
 PROCESSES = -1
 OUTPUT_TRAJECTORY = "atoms.traj"
 NP_ELEMENTS = ["Ag"]
@@ -44,8 +48,12 @@ def create_outputdir() -> str:
 
 
 def create_trajectory(
-        min_angle: float, max_angle: float, n_angles: int,
-        min_radius: float, max_radius: float, n_radii: int,
+        min_angle: float,
+        max_angle: float,
+        n_angles: int,
+        min_radius: float,
+        max_radius: float,
+        n_radii: int,
         output_trajectory: str,
         np_elements: Union[str, List[str]],
         support_element: Union[str, List[str]]
@@ -60,12 +68,12 @@ def create_trajectory(
         max_angle:          max contact angle desired
         n_angles:           how many contact angles desired
         min_radius:         lowest radius OF CURVATURE (NOT footprint radius) desired
-        max_radius:         work it out
-        n_radii:            work it out
+        max_radius:         figure it out
+        n_radii:            figure it out
         output_trajectory:  name of file in which to write the models
         np_elements:        the type of atom of which the nanoparticle is composed,
                             as a list, one for each nanoparticle/support combination
-        support_elements:   the type of atom of which the support is composed,
+        support_element:   the type of atom of which the support is composed,
                             as a list, one for each nanoparticle/support combination.
                             Should be 'graphene', 'mgo', or 'au'
 
@@ -79,9 +87,17 @@ def create_trajectory(
 
     if max_radius > 40:
         warnings.warn("""This will take some time.
-                I hope you can what you are doing!""",
+                I hope you know what you are doing!""",
                 category = UserWarning
                 )
+
+    requested_system = (
+            f"Requested system:"
+            "{int(n_radii * n_angles)} {np_elements} nanoparticles on {support_element}\n"
+            f"Nanoparticle curvature radii are from {min_radius} to {max_radius} A,\n"
+            f"with contact angles from {min_angle} to {max_angle}"
+            )
+    print(requested_system)
 
     nanoparticles = [np_elements] if isinstance(np_elements, str) else np_elements
     supports = [support_elements] if isinstance(support_element, str) else support_element
@@ -111,9 +127,11 @@ def create_trajectory(
 
 def run_atomistic(
         processes: int,
-        trajectory_file: str, radii_angstrom: List[float],
+        trajectory_file: str,
+        radii_angstrom: List[float],
         contact_angles: List[float],
-        nanoparticles: List[str], supports: List[str],
+        nanoparticles: List[str],
+        supports: List[str],
         input_to_atomcounter: str,
         atomistic_output: str,
         new_atoms_output: str,
@@ -172,7 +190,11 @@ def run_atomistic(
     print("Finished the atomistic modelling")
 
 
-def run_atomcounter(input_file: str, output_file: str, output_dir: str):
+def run_atomcounter(
+        input_file: str,
+        output_file: str,
+        output_dir: str
+        ):
     """
     Runs the atomcounter to get the number of each kind of atom in each nanoparticle
 
@@ -183,7 +205,7 @@ def run_atomcounter(input_file: str, output_file: str, output_dir: str):
         output_dir:     name of output directory in which all files will be created
     """
 
-    print("running npatomcounter...")
+    print("running NanoparticleAtomCounter ...")
 
     atomcounter_out = output_dir + "atomcounter.out"
     atomcounter_err = output_dir + "atomcounter.err"
@@ -200,8 +222,11 @@ def run_atomcounter(input_file: str, output_file: str, output_dir: str):
     print("Finished running the atom counter")
 
 
-def plot_parities(atomistic_output: str,
-        atomcounter_output: str, output_dir: str):
+def plot_parities(
+        atomistic_output: str,
+        atomcounter_output: str,
+        output_dir: str
+        ):
     """
     Creates parity plots of the results, comparing the atomistic to the atomcounter
 
@@ -209,9 +234,9 @@ def plot_parities(atomistic_output: str,
         atomistic_output:       name of output file from the atomistic
         atomcounter_output:     name of output file from the atomcounter
     """
-    print("plotting parities...")
+    print("creating parities...")
     command = shlex.split(f"python {script_dir}/plot-parity.py {atomistic_output} "
-            f"{atomcounter_output} --output_dir {output_dir} --show")
+            f"{atomcounter_output} --output_dir {output_dir}")
 
     parity_out = output_dir + "parity.out"
     parity_err = output_dir + "parity.err"
@@ -225,8 +250,8 @@ def plot_parities(atomistic_output: str,
                 )
 
 
-
 ##ikimashou
+
 output_dir = create_outputdir()
 print(f"\n\nWriting all results to {output_dir}\n\n")
 
@@ -236,20 +261,46 @@ atomcounter_output = output_dir + "counter.csv"
 atomistic_output = output_dir + "atomistic.csv"
 new_atoms_output = output_dir + "identified.traj"
 
-contact_angles, radii_angstrom, nanoparticles, supports = create_trajectory(
-        min_angle = 69, max_angle = 159, n_angles = 8,
-        min_radius = 17, max_radius = 35, n_radii = 8,
-        output_trajectory = traj_file,
-        np_elements = ["Pd"],
-        support_element = ["graphene"],
+
+
+theory = (
+        "- Calculating the total number of atoms by assuming a spherical cap\n"
+        "- Calculating perimeter atoms by assuming the interface is an annular ring\n"
+        "  (this might introduce some errors)\n"
+        "- Calculating surface atoms by assuming the nanoparticle surface is an annulus\n"
+        "  (this might also introduce some errors)\n"
         )
 
-print("We might be here a while . . . ")
+ASCIIColors.print(
+    theory,
+    color=ASCIIColors.color_yellow,
+    style=ASCIIColors.style_bold,
+    background=ASCIIColors.color_black,
+    end="\n\n",
+    flush=True,
+    file=sys.stdout
+)
+
+contact_angles, radii_angstrom, nanoparticles, supports = create_trajectory(
+        min_angle = MIN_ANGLE,
+        max_angle = MAX_ANGLE,
+        n_angles = N_ANGLES,
+        min_radius = MIN_RADIUS,
+        max_radius = MAX_RADIUS,
+        n_radii = N_RADII,
+        output_trajectory = traj_file,
+        np_elements = NP_ELEMENTS,
+        support_element = [SUPPORT_ELEMENTS[0]],
+        )
+
 
 run_atomistic(
-        processes = PROCESSES, trajectory_file = traj_file,
-        contact_angles = contact_angles, radii_angstrom = radii_angstrom,
-        nanoparticles = nanoparticles, supports = supports,
+        processes = PROCESSES,
+        trajectory_file = traj_file,
+        contact_angles = contact_angles,
+        radii_angstrom = radii_angstrom,
+        nanoparticles = nanoparticles,
+        supports = supports,
         input_to_atomcounter = input_to_atomcounter,
         atomistic_output = atomistic_output,
         new_atoms_output = new_atoms_output,
@@ -273,12 +324,12 @@ print(f"\n\nAll output written to {output_dir}")
 
 
 explanation = """\
-- input.csv: input file for the nanoparticleatomcounter
-- counter.csv: atom counts according to the nanoparticleatomcounter
+- input.csv: input file for the NanoparticleAtomCounter
+- counter.csv: atom counts according to the NanoparticleAtomCounter
 - atomistic.csv: atom counts by using an atomistic model
 - atoms.traj: atomistic model
 - identified.traj: atomistic model, with different types of atoms distinguished
-- parity*.png: parity plots comparing the nanoparticleatomcounter to the atomistic model
+- parity*.png: parity plots comparing the NanoparticleAtomCounter to the atomistic model
 """
 
 readme = output_dir + "README.md"

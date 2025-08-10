@@ -4,7 +4,7 @@ Tests all functions in the by_area script
 import pytest
 import numpy as np
 import warnings
-from nanoparticleatomcounter.by_area import (
+from NanoparticleAtomCounter.by_area import (
         calculate_by_area,
         calculate_areas,
         )

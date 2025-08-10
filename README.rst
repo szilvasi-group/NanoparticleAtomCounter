@@ -1,10 +1,9 @@
 Nanoparticle Atom Counter
 =========================
 
-| Assuming a spherical cap, this estimates the number of **Total, Surface**, **Perimeter**, and **Interfacial** atoms (illustrated below)
-| of a supported nanoparticle from the radius and contact angle, both of which can be gotten by **Transmission Electron Microscopy** (TEM)
-|
-|
+Treating a supported nanoparticle as a spherical cap, NanoparticleAtomCounter rapidly estimates the number of *Total, Surface**, **Perimeter**, and **Interfacial** atoms.
+Only two inputs are needed: the radius and contact angle, readily obtainable from Transmission Electron Microscopy (TEM).
+
 
 .. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Nanoparticle_Legend.png
    :width: 450
@@ -29,12 +28,13 @@ Requirements
 * xlrd>=2.0.1
 
 
-For testing, these are also required:
+For testing, these are also required
+
 * pytest>=8,<9
 * ase>=3.22.0,<3.25
 * tqdm<=4.67.1
 * joblib<=1.5.1
-
+* ascii-colors
 
 
 
@@ -48,7 +48,7 @@ First create and activate a new environment::
 
 To install the latest version::
 
-    pip install nanoparticleatomcounter
+    pip install NanoparticleAtomCounter
 
 Alternatively::
 
@@ -59,7 +59,17 @@ Alternatively::
 
 To also be able to run tests, install as::
 
-    pip install nanoparticleatomcounter[test]
+    pip install NanoparticleAtomCounter[test]
+
+
+
+Usage
+-------
+
+* To use on the web app_, upload your input file and download the output
+* To use on a command line::
+
+    nanoparticle-atom-counter --input input.csv --output output.csv
 
 
 
@@ -80,15 +90,6 @@ Any problems or questions?
 * Email me at giolajide@crimson.ua.edu
 * Or raise an issue right here_
 
-
-
-Example
--------
-
-* To use on the web app_, upload your input file and download the output
-* To use on a command line::
-
-    nanoparticle-atom-counter --input input.csv --output output.csv
 
 
 

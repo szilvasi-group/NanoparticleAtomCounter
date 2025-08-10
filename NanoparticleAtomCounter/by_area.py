@@ -20,7 +20,7 @@ calculate_by_area(element: str, r: float, theta: float, facet: tuple) -> tuple
 from typing import Tuple, List
 import numpy as np
 import warnings
-from nanoparticleatomcounter.count_utilities import (
+from NanoparticleAtomCounter.count_utilities import (
         volume_to_atoms,
         calculate_total_volume,
         area_to_atoms,

@@ -4,7 +4,7 @@ Tests all functions in the count_utilities script
 import pytest
 import numpy as np
 import warnings
-from nanoparticleatomcounter.count_utilities import (
+from NanoparticleAtomCounter.count_utilities import (
         volume_to_atoms,
         beta,
         alpha,

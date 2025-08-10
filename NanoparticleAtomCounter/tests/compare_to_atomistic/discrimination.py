@@ -36,11 +36,12 @@ from typing import (Tuple, Literal, List, Union)
 from ase.neighborlist import natural_cutoffs, NeighborList
 import warnings
 from os import system, environ
-from nanoparticleatomcounter.tests.compare_to_atomistic.atomistic_utils import (
+from NanoparticleAtomCounter.tests.compare_to_atomistic.atomistic_utils import (
         divider, setup_neighborlist,
         setup_analyzer, NANOPARTICLE_ELEMENT, #SKIN
         )
 from joblib import Parallel, delayed
+from ascii_colors import ASCIIColors
 
 
 INTERFACE_SCALING = 1.3  #1.3 scaling factor for interfacial NP atoms' covalent radii
@@ -385,10 +386,10 @@ def discriminate(
         np_bulk = [i for i in nps if i not in np_surface_plus_interface]
 
     except TypeError: #get_interface returned None, None
-        print("get_interface probably failed")
+        ASCIIColors.red("get_interface probably failed")
         np_surface, np_bulk, np_interface, np_perimeter, substrate_interface, substrate = [0] * 6
     except Exception as e:
-        print(f"Unexpected error occurred:\t{e}")
+        ASCIIColors.red(f"Unexpected error occurred:\t{e}")
         exit(1)
 
     return np_surface, np_bulk, np_interface, np_perimeter, substrate_interface, substrate
