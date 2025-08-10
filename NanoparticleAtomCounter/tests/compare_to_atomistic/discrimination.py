@@ -573,7 +573,7 @@ if __name__ == "__main__":
         for i in np_peri:
             image[i].symbol = "Mo"
         for i in np_surf:
-            image[i].symbol = "Ti"
+            image[i].symbol = "Pd"
 
     print("Saving results")
     write(output_traj, atoms)
