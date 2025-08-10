@@ -16,16 +16,35 @@ authors:
   - given-names: Tibor
     email: tszilvasi@ua.edu
     affiliation: University of Alabama
+    orcid: 'https://orcid.org/0000-0002-4218-1570'
     family-names: ' Szilvasi'
-repository-code: 'https://github.com/giolajide/nanoparticleatomcounting/'
+repository-code: 'https://github.com/szilvasi-group/NanoparticleAtomCounter/'
 url: 'https://nanoparticle-atom-counting.streamlit.app/'
 abstract: >-
   Determines the number of interfacial, perimeter, surface,
   and total atoms of a nanoparticle given the radius and
   contact angle
 keywords:
-  - Nanoparticles
+  - Nanoparticle
   - Transmission Electron Microscopy
-  - Spherical Cap Model
+  - Spherical Cap
+  - Catalysis
 license: MIT
-version: 0.1.0
+version: 0.1.1
+
+#to be filled in after acceptance
+#preferred-citation:
+#  type:
+#  title:
+#  authors:
+#    - given-names: Gbolagade
+#      family-names: Olajide
+#    - given-names: Tibor
+#      family-names: Szilvasi
+#  journal: 
+#  year: 
+#  volume: 
+#  issue: 
+#  start: 
+#  end: 
+#  doi: 
