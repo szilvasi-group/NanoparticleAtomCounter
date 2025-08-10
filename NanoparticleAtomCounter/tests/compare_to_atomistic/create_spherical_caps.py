@@ -1,3 +1,9 @@
+"""
+Create spheres with their specified radii,
+then cut them to yield spherical caps
+of specified contact angles
+"""
+
 from ase.io import write
 from os import system
 import math
