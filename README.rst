@@ -2,7 +2,7 @@ Nanoparticle Atom Counter
 =========================
 
 Treating a supported nanoparticle as a spherical cap, NanoparticleAtomCounter rapidly estimates the number of **Total**, **Surface**, **Perimeter**, and **Interfacial** atoms (see below).
-Only two inputs are needed: the radius and contact angle, readily obtainable from Transmission Electron Microscopy (TEM) images.
+| Only two inputs are needed: the radius and contact angle, readily obtainable from Transmission Electron Microscopy (TEM) images.
 
 |
 .. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Nanoparticle_Legend.png
