@@ -24,7 +24,7 @@ setup(
     url="https://github.com/giolajide/nanoparticleatomcounter",
     packages=find_packages(where="."),
     # specify your dependencies here
-    python_requires=">=3.10",
+    python_requires=">=3.10,<3.15",
     install_requires=[
         "numpy>=1.20,<2.3",
         "pandas>=1.4",
