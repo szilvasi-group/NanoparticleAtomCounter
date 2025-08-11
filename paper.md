@@ -36,7 +36,7 @@ Below, we describe the methods used to calculate the number of total, interfacia
 ![Fig1. Spherical cap model of a supported nanoparticle with *θ* > 90. \label{fig:figure1}](Fig1_v3.png)
 
 ## Interfacial count
-We first consider the entire interfacial region (i.e. interface + perimeter) of thickness $z$ (exaggerated in Figure 1), which is equal to the planar spacing at the nanoparticle-support interface. We calculate the planar spacing using the atomic simulation environment (ASE) [@Larsen:2017ASE] for all facets from {0,0,1} 1till {3,3,3}. The volume for the entire interfacial region is given by the formula for the volume of a spherical segment:
+We first consider the entire interfacial region (i.e. interface + perimeter) of thickness $z$ (exaggerated in Figure 1), which is equal to the planar spacing at the nanoparticle-support interface. We calculate the planar spacing using the atomic simulation environment (ASE) [@Larsen2017ASE] for all facets from {0,0,1} 1till {3,3,3}. The volume for the entire interfacial region is given by the formula for the volume of a spherical segment:
 
 \begin{equation}\label{eq:ventire}
 V_{\text{entire interface}} = \frac{\pi z}{6}\left(3x^2 + 3r^2 + z^2\right)
