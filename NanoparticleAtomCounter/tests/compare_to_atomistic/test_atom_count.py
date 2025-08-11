@@ -106,9 +106,10 @@ def create_trajectory(
     n_calculations = int(n_radii * n_angles * len(nanoparticles) * len(supports))
     requested_system = (
         "Requested system: \n"
-        f"{n_calculations} all possible combinations of {np_elements} nanoparticles on {support_element}\n"
+        f"All possible combinations of {np_elements} nanoparticles on {support_element}\n"
         f"Nanoparticle curvature radii are from {min_radius} to {max_radius} A,\n"
         f"with contact angles from {min_angle} to {max_angle}"
+        f"Number of calculations: {n_calculations}"
     )
     print(requested_system)
     
@@ -190,7 +191,7 @@ def run_atomistic(
     ):
         rows.append(
             {
-                "r (A)": 0.0,
+                "r (A)": "",
                 "R (A)": R,
                 "Theta": theta,
                 "Element": element.capitalize(),
@@ -266,7 +267,7 @@ def plot_parities(atomistic_output: str, atomcounter_output: str, output_dir: st
         subprocess.run(command, stdout=out_f, stderr=err_f, check=True)
 
 
-##ikimashou!
+##ikimashou
 
 output_dir = create_outputdir()
 print(f"\n\nWriting all results to {output_dir}\n\n")
@@ -351,7 +352,7 @@ nanoparticleatomcounter took {timing * 1000} milliseconds to run {n_calculations
 """
 
 readme = output_dir + "README.md"
-speed = output_dir + "timing.txt"
+speed = output_dir + "timing.log"
 
 with open(readme, "w") as explain_file, open(speed, "w") as speed_file:
     explain_file.write(explanation)
