@@ -6,7 +6,7 @@ Only two inputs are needed: the radius and contact angle, readily obtainable fro
 
 
 
-.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/blob/main/yNanoparticle_Legend.png
+.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/blob/main/Nanoparticle_Legend.png
    :width: 450
    :alt: Atom types discriminated
    :align: center
