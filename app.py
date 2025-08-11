@@ -43,9 +43,6 @@ Interface Facet and Surface Facet are optional; leave blank if unknown.*
 
 **Need a template or a visual guide?**  
 A sample input file and explanatory diagrams are in the sidebar.
-
-
-**This note here is for me: when the paper has been written, add a link to the paper.md and the CITATION.cff**
 """,
     unsafe_allow_html=True,
 )
