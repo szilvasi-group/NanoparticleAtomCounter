@@ -63,50 +63,48 @@ Alternatively::
 Usage
 -------
 
-- **Prepare your input CSV**
+**1) Prepare your input CSV**
 
-  Upload a .csv containing the columns:
+Upload a ``.csv`` with these columns:
 
-  ::
+::
 
-      r (A), R (A), Theta, Element, Interface Facet, Surface Facet
+    r (A), R (A), Theta, Element, Interface Facet, Surface Facet
 
-  Notes:
-  - r = footprint radius; R = radius of curvature (see figure below)
-  - Theta = contact angle (see the figure below for acute and obtuse Theta)
-  - Element = chemical symbol for the element the nanoparticle is composed of
-  - Supply either ``r`` or ``R`` (if both are present, ``r`` is used).
+Definitions:
 
+- ``r`` = footprint radius; ``R`` = radius of curvature
+- ``Theta`` = contact angle (degrees)
+- ``Element`` = chemical symbol
+- Provide either ``r`` or ``R`` (if both are present, ``r`` is used).
+- ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
+  - ``Interface Facet`` = facet at the nanoparticle–support interface
+  - ``Surface Facet`` = dominant facet at the nanoparticle–gas/vacuum interface
+- See the sidebar on the web app_ for a sample input file.
 
-.. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Acute.png
-   :width: 450
+**Contact-angle reference**
+
+========== ==========
+|acute|    |obtuse|
+========== ==========
+
+.. |acute| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Acute.png
+   :width: 340
    :alt: Acute theta
-   :align: center
 
+.. |obtuse| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Obtuse.png
+   :width: 340
+   :alt: Obtuse theta
 
-.. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Obtuse.png
-   :width: 450
-   :alt: Acute theta
-   :align: center
+**2) Use the web app**
 
+Upload your input file and download the output.
 
+**3) Use from the command line**
 
-  - ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
-      - ``Interface Facet`` is the facet at the nanoparticle-support interface
-      - ``Surface Facet`` is the dominant facet at the nanoparticle-gas/vacuum interface.
-  - See the sidebar on the web app_ for a sample input file.
+::
 
-- **Use the web app_**
-
-  Upload your input file and download the output.
-
-- **Use from the command line**
-
-  ::
-
-      nanoparticle-atom-counter -i input_file.csv -o output_file.csv
-
-
+    nanoparticle-atom-counter -i input_file.csv -o output_file.csv
 
 Testing
 -------
