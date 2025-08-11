@@ -6,7 +6,7 @@ Only two inputs are needed: the radius and contact angle, readily obtainable fro
 
 
 
-.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/blob/main/Nanoparticle_Legend.png
+.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/main/Nanoparticle_Legend.png 
    :width: 450
    :alt: Atom types discriminated
    :align: center
@@ -78,13 +78,13 @@ Usage
   - Supply either ``r`` or ``R`` (if both are present, ``r`` is used).
 
 
-.. figure:: https://raw.githubusercontent.com/szilvasi-group/NanoparticleAtomCounter/blob/main/Acute.png
+.. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Acute.png
    :width: 450
    :alt: Acute theta
    :align: center
 
 
-.. figure:: https://raw.githubusercontent.com/szilvasi-group/NanoparticleAtomCounter/blob/main/Obtuse.png
+.. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Obtuse.png
    :width: 450
    :alt: Acute theta
    :align: center
