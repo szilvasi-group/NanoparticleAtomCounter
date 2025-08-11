@@ -20,6 +20,7 @@ import warnings
 from argparse import ArgumentParser
 from pathlib import Path
 from ascii_colors import ASCIIColors
+from time import perf_counter
 from NanoparticleAtomCounter.tests.compare_to_atomistic.create_spherical_caps import (
     create_sphere,
     cut_particle,
@@ -34,8 +35,8 @@ MIN_ANGLE = 60
 MAX_ANGLE = 160
 MIN_RADIUS = 10  # Ang
 MAX_RADIUS = 30  # Ang
-N_ANGLES = 4
-N_RADII = 4
+N_ANGLES = 7
+N_RADII = 7
 PROCESSES = -1
 OUTPUT_TRAJECTORY = "atoms.traj"
 NP_ELEMENTS = ["Ag"]
@@ -201,7 +202,7 @@ def run_atomistic(
     print("Finished the atomistic modelling")
 
 
-def run_atomcounter(input_file: str, output_file: str, output_dir: str):
+def run_atomcounter(input_file: str, output_file: str, output_dir: str) -> float:
     """
     Runs the atomcounter to get the number of each kind of atom in each nanoparticle
 
@@ -219,9 +220,13 @@ def run_atomcounter(input_file: str, output_file: str, output_dir: str):
 
     command = shlex.split(f"nanoparticle-atom-count -i {input_file} -o {output_file}")
     with open(atomcounter_out, "w") as out_f, open(atomcounter_err, "w") as err_f:
+        start = perf_counter()
         subprocess.run(command, stdout=out_f, stderr=err_f, check=True)
-
+        end = perf_counter()
+    timing = end - start #seconds
     print("Finished running the atom counter")
+
+    return timing
 
 
 def plot_parities(atomistic_output: str, atomcounter_output: str, output_dir: str):
@@ -232,7 +237,7 @@ def plot_parities(atomistic_output: str, atomcounter_output: str, output_dir: st
         atomistic_output:       name of output file from the atomistic
         atomcounter_output:     name of output file from the atomcounter
     """
-    print("comparing . . . creating parities...")
+    print("comparing . . .")
     command = shlex.split(
         f"python {script_dir}/plot-parity.py {atomistic_output} "
         f"{atomcounter_output} --output_dir {output_dir}"
@@ -301,7 +306,7 @@ run_atomistic(
     output_dir=output_dir,
 )
 
-run_atomcounter(
+timing = run_atomcounter(
     input_file=input_to_atomcounter,
     output_file=atomcounter_output,
     output_dir=output_dir,
@@ -326,5 +331,9 @@ explanation = """\
 """
 
 readme = output_dir + "README.md"
-with open(readme, "w") as file:
-    file.write(explanation)
+speed = output_dir + "timing.txt"
+
+with open(readme, "w") as explain_file, open(speed, "w") as speed_file:
+    explain_file.write(explanation)
+    speed_file.write(f"nanoparticleatomcounter took {timing * 1000} ms")
+    
