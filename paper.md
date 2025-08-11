@@ -9,11 +9,11 @@ tags:
 authors:
     - name: Gbolagade Olajide
       orcid: 0000-0003-0992-670X
-      affiliation: 1
+      affiliation: '1'
     - name: Tibor Szilvasi
       corresponding: true
       orcid: 0000-0002-4218-1570
-      affiliation: 1
+      affiliation: 1''
 affiliations:
     - index: 1
       name: Department of Chemical and Biological Engineering, The University of Alabama, Tuscaloosa, AL, 35405, United States
