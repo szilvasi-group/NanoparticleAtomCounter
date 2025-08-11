@@ -63,7 +63,7 @@ def create_trajectory(
     output_trajectory: str,
     np_elements: Union[str, List[str]],
     support_element: Union[str, List[str]],
-) -> Tuple[List[float], List[float], List[str]]:
+) -> Tuple[List[float], List[float], List[str], List[str], int]:
     """
     Creates the atomistic model
 
@@ -88,6 +88,7 @@ def create_trajectory(
         radii_angstrom:     list of curvature radii
         nanoparticles:      list of nanoparticle elements
         supports:           list of support elements
+        n_calculations:     number of calculations to run
     """
 
     if max_radius > 40:
@@ -97,19 +98,20 @@ def create_trajectory(
             category=UserWarning,
         )
 
+    nanoparticles = [np_elements] if isinstance(np_elements, str) else np_elements
+    supports = (
+        [support_element] if isinstance(support_element, str) else support_element
+    )
+
+    n_calculations = int(n_radii * n_angles * len(nanoparticles) * len(supports))
     requested_system = (
-        "Requested system:"
-        f"{int(n_radii * n_angles)} {np_elements[0]} nanoparticles on {support_element[0]}\n"
+        "Requested system: \n"
+        f"{n_calculations} all possible combinations of {np_elements} nanoparticles on {support_element}\n"
         f"Nanoparticle curvature radii are from {min_radius} to {max_radius} A,\n"
         f"with contact angles from {min_angle} to {max_angle}"
     )
     print(requested_system)
-
-    nanoparticles = [np_elements] if isinstance(np_elements, str) else np_elements
-    supports = (
-        [support_elements] if isinstance(support_element, str) else support_element
-    )
-
+    
     radii_angstrom = np.linspace(min_radius, max_radius, n_radii)
     contact_angles = np.linspace(min_angle, max_angle, n_angles)
 
@@ -133,7 +135,7 @@ def create_trajectory(
     write(output_trajectory, atoms_list)
     print("created and written atoms objects")
 
-    return contact_angles, radii_angstrom, nanoparticles, supports
+    return contact_angles, radii_angstrom, nanoparticles, supports, n_calculations
 
 
 def run_atomistic(
@@ -147,7 +149,7 @@ def run_atomistic(
     atomistic_output: str,
     new_atoms_output: str,
     output_dir: str,
-):
+) -> None:
     """
     Use the atomistic model to get the number of each kind of atom in each nanoparticle
 
@@ -202,7 +204,11 @@ def run_atomistic(
     print("Finished the atomistic modelling")
 
 
-def run_atomcounter(input_file: str, output_file: str, output_dir: str) -> float:
+def run_atomcounter(
+    input_file: str,
+    output_file: str,
+    output_dir: str
+) -> float:
     """
     Runs the atomcounter to get the number of each kind of atom in each nanoparticle
 
@@ -211,6 +217,10 @@ def run_atomcounter(input_file: str, output_file: str, output_dir: str) -> float
         input_file:     name of input file, having the element, curvature radius, etc
         output_file:    name of output file to be generated
         output_dir:     name of output directory in which all files will be created
+
+    Returns:   
+
+        timing:          timing in seconds
     """
 
     print("running NanoparticleAtomCounter ...")
@@ -220,13 +230,19 @@ def run_atomcounter(input_file: str, output_file: str, output_dir: str) -> float
 
     command = shlex.split(f"nanoparticle-atom-count -i {input_file} -o {output_file}")
     with open(atomcounter_out, "w") as out_f, open(atomcounter_err, "w") as err_f:
-        start = perf_counter()
         subprocess.run(command, stdout=out_f, stderr=err_f, check=True)
-        end = perf_counter()
-    timing = end - start #seconds
-    print("Finished running the atom counter")
+        
+    timing = None
+    with open(atomcounter_out, "r") as t:
+        lines = t.readlines()
+        last = lines[-1].strip()
+        if last.startswith("Calculation took"):
+            parts = last.split()
+            timing = float(parts[2])
+            
+    print("Finished running the nanoparticle atom counter")
 
-    return timing
+    return timing #seconds
 
 
 def plot_parities(atomistic_output: str, atomcounter_output: str, output_dir: str):
@@ -250,7 +266,7 @@ def plot_parities(atomistic_output: str, atomcounter_output: str, output_dir: st
         subprocess.run(command, stdout=out_f, stderr=err_f, check=True)
 
 
-##ikimashou
+##ikimashou!
 
 output_dir = create_outputdir()
 print(f"\n\nWriting all results to {output_dir}\n\n")
@@ -280,7 +296,7 @@ ASCIIColors.print(
     file=sys.stdout,
 )
 
-contact_angles, radii_angstrom, nanoparticles, supports = create_trajectory(
+contact_angles, radii_angstrom, nanoparticles, supports, n_calculations = create_trajectory(
     min_angle=MIN_ANGLE,
     max_angle=MAX_ANGLE,
     n_angles=N_ANGLES,
@@ -330,10 +346,14 @@ explanation = """\
 - parity*.png: parity plots comparing the NanoparticleAtomCounter to the atomistic model
 """
 
+speed_benchmark = f"""\
+nanoparticleatomcounter took {timing * 1000} milliseconds to run {n_calculations} calculations
+"""
+
 readme = output_dir + "README.md"
 speed = output_dir + "timing.txt"
 
 with open(readme, "w") as explain_file, open(speed, "w") as speed_file:
     explain_file.write(explanation)
-    speed_file.write(f"nanoparticleatomcounter took {timing * 1000} ms")
+    speed_file.write(speed_benchmark)
     
