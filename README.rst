@@ -65,7 +65,7 @@ To be able to run tests::
 Usage
 -------
 
-**1) Prepare your input CSV (here's a sample_)**
+**1) Prepare your input CSV (here's a sample_ )**
 
 Upload a ``.csv`` with these headers:
 
