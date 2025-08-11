@@ -4,14 +4,14 @@ Nanoparticle Atom Counter
 Treating a supported nanoparticle as a spherical cap, NanoparticleAtomCounter rapidly estimates the number of **Total**, **Surface**, **Perimeter**, and **Interfacial** atoms (see below).
 Only two inputs are needed: the radius and contact angle, readily obtainable from Transmission Electron Microscopy (TEM) images.
 
-|
+
+
 .. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Nanoparticle_Legend.png
    :width: 450
    :alt: Atom types discriminated
    :align: center
 
-|
-|
+
 
 Can be used on the web app_ or on a command line.
 
@@ -55,24 +55,26 @@ Alternatively::
 
     git clone git@github.com:giolajide/nanoparticleatomcounter.git
     cd nanoparticleatomcounter
-    pip install -e . #pip install -e ".[test]" to be able to run tests
+    pip install -e .
+    #pip install -e ".[test]" to be able to run tests
 
 
 
 Usage
 -------
 
+* Prepare your input CSV. See the sidebar on the web app_ for a sample input file
 * To use on the web app_, upload your input file and download the output
 * To use on a command line::
 
-    nanoparticle-atom-counter --input input.csv --output output.csv
+    nanoparticle-atom-counter --input input_file.csv --output output_file.csv
 
 
 
 Testing
 -------
 
-If you have it installed with the tests, then please run the following test and let me know if there are any errors::
+If you have it installed with the tests, then run the following test and please let me know if there are any errors::
 
     atom-count-test
 
