@@ -21,7 +21,7 @@ from numpy.typing import NDArray
 from os import path
 from collections import Counter
 import argparse
-from time import perf_counter
+#from time import perf_counter
 
 
 MODE = "volume"
@@ -117,7 +117,7 @@ def parse_input_data(
     return rs, Rs, thetas, elements, interface_facets, surface_facets
 
 
-def main() -> float:
+def main() -> None:
     f"""
     Main function to do all calculations through the selected method
 
@@ -128,9 +128,7 @@ def main() -> float:
 
 
     Returns:
-        timing, in seconds
-        
-    writes out the output file
+        NONE, but writes out the output file
     """
     parser = argparse.ArgumentParser(
         description="""Given an input file containing:
@@ -165,7 +163,7 @@ def main() -> float:
         choices=("volume", "area"),
     )
 
-    start = perf_counter()
+#    start = perf_counter()
     args = parser.parse_args()
     input_file = args.input
     output_file = args.output
@@ -241,8 +239,7 @@ def main() -> float:
 
     df.to_csv(output_file, index=False)
     print(f"Output ({output_file}) written!")
-    
-    return perf_counter() - start #seconds
+
 
 
 if __name__ == "__main__":
