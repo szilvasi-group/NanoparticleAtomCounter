@@ -49,18 +49,13 @@ First create and activate a new environment::
 To install the latest version::
 
     pip install NanoparticleAtomCounter
-    #pip install NanoparticleAtomCounter[test] to install with tests
+    #pip install NanoparticleAtomCounter[test] to be able to run tests
 
 Alternatively::
 
     git clone git@github.com:giolajide/nanoparticleatomcounter.git
     cd nanoparticleatomcounter
-    pip install -e .
-
-
-To also be able to run tests, install as::
-
-    pip install NanoparticleAtomCounter[test]
+    pip install -e . #pip install -e ".[test]" to be able to run tests
 
 
 
