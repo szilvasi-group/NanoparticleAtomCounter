@@ -48,7 +48,8 @@ First create and activate a new environment::
 
 To install the latest version::
 
-    pip install NanoparticleAtomCounter #pip install NanoparticleAtomCounter[test] to install with tests
+    pip install NanoparticleAtomCounter
+    #pip install NanoparticleAtomCounter[test] to install with tests
 
 Alternatively::
 
