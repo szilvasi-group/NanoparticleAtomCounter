@@ -20,7 +20,7 @@ affiliations:
 
 date: 13 August 2025
 bibliography: paper.bib
-
+---
 
 # Summary
 `NanoparticleAtomCounter` converts transmission electron microscopy (TEM) derived geometry into atom counts for supported nanoparticles. Using the radius and contact angle of a nanoparticle, `NanoparticleAtomCounter` models nanoparticles as spherical caps and analytically estimates the total, surface, interfacial, and perimeter atoms without any atomistic modelling, allowing the conversion of hundreds of thousands of geometries into atom counts in minutes.
