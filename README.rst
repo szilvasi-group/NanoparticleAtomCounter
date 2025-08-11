@@ -63,7 +63,32 @@ Alternatively::
 Usage
 -------
 
-* Prepare your input CSV. See the sidebar on the web app_ for a sample input file
+- **Prepare your input CSV**
+
+  Upload a .csv containing the columns:
+
+  ::
+
+      r (A), R (A), Theta, Element, Interface Facet, Surface Facet
+
+  Notes:
+
+  - Supply either ``r`` or ``R`` (if both are present, ``r`` is used).
+  - ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
+  - See the sidebar on the web app_ for a sample input file.
+
+- **Use the web app**
+
+  Upload your input file and download the output.
+
+* Prepare your input CSV. 
+Upload a .csv containing the columns
+r (A), R (A), Theta, Element, Interface Facet, Surface Facet.
+
+Supply either r or R (if both are present, r is used).
+Interface Facet and Surface Facet are optional; leave blank if unknown.
+
+See the sidebar on the web app_ for a sample input file
 * To use on the web app_, upload your input file and download the output
 * To use on a command line::
 
