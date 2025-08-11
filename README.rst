@@ -6,7 +6,7 @@ Only two inputs are needed: the radius and contact angle, readily obtainable fro
 
 
 
-.. figure:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Nanoparticle_Legend.png
+.. figure:: https://raw.githubusercontent.com/szilvasi-group/NanoparticleAtomCounter/blob/main/Nanoparticle_Legend.png
    :width: 450
    :alt: Atom types discriminated
    :align: center
@@ -72,14 +72,31 @@ Usage
       r (A), R (A), Theta, Element, Interface Facet, Surface Facet
 
   Notes:
-
+  - r = footprint radius; R = radius of curvature (see figure below)
+  - Theta = contact angle (see the figure below for acute and obtuse Theta)
+  - Element = chemical symbol for the element the nanoparticle is composed of
   - Supply either ``r`` or ``R`` (if both are present, ``r`` is used).
+
+
+.. figure:: https://raw.githubusercontent.com/szilvasi-group/NanoparticleAtomCounter/blob/main/Acute.png
+   :width: 450
+   :alt: Acute theta
+   :align: center
+
+
+.. figure:: https://raw.githubusercontent.com/szilvasi-group/NanoparticleAtomCounter/blob/main/Obtuse.png
+   :width: 450
+   :alt: Acute theta
+   :align: center
+
+
+
   - ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
       - ``Interface Facet`` is the facet at the nanoparticle-support interface
       - ``Surface Facet`` is the dominant facet at the nanoparticle-gas/vacuum interface.
   - See the sidebar on the web app_ for a sample input file.
 
-- **Use the web app**
+- **Use the web app_**
 
   Upload your input file and download the output.
 
@@ -112,4 +129,4 @@ Any problems or questions?
 
 
 .. _app: https://nanoparticle-atom-counting.streamlit.app
-.. _here: https://github.com/giolajide/nanoparticleatomcounting/issues
+.. _here: https://github.com/szilvasi-group/NanoparticleAtomCounter/issues
