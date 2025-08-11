@@ -65,7 +65,7 @@ To be able to run tests::
 Usage
 -------
 
-**1) Prepare your input CSV (here's a sample_ )**
+**1) Prepare your input CSV**
 
 Upload a ``.csv`` with these headers:
 
@@ -99,6 +99,7 @@ Definitions:
     - ``Interface Facet`` = facet at the nanoparticle-support interface, e.g. ``(1,1,1)``
     - ``Surface Facet`` = dominant facet at the nanoparticle-gas/vacuum interface, e.g. ``(1,0,0)``
 
+- Here's a sample input file_
 
 
 **2) Use the web app**
@@ -138,4 +139,4 @@ Any problems or questions?
 .. _app: https://nanoparticle-atom-counting.streamlit.app
 .. _here: https://github.com/szilvasi-group/NanoparticleAtomCounter/issues
 .. _file: https://github.com/giolajide/NanoparticleAtomCounter/blob/main/sample_input.csv
-.. _sample: https://github.com/giolajide/NanoparticleAtomCounter/blob/main/sample_input.csv
+
