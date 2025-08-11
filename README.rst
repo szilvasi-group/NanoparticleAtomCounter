@@ -49,15 +49,17 @@ First create and activate a new environment::
 To install the latest version::
 
     pip install NanoparticleAtomCounter
-    #pip install NanoparticleAtomCounter[test] to be able to run tests
+ 
 
 Alternatively::
 
     git clone git@github.com:szilvasi-group/NanoparticleAtomCounter.git
     cd NanoparticleAtomCounter/
     pip install -e .
-    #pip install -e ".[test]" to be able to run tests
 
+To be able to run tests::
+
+    pip install NanoparticleAtomCounter[test]
 
 
 Usage
