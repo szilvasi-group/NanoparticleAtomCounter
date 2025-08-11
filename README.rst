@@ -75,24 +75,19 @@ Usage
 
   - Supply either ``r`` or ``R`` (if both are present, ``r`` is used).
   - ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
+      - ``Interface Facet`` is the facet at the nanoparticle-support interface
+      - ``Surface Facet`` is the dominant facet at the nanoparticle-gas/vacuum interface.
   - See the sidebar on the web app_ for a sample input file.
 
 - **Use the web app**
 
   Upload your input file and download the output.
 
-* Prepare your input CSV. 
-Upload a .csv containing the columns
-r (A), R (A), Theta, Element, Interface Facet, Surface Facet.
+- **Use from the command line**
 
-Supply either r or R (if both are present, r is used).
-Interface Facet and Surface Facet are optional; leave blank if unknown.
+  ::
 
-See the sidebar on the web app_ for a sample input file
-* To use on the web app_, upload your input file and download the output
-* To use on a command line::
-
-    nanoparticle-atom-counter --input input_file.csv --output output_file.csv
+      nanoparticle-atom-counter -i input_file.csv -o output_file.csv
 
 
 
