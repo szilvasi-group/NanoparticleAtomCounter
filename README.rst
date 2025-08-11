@@ -65,7 +65,7 @@ Usage
 
 **1) Prepare your input CSV**
 
-Upload a ``.csv`` with these columns:
+Upload a ``.csv`` with these headers:
 
 ::
 
@@ -93,11 +93,11 @@ Definitions:
 - Provide either ``r (A)`` or ``R (A)`` (if both are present, ``R (A)`` is ignored).
 - ``Theta`` = contact angle (in degrees)
 - ``Element`` = chemical symbol of the element that comprises the nanoparticle, e.g. ``Cr``
-- ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
+- ``Interface Facet`` and ``Surface Facet`` are OPTIONAL; leave blank if unknown.
     - ``Interface Facet`` = facet at the nanoparticle-support interface, e.g. ``(1,1,1)``
     - ``Surface Facet`` = dominant facet at the nanoparticle-gas/vacuum interface, e.g. ``(1,0,0)``
 
-- Here is a sample input file_
+- Here's a sample input file_
 
 
 
