@@ -112,7 +112,7 @@ OR
 
 ::
 
-    nanoparticle-atom-counter -i input_file.csv -o output_file.csv
+    nanoparticle-atom-count -i input_file.csv -o output_file.csv
 
 
 Testing
