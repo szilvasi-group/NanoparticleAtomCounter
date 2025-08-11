@@ -15,8 +15,9 @@ authors:
       orcid: 0000-0002-4218-1570
       affiliation: 1
 affiliations:
-    - name: Department of Chemical and Biological Engineering, The University of Alabama, Tuscaloosa, AL, 35405, United States
-      index: 1
+    - index: 1
+      name: Department of Chemical and Biological Engineering, The University of Alabama, Tuscaloosa, AL, 35405, United States
+
 date: 13 August 2025
 bibliography: paper.bib
 
@@ -34,7 +35,7 @@ Below, we describe the methods used to calculate the number of total, interfacia
 
 ![Fig1. Spherical cap model of a supported nanoparticle with *θ* > 90. \label{fig:figure1}](Fig1_v3.png)
 
-**Interfacial **count
+## Interfacial count
 We first consider the entire interfacial region (i.e. interface + perimeter) of thickness $z$ (exaggerated in Figure 1), which is equal to the planar spacing at the nanoparticle-support interface. We calculate the planar spacing using the atomic simulation environment (ASE) [@Larsen:2017] for all facets from {0,0,1} 1till {3,3,3}. The volume for the entire interfacial region is given by the formula for the volume of a spherical segment:
 
 \begin{equation}\label{eq:ventire}
@@ -103,7 +104,7 @@ N_{\text{interface}} = N_{\text{entire interface}} - N_{\text{perimeter}}
 
 The* *procedure for estimating $N_{\text{perimeter}}$ is described below.
 
-Perimeter** **count
+## Perimeter count
 We assume that the entire interface is an annulus of thickness $D$, which is the diameter of an atom of the nanoparticle and therefore the thickness of the perimeter. Thus, the radius of the interface is $r-D$. The volume of the interface $V_{\text{interface}}$ is therefore calculated with \autoref{eq:ventire}, where $r-D$ is substituted for $r$. Note that before applying \autoref{eq:ventire}, $x$ is also recalculated using \autoref{eq:x2-r2-hz2-h2}, with $r-D$ substituted for $r$.
 The perimeter’s volume $V_{\text{perimeter}}$ is:
 
@@ -119,7 +120,7 @@ A_{\text{perimeter}}=\pi r^2-\pi(r-D)^2
 \end{equation}
 
 
-Total count
+## Total count
 The total volume $V_{\text{total}}$ of the nanoparticle uses the formula:
 
 \begin{equation}\label{eq:V-total-alpha-beta}
@@ -141,7 +142,7 @@ and:
 
 The total number of atoms $N_{\text{total}}$ is then calculated using \autoref{eq:N-entire-interface}, with $N_{\text{total}}$ substituted for $N_{\text{entire interface}}$
 
-**Surface count**
+## Surface count
 From \autoref{fig:figure1}, it can be seen that:
 
 \begin{equation}\label{eq:cos-180-theta}
