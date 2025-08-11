@@ -83,11 +83,11 @@ Definitions:
 |acute|    |obtuse|
 ========== ==========
 
-.. |acute| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Acute.png
+.. |acute| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Acute_1.png
    :width: 340
    :alt: Acute theta
 
-.. |obtuse| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Obtuse.png
+.. |obtuse| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Obtuse_1.png
    :width: 340
    :alt: Obtuse theta
 
