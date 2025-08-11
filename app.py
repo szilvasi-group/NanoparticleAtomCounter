@@ -22,8 +22,8 @@ with st.sidebar:
         mime="text/csv",
     )
 
-    st.image("Acute.png", caption="θ < 90°", use_container_width=True)
-    st.image("Obtuse.png", caption="θ > 90°", use_container_width=True)
+    st.image("Acute_1.png", caption="θ < 90°", use_container_width=True)
+    st.image("Obtuse_1.png", caption="θ > 90°", use_container_width=True)
     st.image(
         "Nanoparticle_Legend.png",
         caption="Definition of surface, interfacial, and perimeter atoms",
