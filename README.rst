@@ -92,10 +92,10 @@ Definitions:
 
 - Provide either ``r (A)`` or ``R (A)`` (if both are present, ``R (A)`` is ignored).
 - ``Theta`` = contact angle (in degrees)
-- ``Element`` = chemical symbol of the element that comprises the nanoparticle, e.g. Cr
+- ``Element`` = chemical symbol of the element that comprises the nanoparticle, e.g. ``Cr``
 - ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
-    - ``Interface Facet`` = facet at the nanoparticle-support interface, e.g. (1,1,1)
-    - ``Surface Facet`` = dominant facet at the nanoparticle-gas/vacuum interface, e.g. (1,0,0)
+    - ``Interface Facet`` = facet at the nanoparticle-support interface, e.g. ``(1,1,1)``
+    - ``Surface Facet`` = dominant facet at the nanoparticle-gas/vacuum interface, e.g. ``(1,0,0)``
 - See the sidebar on the web app_ for a sample input file.
 
 
