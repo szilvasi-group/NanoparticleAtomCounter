@@ -96,7 +96,8 @@ Definitions:
 - ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
     - ``Interface Facet`` = facet at the nanoparticle-support interface, e.g. ``(1,1,1)``
     - ``Surface Facet`` = dominant facet at the nanoparticle-gas/vacuum interface, e.g. ``(1,0,0)``
-- See the sidebar on the web app_ for a sample input file.
+
+- Here is a sample input file_
 
 
 
@@ -136,3 +137,4 @@ Any problems or questions?
 
 .. _app: https://nanoparticle-atom-counting.streamlit.app
 .. _here: https://github.com/szilvasi-group/NanoparticleAtomCounter/issues
+.. _file: https://github.com/giolajide/NanoparticleAtomCounter/blob/main/sample_input.csv
