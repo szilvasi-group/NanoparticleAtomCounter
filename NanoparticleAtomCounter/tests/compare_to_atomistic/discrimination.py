@@ -1,6 +1,8 @@
 """
 In memory of Korosensei
 
+This is the atomistic method
+
 Use:                    Discrimination of kinds of atoms in supported NPs
                         The interface absolutely MUST be flat or nearly so
 
