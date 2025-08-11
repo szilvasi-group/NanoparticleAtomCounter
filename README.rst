@@ -2,7 +2,7 @@ Nanoparticle Atom Counter
 =========================
 
 Treating a supported nanoparticle as a spherical cap, NanoparticleAtomCounter rapidly estimates the number of **Total**, **Surface**, **Perimeter**, and **Interfacial** atoms (see below).
-Only two inputs are needed: the radius and contact angle, readily obtainable from Transmission Electron Microscopy (TEM) images.
+Only two inputs are mandatory: the radius and contact angle, readily obtainable from Transmission Electron Microscopy (TEM) images.
 
 
 
@@ -73,16 +73,16 @@ Upload a ``.csv`` with these columns:
 
 Definitions:
 
-- ``r`` = footprint radius; ``R`` = radius of curvature
-- ``Theta`` = contact angle (degrees)
-- ``Element`` = chemical symbol
-- Provide either ``r`` or ``R`` (if both are present, ``r`` is used).
+- ``r (A)`` = footprint radius (in Angstrom); ``R (A)`` = radius of curvature (in Angstrom)
+- Provide either ``r (A)`` or ``R (A)`` (if both are present, ``R (A)`` is ignored).
+- ``Theta`` = contact angle (in degrees)
+- ``Element`` = chemical symbol of the element that comprises the nanoparticle, e.g. Cr
 - ``Interface Facet`` and ``Surface Facet`` are optional; leave blank if unknown.
-  - ``Interface Facet`` = facet at the nanoparticle–support interface
-  - ``Surface Facet`` = dominant facet at the nanoparticle–gas/vacuum interface
+    - ``Interface Facet`` = facet at the nanoparticle-support interface, e.g. (1,1,1)
+    - ``Surface Facet`` = dominant facet at the nanoparticle-gas/vacuum interface, e.g. (1,0,0)
 - See the sidebar on the web app_ for a sample input file.
 
-**Contact-angle reference**
+                                        **Contact-angle reference**
 
 ========== ==========
 |acute|    |obtuse|
@@ -100,11 +100,15 @@ Definitions:
 
 Upload your input file and download the output.
 
-**3) Use from the command line**
+OR
+
+
+**2) Use the command line**
 
 ::
 
     nanoparticle-atom-counter -i input_file.csv -o output_file.csv
+
 
 Testing
 -------
