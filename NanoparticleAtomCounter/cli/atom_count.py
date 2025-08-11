@@ -21,7 +21,7 @@ from numpy.typing import NDArray
 from os import path
 from collections import Counter
 import argparse
-#from time import perf_counter
+from time import perf_counter
 
 
 MODE = "volume"
@@ -163,7 +163,7 @@ def main() -> None:
         choices=("volume", "area"),
     )
 
-#    start = perf_counter()
+    start = perf_counter()
     args = parser.parse_args()
     input_file = args.input
     output_file = args.output
@@ -239,6 +239,8 @@ def main() -> None:
 
     df.to_csv(output_file, index=False)
     print(f"Output ({output_file}) written!")
+    timing = perf_counter() - start
+    print(f"Calculation took {timing} seconds")
 
 
 
