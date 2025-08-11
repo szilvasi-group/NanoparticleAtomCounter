@@ -30,10 +30,10 @@ Supported nanoparticles are important catalysts, and central to their reactivity
 Our package, `NanoparticleAtomCounter`, addresses the challenge of estimating atom counts in nanoparticles by using only two inputs, radius and contact angle, both of which can be obtained from TEM imaging. `NanoparticleAtomCounter` approximates nanoparticle morphology as a spherical cap and uses analytical geometry to estimate the atom counts in the interface, perimeter, and outer surface without requiring atomic-resolution modeling. Hundreds of thousands of calculations can be completed in minutes. Thus, researchers can translate TEM-derived geometry into quantitative binding site populations, enabling turnover frequencies to be reported on a per-site basis, rather than per-mass/area.
 
 # Overview of NanoparticleAtomCounter
-Below, we describe the methods used to calculate the number of total, interfacial, perimeter, and surface atoms of supported nanoparticles. We assume a monometallic nanoparticle shaped as a spherical cap of footprint radius $r$, radius of curvature $R$, and contact angle $\theta$. Users should be aware that the spherical cap model is unreliable for very small nanoparticles (often around $r$ < 1-2 nm). Here, we illustrate only a case with $\theta > 90$; similar equations (with slight modifications) apply when $\theta \le 90$.
+Below, we describe the methods used to calculate the number of total, interfacial, perimeter, and surface atoms of supported nanoparticles. We assume a monometallic nanoparticle shaped as a spherical cap of footprint radius $r$, radius of curvature $R$, and contact angle $\theta$. (Figure 1) Users should be aware that the spherical cap model is unreliable for very small nanoparticles (often around $r$ < 1-2 nm). Here, we illustrate only a case with $\theta > 90$; similar equations (with slight modifications) apply when $\theta \le 90$.
 
 
-![Fig1. Spherical cap model of a supported nanoparticle with *θ* > 90. \label{fig:figure1}](Fig1_v3.png)
+![Spherical cap model of a supported nanoparticle with *θ* > 90. \label{fig:figure1}](Fig1_v3.png)
 
 ## Interfacial count
 We first consider the entire interfacial region (i.e. interface + perimeter) of thickness $z$ (exaggerated in Figure 1), which is equal to the planar spacing at the nanoparticle-support interface. We calculate the planar spacing using the atomic simulation environment (ASE) [@Larsen:2017] for all facets from {0,0,1} till {3,3,3}. The volume for the entire interfacial region is given by the formula for the volume of a spherical segment:
@@ -77,13 +77,13 @@ N_{\text{entire interface}}=\frac{V_{\text{entire interface}}}{V_M}\,N_A
 
 where $N_A$ is Avogadro’s number and $V_M$ is the molar volume, calculated with ASE.
 
-A faster method, which does not consider $\theta$ *and hence assumes a negligible thickness of the interfacial region, calculates the number of interfacial atoms thus:
+A faster method, which does not consider $\theta$ and hence assumes a negligible thickness of the interfacial region, calculates the number of interfacial atoms thus:
 
 \begin{equation}\label{eq:N-entire-from-sigmaA}
 N_{\text{entire interface}}=\sigma_{\text{interface}}\times A_{\text{entire interface}}
 \end{equation}
 
-where* $\sigma_{\text{interface}}$ is the *atomic surface density (atoms per unit area) at the interface and $A_{\text{entire interface}}$ is the area of the entire interface. $A_{\text{entire interface}}$ *is calculated by:
+where $\sigma_{\text{interface}}$ is the *atomic surface density (atoms per unit area) at the interface and $A_{\text{entire interface}}$ is the area of the entire interface. $A_{\text{entire interface}}$ *is calculated by:
 
 \begin{equation}\label{eq:A-entire-interface}
 A_{\text{entire interface}}=\pi r^2
@@ -102,10 +102,10 @@ Lastly, as what we have called the “entire interface” is comprised of the in
 N_{\text{interface}} = N_{\text{entire interface}} - N_{\text{perimeter}}
 \end{equation}
 
-The* *procedure for estimating $N_{\text{perimeter}}$ is described below.
+The procedure for estimating $N_{\text{perimeter}}$ is described below.
 
 ## Perimeter count
-We assume that the entire interface is an annulus of thickness $D$, which is the diameter of an atom of the nanoparticle and therefore the thickness of the perimeter. Thus, the radius of the interface is $r-D$. The volume of the interface $V_{\text{interface}}$ is therefore calculated with \autoref{eq:ventire}, where $r-D$ is substituted for $r$. Note that before applying \autoref{eq:ventire}, $x$ is also recalculated using \autoref{eq:x2-r2-hz2-h2}, with $r-D$ substituted for $r$.
+We assume that the entire interface is an annular ring of thickness $D$, which is the diameter of an atom of the nanoparticle and therefore the thickness of the perimeter. Thus, the radius of the interface is $r-D$. The volume of the interface $V_{\text{interface}}$ is therefore calculated with \autoref{eq:ventire}, where $r-D$ is substituted for $r$. Note that before applying \autoref{eq:ventire}, $x$ is also recalculated using \autoref{eq:x2-r2-hz2-h2}, with $r-D$ substituted for $r$.
 The perimeter’s volume $V_{\text{perimeter}}$ is:
 
 \begin{equation}\label{eq:V-perimeter-diff}
@@ -113,7 +113,7 @@ V_{\text{perimeter}}=V_{\text{entire interface}}-V_{\text{interface}}
 \end{equation}
 
 $N_{\text{perimeter}}$ is then calculated using \autoref{eq:N-entire-interface}, with $V_{\text{perimeter}}$ *substituted for $V_{\text{entire interface}}$.
-Using the area-based method, we can calculate $N_{\text{perimeter}}$ *using \autoref{eq:N-entire-from-sigmaA}, \autoref{eq:A-entire-interface}, and \autoref{eq:sigma-interface}, but with \autoref{eq:A-entire-interface} modified to:
+Using the area-based method, we can calculate $N_{\text{perimeter}}$ using \autoref{eq:N-entire-from-sigmaA}, \autoref{eq:A-entire-interface}, and \autoref{eq:sigma-interface}, but with \autoref{eq:A-entire-interface} modified to:
 
 \begin{equation}\label{eq:A-perimeter-annulus}
 A_{\text{perimeter}}=\pi r^2-\pi(r-D)^2
@@ -193,10 +193,8 @@ The atomic density at the surface is calculated similarly to \autoref{eq:sigma-i
 \end{equation}
 
 where $z_{\text{surface}}$ is the planar spacing at the nanoparticle’s outer surface.
-Finally, the number of surface atoms (*excluding the perimeter atoms) is calculated with \autoref{eq:N-entire-from-sigmaA}, substituting $A_{\text{curved surface}}$ for $A_{\text{entire interface}}$ and $\sigma_{\text{surface}}$ for $\sigma_{\text{interface}}$.
+Finally, the number of surface atoms (excluding the perimeter atoms) is calculated with \autoref{eq:N-entire-from-sigmaA}, substituting $A_{\text{curved surface}}$ for $A_{\text{entire interface}}$ and $\sigma_{\text{surface}}$ for $\sigma_{\text{interface}}$.
 
-# Figures
-![Fig1. Spherical cap model of a supported nanoparticle with *θ* > 90. \label{fig:figure1}](Fig1_v3.png)
 
 # Availability
 Version 0.1.4 of `NanoparticleAtomCounter` is freely available under the MIT License. The source code, tests, examples, and documentation are hosted at https://github.com/szilvasi-group/NanoparticleAtomCounter. The web version is hosted at https://nanoparticle-atom-counting.streamlit.app/.
