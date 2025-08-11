@@ -13,7 +13,7 @@ authors:
     - name: Tibor Szilvasi
       corresponding: true
       orcid: 0000-0002-4218-1570
-      affiliation: 1''
+      affiliation: '1'
 affiliations:
     - index: 1
       name: Department of Chemical and Biological Engineering, The University of Alabama, Tuscaloosa, AL, 35405, United States
@@ -42,7 +42,7 @@ We first consider the entire interfacial region (i.e. interface + perimeter) of 
 V_{\text{entire interface}} = \frac{\pi z}{6}\left(3x^2 + 3r^2 + z^2\right)
 \end{equation}
 
-where $x$ is the footprint radius at height $z$ above the nanoparticle-support interface. *The only unknown term is $x$, which is expressed by Pythagoras’ theorem:
+where $x$ is the footprint radius at height $z$ above the nanoparticle-support interface. The only unknown term is $x$, which is expressed by Pythagoras’ theorem:
 
 \begin{equation}\label{eq:pythag-offset}
 x^2 = R^2 - h^2
