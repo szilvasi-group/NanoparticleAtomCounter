@@ -53,7 +53,7 @@ To install the latest version::
 
 Alternatively::
 
-    git clone git@github.com:giolajide/nanoparticleatomcounter.git
+    git clone git@github.com:szilvasi-group/NanoparticleAtomCounter.git
     cd nanoparticleatomcounter
     pip install -e .
     #pip install -e ".[test]" to be able to run tests
