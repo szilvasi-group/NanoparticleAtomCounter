@@ -1,4 +1,6 @@
 """
+In memory of Korosensei
+
 Use:                    Discrimination of kinds of atoms in supported NPs
                         The interface absolutely MUST be flat or nearly so
 
@@ -156,8 +158,9 @@ def get_perimeter(
     Get indices of perimeter atoms of the NP
     By:
         1. Getting the interface
-        2. Convex hull of interfacial atoms to trace the perimeter (misses concave regions);
-        from experience, the bigger the NP, the more it'll undercount the perimeter
+        2. Convex/concave hull of interfacial atoms to trace the perimeter (misses concave regions);
+        from experience, the bigger the NP, the more it'll undercount the perimeter, especially the convex
+        hull.
         3. To correct (2), also gets CNmax (the most-coordinated atom amongst those flagged by (2)
         as perimeter) minus 1, and defines that any atom of coordination less than the max of CNmax and
         CNmedian (median coordination of all atoms flagged by (2) as perimeter).
@@ -279,7 +282,7 @@ def get_np_surface_by_CN(
     if not coord_cutoff:
         lattice = bulk(np_element).cell.get_bravais_lattice().__class__.__name__
         if lattice in ["FCC", "HCP", "HEX"]:  # should confirm later, but it seems ASE
-            # has only hex not hcp (they mean the same)
+            # has only hex not hcp (they mean the same, I suppose)
             coord_cutoff = FCC_AND_HCP_COORD_CUTOFF
         elif lattice == "BCC":
             coord_cutoff = BCC_COORD_CUTOFF
@@ -339,6 +342,7 @@ def discriminate(
         do_alphashape (bool):               whether or not to get perimeter atoms by alphashape rather than only by CN
                                             default = False
                                             !!!It's very expensive to optimize alpha for large NPs!!!
+                                            So, I hope you know what you are doing!
 
     Returns:
         np_surface (List[int]):             indices of NP surface atoms (excluding interface)
