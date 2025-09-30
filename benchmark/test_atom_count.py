@@ -21,11 +21,11 @@ from argparse import ArgumentParser
 from pathlib import Path
 from ascii_colors import ASCIIColors
 from time import perf_counter
-from NanoparticleAtomCounter.tests.compare_to_atomistic.create_spherical_caps import (
+from benchmark.create_spherical_caps import (
     create_sphere,
     cut_particle,
 )
-from NanoparticleAtomCounter.tests.compare_to_atomistic.atomistic_utils import (
+from benchmark.atomistic_utils import (
     scaler,
     create_unit_support,
 )
@@ -47,7 +47,7 @@ script_dir = Path(__file__).resolve().parent
 
 def create_outputdir() -> str:
     home_dir = environ["HOME"]
-    output_dir = f"{home_dir}/nanoparticle_atom_counter_tests/"
+    output_dir = f"{home_dir}/nanoparticle_atom_counter_benchmark/"
     makedirs(output_dir, exist_ok=True)
 
     return output_dir
