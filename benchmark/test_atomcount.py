@@ -365,6 +365,6 @@ def main() -> None:
         print(f"benchmarking failed with error ({e}). see .err files in {output_dir} for details")
         exit_code = 1
 
-    assert exit_code 
+    return exit_code
 
 
