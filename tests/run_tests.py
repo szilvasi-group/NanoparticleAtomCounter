@@ -1,6 +1,5 @@
 """
 Automatically test all functions;
-also benchmark against the atomistic method
 """
 
 from pathlib import Path
@@ -14,7 +13,6 @@ def main() -> None:
     Run every test in the project,
     then exit with pytest’s status code.
     """
-    print("This should take about 5 minutes,\n depending on how many processors you have . . .\n\n")
     tests_dir = Path(__file__).resolve().parent
     exit_code = pytest.main(["-s", str(tests_dir)])
     text = "All tests passed!" if exit_code == 0 else "Some tests failed!"
