@@ -6,7 +6,7 @@ Only two inputs are mandatory: the radius and contact angle, readily obtainable 
 
 
 
-.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/testing/docs/Nanoparticle_Legend.png 
+.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/main/docs/Nanoparticle_Legend.png 
    :width: 450
    :alt: Atom types discriminated
    :align: center
@@ -63,7 +63,7 @@ To be able to run tests::
 
     pip install NanoparticleAtomCounter[test]
 
-To be able to run benchmarks::
+To be able to run benchmarks along with tests::
 
     pip install NanoparticleAtomCounter[benchmark]
 
@@ -129,7 +129,7 @@ If you have it installed with the tests, then run the following test and please 
 
     atom-count-test
 
-Run benchmarks thus::
+If you have it installed with the benchmarks, then run the following and please let me know if there are any errors::
 
     atom-count-benchmark
 
