@@ -197,7 +197,7 @@ Finally, the number of surface atoms (excluding the perimeter atoms) is calculat
 
 
 # Availability
-Version 0.1.5 of `NanoparticleAtomCounter` is freely available under the MIT License. The source code, tests, examples, and documentation are hosted at https://github.com/szilvasi-group/NanoparticleAtomCounter. The web version is hosted at https://nanoparticle-atom-counting.streamlit.app/.
+Version 0.1.6 of `NanoparticleAtomCounter` is freely available under the MIT License. The source code, tests, examples, and documentation are hosted at https://github.com/szilvasi-group/NanoparticleAtomCounter. The web version is hosted at https://nanoparticle-atom-counting.streamlit.app/.
 
 # Acknowledgements
 This work is funded by the National Science Foundation (NSF) under grant number 2245120. G.O. would like to acknowledge financial support from the University of Alabama Graduate School as a Graduate Council Fellow. The authors also thank Tristan Maxson for useful comments and his contributions to an earlier version of the code.
