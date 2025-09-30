@@ -33,7 +33,7 @@ Our package, `NanoparticleAtomCounter`, addresses the challenge of estimating at
 Below, we describe the methods used to calculate the number of total, interfacial, perimeter, and surface atoms of supported nanoparticles. We assume a monometallic nanoparticle shaped as a spherical cap of footprint radius $r$, radius of curvature $R$, and contact angle $\theta$. (Figure 1) Users should be aware that the spherical cap model is unreliable for very small nanoparticles (often around $r$ < 1-2 nm). Here, we illustrate only a case with $\theta > 90$; similar equations (with slight modifications) apply when $\theta \le 90$.
 
 
-![Spherical cap model of a supported nanoparticle with *θ* > 90. \label{fig:figure1}](Fig1_v3.png)
+![Spherical cap model of a supported nanoparticle with *θ* > 90. \label{fig:figure1}](paper/Fig1_v3.png)
 
 ## Interfacial count
 We first consider the entire interfacial region (i.e. interface + perimeter) of thickness $z$ (exaggerated in Figure 1), which is equal to the planar spacing at the nanoparticle-support interface. We calculate the planar spacing using the atomic simulation environment (ASE) [@Larsen:2017] for all facets from {0,0,1} till {3,3,3}. The volume for the entire interfacial region is given by the formula for the volume of a spherical segment:
