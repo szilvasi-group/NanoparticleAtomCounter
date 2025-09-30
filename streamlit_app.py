@@ -14,7 +14,7 @@ st.set_page_config(page_title="Nanoparticle Atom Counter", page_icon="🧮")
 with st.sidebar:
     st.header("Resources")
 
-    SAMPLE_CSV = Path("sample_input.csv").read_bytes()
+    SAMPLE_CSV = Path("docs/sample_input.csv").read_bytes()
     st.download_button(
         "Sample input (.csv)",
         SAMPLE_CSV,
@@ -22,10 +22,10 @@ with st.sidebar:
         mime="text/csv",
     )
 
-    st.image("Acute_1.png", caption="θ < 90°", use_container_width=True)
-    st.image("Obtuse_1.png", caption="θ > 90°", use_container_width=True)
+    st.image("docs/Acute_1.png", caption="θ < 90°", use_container_width=True)
+    st.image("docs/Obtuse_1.png", caption="θ > 90°", use_container_width=True)
     st.image(
-        "Nanoparticle_Legend.png",
+        "docs/Nanoparticle_Legend.png",
         caption="Definition of surface, interfacial, and perimeter atoms",
         use_container_width=True,
     )
