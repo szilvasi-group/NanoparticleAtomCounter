@@ -33,21 +33,40 @@ setup(
         "xlrd>=2.0",
     ],
     extras_require={
+        
         "test": [
             "pytest>=8,<9",
-            "ase>=3.22,<3.27",
-            "tqdm>=4.66,<5",
-            "joblib>=1.5,<2",
             "ascii-colors",
         ],
+        
+        "benchmark": [
+            "joblib>=1.5,<2",
+            "ase>=3.22,<3.27",
+            "ascii-colors",
+            "tqdm>=4.66,<5",
+            "pytest>=8,<9",
+        ],
+
+        "dev": [
+            "joblib>=1.5,<2",
+            "ase>=3.22,<3.27",
+            "ascii-colors",
+            "tqdm>=4.66,<5",
+            "pytest>=8,<9",
+        ],
+        
     },
     # enable the CLI: `nanoparticle-atom-count`
     entry_points={
         "console_scripts": [
             "nanoparticle-atom-count="
             "NanoparticleAtomCounter.cli.atom_count:main",  # main script
+            
             "atom-count-test="
-            "NanoparticleAtomCounter.tests.run_tests:main",  # tests script
+            "NanoparticleAtomCounter.cli.run_tests:main",  # tests script
+            
+            "atom-count-benchmark="
+            "NanoparticleAtomCounter.cli.benchmark:main", # benchmark script
         ],
     },
     classifiers=[
