@@ -129,7 +129,7 @@ If you have it installed with the tests, then run the following test and please 
 
     atom-count-test
 
-You can run benchmarks thus::
+Run benchmarks thus::
 
     atom-count-benchmark
 
