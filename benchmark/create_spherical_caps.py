@@ -13,7 +13,7 @@ from ase.build import bulk
 import warnings
 from ase.data import chemical_symbols
 from typing import Union, Optional, List, Tuple
-from NanoparticleAtomCounter.tests.compare_to_atomistic.atomistic_utils import (
+from benchmark.atomistic_utils import (
     scaler,
     create_unit_support,
 )

@@ -6,7 +6,7 @@ Only two inputs are mandatory: the radius and contact angle, readily obtainable 
 
 
 
-.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/main/Nanoparticle_Legend.png 
+.. figure:: https://raw.githubusercontent.com/giolajide/NanoparticleAtomCounter/testing/docs/Nanoparticle_Legend.png 
    :width: 450
    :alt: Atom types discriminated
    :align: center
@@ -31,11 +31,13 @@ Requirements
 For testing, these are also required
 
 * pytest>=8,<9
+* ascii-colors
+
+For benchmarking, these are also required
+
 * ase>=3.22.0,<3.25
 * tqdm<=4.67.1
 * joblib<=1.5.1
-* ascii-colors
-
 
 
 Installation
@@ -61,6 +63,10 @@ To be able to run tests::
 
     pip install NanoparticleAtomCounter[test]
 
+To be able to run benchmarks::
+
+    pip install NanoparticleAtomCounter[benchmark]
+
 
 Usage
 -------
@@ -83,11 +89,11 @@ Definitions:
 |acute|    |obtuse|
 ========== ==========
 
-.. |acute| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Acute_1.png
+.. |acute| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/testing/docs/Acute_1.png
    :width: 340
    :alt: Acute theta
 
-.. |obtuse| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/main/Obtuse_1.png
+.. |obtuse| image:: https://raw.githubusercontent.com/giolajide/nanoparticleatomcounter/testing/docs/Obtuse_1.png
    :width: 340
    :alt: Obtuse theta
 
@@ -123,6 +129,9 @@ If you have it installed with the tests, then run the following test and please 
 
     atom-count-test
 
+Run benchmarks thus::
+
+    atom-count-benchmark
 
 
 Contact

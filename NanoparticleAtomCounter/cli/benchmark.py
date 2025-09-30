@@ -1,23 +1,23 @@
 """
-Automatically test all functions;
-also benchmark against the atomistic method
+benchmark against the atomistic method
 """
 
 from pathlib import Path
 import sys
 from ascii_colors import ASCIIColors
-import pytest
-
+#import pytest
+from benchmark.test_atomcount import main as benchmarking
 
 def main() -> None:
     """
-    Run every test in the project,
-    then exit with pytest’s status code.
+    Run the test_atomcount.py script, which benchmarks
     """
     print("This should take about 5 minutes,\n depending on how many processors you have . . .\n\n")
-    tests_dir = Path(__file__).resolve().parent
-    exit_code = pytest.main(["-s", str(tests_dir)])
-    text = "All tests passed!" if exit_code == 0 else "Some tests failed!"
+#    repo_root = Path(__file__).resolve().parents[2]
+#    bnchk_dir = repo_root / "benchmark"
+#    exit_code = pytest.main(["-s", str(bnchk_dir)])
+    exit_code = benchmarking()
+    text = "All benchmarking succeeded!" if exit_code == 0 else "Something went wrong! See .err files for details"
     color = ASCIIColors.color_green if exit_code == 0 else ASCIIColors.color_red
     ASCIIColors.print(
         text.upper(),

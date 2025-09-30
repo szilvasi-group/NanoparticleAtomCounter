@@ -21,15 +21,15 @@ from argparse import ArgumentParser
 from pathlib import Path
 from ascii_colors import ASCIIColors
 from time import perf_counter
-from NanoparticleAtomCounter.tests.compare_to_atomistic.create_spherical_caps import (
+from benchmark.create_spherical_caps import (
     create_sphere,
     cut_particle,
 )
-from NanoparticleAtomCounter.tests.compare_to_atomistic.atomistic_utils import (
+from benchmark.atomistic_utils import (
     scaler,
     create_unit_support,
 )
-
+import pytest
 
 MIN_ANGLE = 60
 MAX_ANGLE = 160
@@ -47,7 +47,7 @@ script_dir = Path(__file__).resolve().parent
 
 def create_outputdir() -> str:
     home_dir = environ["HOME"]
-    output_dir = f"{home_dir}/nanoparticle_atom_counter_tests/"
+    output_dir = f"{home_dir}/nanoparticle_atom_counter_benchmark/"
     makedirs(output_dir, exist_ok=True)
 
     return output_dir
@@ -268,93 +268,104 @@ def plot_parities(atomistic_output: str, atomcounter_output: str, output_dir: st
 
 
 ##ikimashou
-
-output_dir = create_outputdir()
-print(f"\n\nWriting all results to {output_dir}\n\n")
-
-traj_file = output_dir + OUTPUT_TRAJECTORY
-input_to_atomcounter = output_dir + "input.csv"
-atomcounter_output = output_dir + "counter.csv"
-atomistic_output = output_dir + "atomistic.csv"
-new_atoms_output = output_dir + "identified.traj"
-
-
-theory = (
-    "- Calculating the total number of atoms by assuming a spherical cap\n"
-    "- Calculating perimeter atoms by assuming the interface is an annular ring\n"
-    "  (this might introduce some errors)\n"
-    "- Calculating surface atoms by assuming the nanoparticle surface is an annulus\n"
-    "  (this might also introduce some errors)\n"
-)
-
-ASCIIColors.print(
-    theory,
-    color=ASCIIColors.color_yellow,
-    style=ASCIIColors.style_bold,
-    background=ASCIIColors.color_black,
-    end="\n\n",
-    flush=True,
-    file=sys.stdout,
-)
-
-contact_angles, radii_angstrom, nanoparticles, supports, n_calculations = create_trajectory(
-    min_angle=MIN_ANGLE,
-    max_angle=MAX_ANGLE,
-    n_angles=N_ANGLES,
-    min_radius=MIN_RADIUS,
-    max_radius=MAX_RADIUS,
-    n_radii=N_RADII,
-    output_trajectory=traj_file,
-    np_elements=NP_ELEMENTS,
-    support_element=[SUPPORT_ELEMENTS[0]],
-)
-
-
-run_atomistic(
-    processes=PROCESSES,
-    trajectory_file=traj_file,
-    contact_angles=contact_angles,
-    radii_angstrom=radii_angstrom,
-    nanoparticles=nanoparticles,
-    supports=supports,
-    input_to_atomcounter=input_to_atomcounter,
-    atomistic_output=atomistic_output,
-    new_atoms_output=new_atoms_output,
-    output_dir=output_dir,
-)
-
-timing = run_atomcounter(
-    input_file=input_to_atomcounter,
-    output_file=atomcounter_output,
-    output_dir=output_dir,
-)
-
-plot_parities(
-    atomistic_output=atomistic_output,
-    atomcounter_output=atomcounter_output,
-    output_dir=output_dir,
-)
-
-print(f"\n\nAll output written to {output_dir}")
-
-
-explanation = """\
-- input.csv: input file for the NanoparticleAtomCounter
-- counter.csv: atom counts according to the NanoparticleAtomCounter
-- atomistic.csv: atom counts by using an atomistic model
-- atoms.traj: atomistic model
-- identified.traj: atomistic model, with different types of atoms distinguished
-- parity*.png: parity plots comparing the NanoparticleAtomCounter to the atomistic model
-"""
-
-speed_benchmark = f"""\
-nanoparticleatomcounter took {timing * 1000} milliseconds to run {n_calculations} calculations
-"""
-
-readme = output_dir + "README.md"
-speed = output_dir + "timing.log"
-
-with open(readme, "w") as explain_file, open(speed, "w") as speed_file:
-    explain_file.write(explanation)
-    speed_file.write(speed_benchmark)
+def main() -> None:
+    """
+    if any function fails, we exist with a non-zero exit code
+    details on the failure will be written in the .err file (by the above functions)
+    """
+    output_dir = create_outputdir()
+    print(f"\n\nWriting all results to {output_dir}\n\n")
     
+    traj_file = output_dir + OUTPUT_TRAJECTORY
+    input_to_atomcounter = output_dir + "input.csv"
+    atomcounter_output = output_dir + "counter.csv"
+    atomistic_output = output_dir + "atomistic.csv"
+    new_atoms_output = output_dir + "identified.traj"
+            
+    theory = (
+        "- Calculating the total number of atoms by assuming a spherical cap\n"
+        "- Calculating perimeter atoms by assuming the interface is an annular ring\n"
+        "  (this might introduce some errors)\n"
+        "- Calculating surface atoms by assuming the nanoparticle surface is an annulus\n"
+        "  (this might also introduce some errors)\n"
+     )
+        
+    ASCIIColors.print(
+        theory,
+        color=ASCIIColors.color_yellow,
+        style=ASCIIColors.style_bold,
+        background=ASCIIColors.color_black,
+        end="\n\n",
+        flush=True,
+        file=sys.stdout,
+    )
+        
+    exit_code = 0
+    try:
+        contact_angles, radii_angstrom, nanoparticles, supports, n_calculations = create_trajectory(
+            min_angle=MIN_ANGLE,
+            max_angle=MAX_ANGLE,
+            n_angles=N_ANGLES,
+            min_radius=MIN_RADIUS,
+            max_radius=MAX_RADIUS,
+            n_radii=N_RADII,
+            output_trajectory=traj_file,
+            np_elements=NP_ELEMENTS,
+            support_element=[SUPPORT_ELEMENTS[0]],
+        )
+        
+        
+        run_atomistic(
+            processes=PROCESSES,
+            trajectory_file=traj_file,
+            contact_angles=contact_angles,
+            radii_angstrom=radii_angstrom,
+            nanoparticles=nanoparticles,
+            supports=supports,
+            input_to_atomcounter=input_to_atomcounter,
+            atomistic_output=atomistic_output,
+            new_atoms_output=new_atoms_output,
+            output_dir=output_dir,
+        )
+        
+        timing = run_atomcounter(
+            input_file=input_to_atomcounter,
+            output_file=atomcounter_output,
+            output_dir=output_dir,
+        )
+        
+        plot_parities(
+            atomistic_output=atomistic_output,
+            atomcounter_output=atomcounter_output,
+            output_dir=output_dir,
+        )
+        
+        print(f"\n\nAll output written to {output_dir}")
+        
+        
+        explanation = """\
+        - input.csv: input file for the NanoparticleAtomCounter
+        - counter.csv: atom counts according to the NanoparticleAtomCounter
+        - atomistic.csv: atom counts by using an atomistic model
+        - atoms.traj: atomistic model
+        - identified.traj: atomistic model, with different types of atoms distinguished
+        - parity*.png: parity plots comparing the NanoparticleAtomCounter to the atomistic model
+        """
+        
+        speed_benchmark = f"""\
+        nanoparticleatomcounter took {timing * 1000} milliseconds to run {n_calculations} calculations
+        """
+        
+        readme = output_dir + "README.md"
+        speed = output_dir + "timing.log"
+        
+        with open(readme, "w") as explain_file, open(speed, "w") as speed_file:
+            explain_file.write(explanation)
+            speed_file.write(speed_benchmark)
+    except Exception as e:
+        print(f"benchmarking failed with error ({e}). see .err files in {output_dir} for details")
+        exit_code = 1
+
+    return exit_code
+
+
