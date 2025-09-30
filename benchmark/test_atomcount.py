@@ -268,39 +268,40 @@ def plot_parities(atomistic_output: str, atomcounter_output: str, output_dir: st
 
 
 ##ikimashou
-###if any function fails, we exist with a non-zero exit code
-###details on the failure will be written in the .err file (by the above functions)
 def main() -> None:
+    """
+    if any function fails, we exist with a non-zero exit code
+    details on the failure will be written in the .err file (by the above functions)
+    """
+    output_dir = create_outputdir()
+    print(f"\n\nWriting all results to {output_dir}\n\n")
+    
+    traj_file = output_dir + OUTPUT_TRAJECTORY
+    input_to_atomcounter = output_dir + "input.csv"
+    atomcounter_output = output_dir + "counter.csv"
+    atomistic_output = output_dir + "atomistic.csv"
+    new_atoms_output = output_dir + "identified.traj"
+            
+    theory = (
+        "- Calculating the total number of atoms by assuming a spherical cap\n"
+        "- Calculating perimeter atoms by assuming the interface is an annular ring\n"
+        "  (this might introduce some errors)\n"
+        "- Calculating surface atoms by assuming the nanoparticle surface is an annulus\n"
+        "  (this might also introduce some errors)\n"
+     )
+        
+    ASCIIColors.print(
+        theory,
+        color=ASCIIColors.color_yellow,
+        style=ASCIIColors.style_bold,
+        background=ASCIIColors.color_black,
+        end="\n\n",
+        flush=True,
+        file=sys.stdout,
+    )
+        
     exit_code = 0
     try:
-        output_dir = create_outputdir()
-        print(f"\n\nWriting all results to {output_dir}\n\n")
-    
-        traj_file = output_dir + OUTPUT_TRAJECTORY
-        input_to_atomcounter = output_dir + "input.csv"
-        atomcounter_output = output_dir + "counter.csv"
-        atomistic_output = output_dir + "atomistic.csv"
-        new_atoms_output = output_dir + "identified.traj"
-    
-        
-        theory = (
-            "- Calculating the total number of atoms by assuming a spherical cap\n"
-            "- Calculating perimeter atoms by assuming the interface is an annular ring\n"
-            "  (this might introduce some errors)\n"
-            "- Calculating surface atoms by assuming the nanoparticle surface is an annulus\n"
-            "  (this might also introduce some errors)\n"
-        )
-        
-        ASCIIColors.print(
-            theory,
-            color=ASCIIColors.color_yellow,
-            style=ASCIIColors.style_bold,
-            background=ASCIIColors.color_black,
-            end="\n\n",
-            flush=True,
-            file=sys.stdout,
-        )
-        
         contact_angles, radii_angstrom, nanoparticles, supports, n_calculations = create_trajectory(
             min_angle=MIN_ANGLE,
             max_angle=MAX_ANGLE,
