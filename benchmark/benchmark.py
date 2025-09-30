@@ -1,6 +1,5 @@
 """
-Automatically test all functions;
-also benchmark against the atomistic method
+benchmark against the atomistic method
 """
 
 from pathlib import Path
@@ -16,7 +15,7 @@ def main() -> None:
     """
     print("This should take about 5 minutes,\n depending on how many processors you have . . .\n\n")
     tests_dir = Path(__file__).resolve().parent
-    exit_code = pytest.main(["-s", str(tests_dir)])
+    exit_code = python test_atom_count.pypytest.main(["-s", str(tests_dir)])
     text = "All tests passed!" if exit_code == 0 else "Some tests failed!"
     color = ASCIIColors.color_green if exit_code == 0 else ASCIIColors.color_red
     ASCIIColors.print(
