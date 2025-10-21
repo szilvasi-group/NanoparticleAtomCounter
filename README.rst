@@ -45,7 +45,7 @@ Installation
 
 First create and activate a new environment::
 
-    mamba create --name env_name "python>=3.10,<3.15"
+    mamba create --name env_name "python>=3.10,<3.14"
     mamba activate env_name
 
 To install the latest version::
