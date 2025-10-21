@@ -24,7 +24,7 @@ setup(
     url="https://github.com/szilvasi-group/NanoparticleAtomCounter#readme",
     packages=find_packages(where="."),
     # specify your dependencies here
-    python_requires=">=3.10,<3.15",
+    python_requires=">=3.10,<3.14", #pyarrow (for streamlit) ends at 3.13. look again someday
     install_requires=[
         "numpy>=1.20,<2.3",
         "pandas>=1.4",
